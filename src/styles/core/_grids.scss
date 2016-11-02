@@ -1,0 +1,64 @@
+$grids: (
+  'small': (
+    'grid': 4,
+    'column': 60px,
+    'gutter': 20px,
+  ),
+  'big': (
+    'grid': 12,
+    'column': 60px,
+    'gutter': 20px,
+  ),
+);
+
+$spans: (
+  'header': (
+    'small': 4,
+    'big': 12
+  ),
+  'side-nav__content': (
+    'small': 3,
+    'big': 4
+  ),
+  'toast-view': (
+    'small': 4,
+    'big': 3
+  )
+);
+
+@function span($span, $column, $gutter) {
+  @return ($span * $column) + (($span - 1) * $gutter);
+}
+
+@function rwd($target, $context) {
+  @return $target / $context * 100%;
+}
+
+@mixin span($span, $grid) {
+  $info: map-get($grids, $grid);
+  $size: map-get($info, 'grid');
+  $column: map-get($info, 'column');
+  $gutter: map-get($info, 'gutter');
+  $target: span($span, $column, $gutter);
+  $context: span($size, $column, $gutter);
+  $gutter: span($gutter / $column, $column, $gutter);
+  width: rwd($target, $context);
+  margin-right: rwd($gutter, $context);
+  float: left;
+}
+
+@mixin mq($min-width) {
+  @media (min-width: #{$min-width}) {
+    @content;
+  }
+}
+
+@each $class, $span in $spans {
+  .#{$class} {
+    @include span(map-get($span, 'small'), 'small');
+
+    @include mq(900px) {
+      @include span(map-get($span, 'big'), 'big');
+    }
+  }
+}
