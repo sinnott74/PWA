@@ -1,4 +1,4 @@
-# Application Shell Architecture
+# Progressive Web Application Shell Architecture
 
 A modern web application architecture leveraging [Service Worker](http://www.html5rocks.com/en/tutorials/service-worker/introduction/) to offline cache your application 'shell' and populate the content using JS. This means you can get pixels on the screen without the network, even if the content eventually comes from the network - a great performance win. In browsers without SW, we gracefully degrade to server-side rendering (e.g iOS). [Demo](https://app-shell.appspot.com/).
 
@@ -96,18 +96,4 @@ There are no hard and fast rules with this architecture, but there are a few got
     Essentially the `noscript` use is a small (and trivial) attempt at treating
     JavaScript as a progressive enhancement.
 
-## License
 
-Copyright 2015 Google, Inc.
-
-Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License. You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-
-Please note: this is not a Google product
-
-## Acknowledgements
-
-With thanks to Paul Lewis for his inspiration in the [Voice Memos](https://voice-memos.appspot.com/) app and [Yannick Lung](https://www.iconfinder.com/icons/315148/app_document_file_icon#size=512) for the App icon used.
