@@ -15,6 +15,7 @@ coverage
 
 # Dependency directory
 node_modules
+bower_components
 
 .DS_Store
 *.pyc
@@ -24,5 +25,8 @@ dist
 
 # Test folder
 tests
+
+# IDE specific folders
+.vscode
 
 npm-debug.log
