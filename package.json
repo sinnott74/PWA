@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "node app.js",
+    "postinstall": "gulp",
     "monitor": "gulp dev",
     "bower": "bower",
     "gulp": "gulp"
