@@ -1,6 +1,6 @@
 {
   "name": "app-shell",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "license": "Apache Version 2.0",
   "main": "app.js",
@@ -10,7 +10,6 @@
   "scripts": {
     "start": "node app.js",
     "monitor": "gulp dev",
-    "postinstall": "gulp",
     "bower": "bower",
     "gulp": "gulp"
   },
