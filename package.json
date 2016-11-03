@@ -24,9 +24,7 @@
     "require-dir": "^0.3.0",
     "run-sequence": "^1.1.4",
     "sw-precache": "^4.1.0",
-    "vinyl-source-stream": "^1.1.0"
-  },
-  "devDependencies": {
+    "vinyl-source-stream": "^1.1.0",
     "babel-preset-es2015": "^6.0.15",
     "del": "^2.0.2",
     "glob": "^5.0.15",
