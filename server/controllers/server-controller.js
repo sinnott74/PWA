@@ -1,6 +1,9 @@
 var path = require('path');
 var express = require('express');
 var exphbs = require('express-handlebars');
+// cfenv provides access to your Cloud Foundry environment
+// for more info, see: https://www.npmjs.com/package/cfenv
+var cfenv = require('cfenv');
 
 function ServerController() {
   var expressApp = express();
@@ -55,6 +58,18 @@ ServerController.prototype.startServer = function(port) {
     console.log('Server running on port ' + serverPort);
   });
   this.setExpressServer(server);
+
+  // force https on Bluemix
+  if (!cfenv.getAppEnv().isLocal) {
+    this.getExpressApp().use(function(req, res, next) {
+      if (req.secure) {
+        // returns true is protocol = https
+        next();
+      } else {
+        res.redirect('https://' + req.headers.host + req.url);
+      }
+    });
+  }
 };
 
 ServerController.prototype.addEndpoint = function(endpoint, controller) {
