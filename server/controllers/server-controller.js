@@ -25,7 +25,7 @@ function ServerController() {
   // force https on Bluemix
   if (!cfenv.getAppEnv().isLocal) {
     expressApp.use(function(req, res, next) {
-      if (req.secure) {
+      if (req.secure || req.headers['x-forwarded-proto'] === 'https') {
         // returns true is protocol = https
         next();
       } else {
