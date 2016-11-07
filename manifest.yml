@@ -1,8 +1,8 @@
 applications:
 - path: .
-  memory: 1024M
+  memory: 512M
   instances: 1
   domain: mybluemix.net
   name: PWA
   host: PWA
-  disk_quota: 2024M
+  disk_quota: 1024M
