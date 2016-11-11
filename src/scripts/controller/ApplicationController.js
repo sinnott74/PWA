@@ -21,9 +21,10 @@ export default class ApplicationController extends Controller {
 
     // TODO: Find more elegant solution to this and handling anchors in the
     // web app for dynamically loaded content
-    var sideNav = document.getElementsByTagName('app-sidenav')[0];
+    // var sideNav = document.getElementsByTagName('app-sidenav')[0];
 
-    var anchorElements = sideNav.sideNavContent.querySelectorAll('a');
+    var sideNav = document.getElementsByTagName('app-sidenav')[0];
+    var anchorElements = sideNav.querySelectorAll('a');
     for (var i = 0; i < anchorElements.length; i++) {
       if (!anchorElements[i].href) {
         continue;

@@ -14,6 +14,7 @@ export default class PageController {
     console.log('onStart: ', path);
 
     // Show loading dialog while we get content
+    this.loader = document.querySelector('.js-global-loader');
     this.loader.classList.remove('is-hidden');
 
     this.updateNavDrawer(path);

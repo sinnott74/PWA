@@ -35,7 +35,7 @@ gulp.task('service-worker', function(cb) {
     navigateFallback: '/app-shell',
     cacheId: packageName,
 
-    //Turn on service worker for production only
+    // Turn on service worker for production only
     handleFetch: (GLOBAL.config.env === 'prod')
   })
   .then(cb)
