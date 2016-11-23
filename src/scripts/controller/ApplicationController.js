@@ -24,29 +24,33 @@ export default class ApplicationController extends Controller {
     // var sideNav = document.getElementsByTagName('app-sidenav')[0];
 
     var sideNav = document.getElementsByTagName('app-sidenav')[0];
-    var anchorElements = sideNav.querySelectorAll('a');
-    for (var i = 0; i < anchorElements.length; i++) {
-      if (!anchorElements[i].href) {
-        continue;
+
+    document.addEventListener('side-nav-ready', (navReadyEvent) => {
+      var anchorElements = sideNav.querySelectorAll('a');
+      for (var i = 0; i < anchorElements.length; i++) {
+        if (!anchorElements[i].href) {
+          continue;
+        }
+
+        anchorElements[i].addEventListener('click', (clickEvent) => {
+          console.log(clickEvent);
+          clickEvent.stopPropagation();
+          clickEvent.preventDefault();
+
+          var closeNavEvent = new Event('close-nav');
+          document.dispatchEvent(closeNavEvent);
+
+          var router = RouterSingleton.getRouter();
+          router.goToPath(clickEvent.target.href);
+        });
       }
 
-      anchorElements[i].addEventListener('click', (clickEvent) => {
-        clickEvent.preventDefault();
-
-        // navDrawer.close();
-        var event = new Event('close-nav');
-        document.dispatchEvent(event);
-
-        var router = RouterSingleton.getRouter();
-        router.goToPath(clickEvent.target.href);
-      });
-    }
-
-    var router = RouterSingleton.getRouter();
-    router.addRoute('/', new PageController());
-    router.addRoute('/url-1', new PageController());
-    router.addRoute('/url-2', new PageController());
-    router.setDefaultRoute(new PageController());
-    router.requestStateUpdate();
+      var router = RouterSingleton.getRouter();
+      router.addRoute('/', new PageController());
+      router.addRoute('/url-1', new PageController());
+      router.addRoute('/url-2', new PageController());
+      router.setDefaultRoute(new PageController());
+      router.requestStateUpdate();
+    });
   }
 }

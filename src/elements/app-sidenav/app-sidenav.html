@@ -68,6 +68,8 @@
           };
 
           var onSideNavTouchEnd = (e) => {
+
+            console.log('side nav content - onTouchEnd');
             if (sideNavTransform < -TOUCH_SLOP) {
               this.close();
               return;
@@ -90,6 +92,9 @@
 
         document.addEventListener('open-nav', this.open);
         document.addEventListener('close-nav', this.close);
+
+        var event = new Event('side-nav-ready');
+        document.dispatchEvent(event);
       },
       isOpen: function() {
         return this.rootElement.classList.contains('side-nav--visible');
@@ -104,6 +109,8 @@
       },
 
       close: function() {
+
+        console.log("nav close called");
         this.rootElement.classList.remove('side-nav--visible');
         this.sideNavContent.classList.add('side-nav__content--animatable');
 
@@ -115,6 +122,7 @@
       },
 
       open: function() {
+        console.log("nav open called");
         this.rootElement.classList.add('side-nav--visible');
 
         if (this.hasUnprefixedTransform) {

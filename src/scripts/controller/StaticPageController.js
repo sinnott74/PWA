@@ -5,16 +5,5 @@ export default class StaticPageController extends Controller {
 
   constructor() {
     super();
-
-    // var navDrawer = new NavDrawerView();
-
-    // var sideNavToggleButton = document.querySelector('.js-toggle-menu');
-    // sideNavToggleButton.addEventListener('click', () => {
-    //   navDrawer.toggle();
-    // });
-
-    // document.addEventListener('open-nav', () => {
-    //   navDrawer.toggle();
-    // });
   }
 }

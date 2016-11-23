@@ -10,8 +10,6 @@ body {
   width: 100%;
   font-family: $font-family;
   font-weight: 400;
-  // Not implemented yet but is a nice solution for async loading fonts
-  font-display: optional;
   color: $font-dark;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -30,7 +28,7 @@ body {
   align-content: stretch;
   background: $background;
 
-  &::after {
+  /*&::after {
     content: '';
     position: fixed;
     top: 0;
@@ -42,7 +40,7 @@ body {
     opacity: 0;
     will-change: opacity;
     transition: opacity .333s cubic-bezier(0, 0, .21, 1) .4s;
-  }
+  }*/
 }
 
 h1,
