@@ -34,10 +34,12 @@
         this.pin = this.rootElement.querySelector('.side-nav__pin');
 
         this.rootElement.addEventListener('click', () => {
+          console.log('sidenav root element clicked - closing sidenav');
           this.close();
         });
 
         this.sideNavContent.addEventListener('click', (e) => {
+          console.log('sidenav content clicked - stopping event propagation');
           e.stopPropagation();
         });
 
@@ -53,14 +55,15 @@
           var sideNavTransform;
 
           var onSideNavTouchStart = (e) => {
-            // e.preventDefault();
+            sideNavTransform = 0;
             touchStartX = e.touches[0].pageX;
+
+            console.log('touchStartX - ' + touchStartX);
           };
 
           var onSideNavTouchMove = (e) => {
-            // e.preventDefault();
-
             var newTouchX = e.touches[0].pageX;
+
             sideNavTransform = Math.min(0, newTouchX - touchStartX);
 
             this.sideNavContent.style.transform =
@@ -68,8 +71,6 @@
           };
 
           var onSideNavTouchEnd = (e) => {
-
-            console.log('side nav content - onTouchEnd');
             if (sideNavTransform < -TOUCH_SLOP) {
               this.close();
               return;
@@ -77,8 +78,6 @@
 
             this.open();
           };
-
-
 
           this.sideNavContent.addEventListener('touchstart', onSideNavTouchStart);
           this.sideNavContent.addEventListener('touchmove', onSideNavTouchMove);
