@@ -33,6 +33,7 @@ export default class ApplicationController extends Controller {
         }
 
         anchorElements[i].addEventListener('click', (clickEvent) => {
+          console.log('Clicked link controlled by router');
           console.log(clickEvent);
           clickEvent.stopPropagation();
           clickEvent.preventDefault();

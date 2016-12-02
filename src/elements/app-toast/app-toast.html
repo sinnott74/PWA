@@ -30,9 +30,12 @@
 
       },
       hide: function(e, detail) {
+        console.log('Hiding toast');
         this.view.classList.remove('toast-view--visible');
       },
       toast: function(e) {
+        console.log('Showing toast');
+        console.log(e);
         this.text.textContent = e.detail;
         this.view.classList.add('toast-view--visible');
       }

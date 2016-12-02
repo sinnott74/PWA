@@ -18,6 +18,9 @@
     Polymer({
       is: 'app-header',
       handleClick : function(e, detail) {
+
+        console.log('Clicked header side nav open button');
+
         var event = new Event('open-nav');
         document.dispatchEvent(event);
       }
