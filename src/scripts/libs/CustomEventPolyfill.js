@@ -1,6 +1,5 @@
-export default class CustomEventPolyfill {
-
-  constructor() {
+module.exports = {
+  invoke: function() {
     if (typeof window.CustomEvent === 'function' ) {
       return false;
     }
@@ -17,4 +16,4 @@ export default class CustomEventPolyfill {
     CustomEvent.prototype = window.Event.prototype;
     window.CustomEvent = CustomEvent;
   }
-}
+};

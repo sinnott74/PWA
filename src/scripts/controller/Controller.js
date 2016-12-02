@@ -1,6 +1,6 @@
 // import ToasterSingleton from '../libs/ToasterSingleton';
 import DatabaseSingleton from '../libs/DatabaseSingleton';
-import customEventPolyfill from '../libs/CustomEventPolyfill';
+import CustomEventPolyfill from '../libs/CustomEventPolyfill';
 
 export default class Controller {
 
@@ -8,7 +8,7 @@ export default class Controller {
     if (registerServiceWorker) {
       this.registerServiceWorker();
     }
-    customEventPolyfill();
+    CustomEventPolyfill.invoke();
     DatabaseSingleton.getDatabase();
   }
 
