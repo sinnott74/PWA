@@ -26,19 +26,21 @@
   <script>
     Polymer({
       is: 'app-sidenav',
+
       ready: function(){
+        var sideNav = this;
         this.rootElement = document.querySelector('.js-side-nav');
         this.sideNavContent = this.rootElement
           .querySelector('.js-side-nav-content');
         this.sideNavBody = this.rootElement.querySelector('.side-nav__body');
         this.pin = this.rootElement.querySelector('.side-nav__pin');
 
-        this.rootElement.addEventListener('click', () => {
+        this.rootElement.addEventListener('click', function(e) {
           console.log('sidenav root element clicked - closing sidenav');
-          this.close();
+          sideNav.close();
         });
 
-        this.sideNavContent.addEventListener('click', (e) => {
+        this.sideNavContent.addEventListener('click', function(e) {
           console.log('sidenav content clicked - stopping event propagation');
           e.stopPropagation();
         });
@@ -54,7 +56,7 @@
           var touchStartX;
           var sideNavTransform;
 
-          var onSideNavTouchStart = (e) => {
+          var onSideNavTouchStart = function(e) {
             console.log('side nav content - onTouchStart');
             
             // e.preventDefault();
@@ -64,7 +66,7 @@
             console.log('touchStartX - ' + touchStartX);
           };
 
-          var onSideNavTouchMove = (e) => {
+          var onSideNavTouchMove = function(e) {
             console.log('side nav content - onTouchMove');
 
             // e.preventDefault();
@@ -77,18 +79,18 @@
 
             console.log('sideNavTransform - ' + sideNavTransform);
 
-            this.sideNavContent.style.transform =
+            sideNav.sideNavContent.style.transform =
               'translateX(' + sideNavTransform + 'px)';
           };
 
-          var onSideNavTouchEnd = (e) => {
+          var onSideNavTouchEnd = function(e) {
 
             console.log('side nav content - onTouchEnd');
             if (sideNavTransform < -TOUCH_SLOP) {
-              this.close();
+              sideNav.close();
               return;
             } else if (sideNavTransform < -window.devicePixelRatio/100){
-              this.open();
+              sideNav.open();
             }
           };
 
@@ -137,15 +139,16 @@
       },
 
       open: function() {
+        var sideNav = this;
         console.log("nav open called");
         this.rootElement.classList.add('side-nav--visible');
 
         if (this.hasUnprefixedTransform) {
-          var onSideNavTransitionEnd = (e) => {
-            this.sideNavBody.focus();
+          var onSideNavTransitionEnd = function(e) {
+            sideNav.sideNavBody.focus();
 
-            this.sideNavContent.classList.remove('side-nav__content--animatable');
-            this.sideNavContent.removeEventListener('transitionend',
+            sideNav.sideNavContent.classList.remove('side-nav__content--animatable');
+            sideNav.sideNavContent.removeEventListener('transitionend',
                 onSideNavTransitionEnd);
           };
 
@@ -153,8 +156,8 @@
           this.sideNavContent.addEventListener('transitionend',
                 onSideNavTransitionEnd);
 
-          requestAnimationFrame( () => {
-            this.sideNavContent.style.transform = 'translateX(0px)';
+          requestAnimationFrame( function() {
+            sideNav.sideNavContent.style.transform = 'translateX(0px)';
             console.log('set transform to 0px');
           });
         } else {
