@@ -32,7 +32,8 @@ GLOBAL.config = {
   license: 'Apache'
 };
 
-var allTasks = ['bower', 'styles', 'scripts', 'copy', 'html', 'images'];
+var allTasks = ['bower', 'styles', 'scripts', 'copy', 'html', 'images', 'vulcanize'];
+
 gulp.task('default', function(cb) {
   runSequence(
     'clean',
