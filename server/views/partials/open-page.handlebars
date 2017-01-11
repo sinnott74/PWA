@@ -9,9 +9,37 @@
     <meta id="theme-color" name="theme-color" content="#4527A0">
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/images/chrome-touch-icon-192x192.png" sizes="192x192" type="image/png">
-    <script src="https://www.promisejs.org/polyfills/promise-7.0.4.min.js"></script>
+    
+
+    <script>
+        (function(document) {
+        'use strict';
+        
+        // Feature detection
+        // Check if Web Components are supported
+        var webComponentsSupported = ('registerElement' in document
+            && 'import' in document.createElement('link')
+            && 'content' in document.createElement('template'));
+        // Load Web Components when not supported
+        if (!webComponentsSupported) {
+            var script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.23/webcomponents-lite.min.js';
+            document.head.appendChild(script);
+        };
+
+        // Promise feature detect
+        var promiseSupported = (typeof Promise !== "undefined");
+        if(!promiseSupported) {
+            var script = document.createElement('script');
+            script.src = 'https://www.promisejs.org/polyfills/promise-7.0.4.min.js';
+            document.head.appendChild(script);
+        }
+
+        })(document);
+    </script>
+    {{!--<script src="https://www.promisejs.org/polyfills/promise-7.0.4.min.js"></script>--}}
     {{!--<script src="/lib/webcomponentsjs/webcomponents-lite.min.js"></script>--}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.23/webcomponents-lite.min.js"></script>
+    {{!--<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.23/webcomponents-lite.min.js"></script>--}}
     <link rel="import" href="/elements/elements.html">
     <style type="text/css">{{{data.inlineStyles}}}</style>
 </head>
