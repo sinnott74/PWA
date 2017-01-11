@@ -1,6 +1,7 @@
 var path = require('path');
 var express = require('express');
 var exphbs = require('express-handlebars');
+var compression = require('compression');
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
 var cfenv = require('cfenv');
@@ -17,6 +18,9 @@ function ServerController() {
   expressApp.set('views', path.join(__dirname, '/../views'));
   expressApp.engine('handlebars', handleBarsInstance.engine);
   expressApp.set('view engine', 'handlebars');
+
+  // use compression
+  expressApp.use(compression());
 
   // Define static assets path - i.e. styles, scripts etc.
   expressApp.use('/',
