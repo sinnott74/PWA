@@ -4,7 +4,7 @@
 var gulp = require('gulp');
 var vulcanize = require('gulp-vulcanize');
 
-gulp.task('vulcanize', function() {
+gulp.task('vulcanize', ['bower'], function() {
   return gulp.src(GLOBAL.config.src + '/elements/elements.html')
     .pipe(vulcanize())
     .pipe(gulp.dest(GLOBAL.config.dest + '/elements'));
