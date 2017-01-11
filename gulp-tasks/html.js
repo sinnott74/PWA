@@ -7,9 +7,11 @@ gulp.task('html:watch', function() {
   gulp.watch(GLOBAL.config.src + '/**/*.html', ['html']);
 });
 
+// copies all html files into the dist directory
+// ignoring webcomponent elements as these are included in elements.html during vulcanization
 gulp.task('html', function() {
   return gulp.src([
-    GLOBAL.config.src + '/**/*.html', '!/**/elements.html'
+    GLOBAL.config.src + '/**/*.html', '!/**/elements/**/*.html'
   ])
     .pipe(gulpif(GLOBAL.config.env == 'prod', minifyHtml()))
     .pipe(replace(/@VERSION@/g, GLOBAL.config.version))
