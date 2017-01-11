@@ -46,7 +46,7 @@ function compileES6Bundles(browserifyBundles, cb) {
         .pipe(replace(/@VERSION@/g, GLOBAL.config.version))
 
         // If this is a production build - minify JS
-        // .pipe(gulpif(GLOBAL.config.env === 'prod', streamify(uglify())))
+        .pipe(gulpif(GLOBAL.config.env === 'prod', streamify(uglify())))
         .pipe(license(GLOBAL.config.license, {tiny: true}))
         .pipe(gulp.dest(bundle.dest))
         .on('end', function() {
@@ -116,7 +116,7 @@ gulp.task('scripts:es6', function(cb) {
 
 gulp.task('scripts:es5', function() {
   return gulp.src([GLOBAL.config.src + '/**/*.es5.js'])
-    // .pipe(gulpif(GLOBAL.config.env !== 'prod', sourcemaps.init()))
+    .pipe(gulpif(GLOBAL.config.env !== 'prod', sourcemaps.init()))
     .pipe(sourcemaps.init())
 
     // Remove the .es5 from the end of the file name using gulp-rename
@@ -127,9 +127,9 @@ gulp.task('scripts:es5', function() {
     }))
 
     .pipe(replace(/@VERSION@/g, GLOBAL.config.version))
-    // .pipe(gulpif(GLOBAL.config.env === 'prod', uglify()))
+    .pipe(gulpif(GLOBAL.config.env === 'prod', uglify()))
     .pipe(license(GLOBAL.config.license, {tiny: true}))
-    // .pipe(gulpif(GLOBAL.config.env !== 'prod', sourcemaps.write()))
+    .pipe(gulpif(GLOBAL.config.env !== 'prod', sourcemaps.write()))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(GLOBAL.config.dest));
 });
