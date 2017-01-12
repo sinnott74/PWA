@@ -23,9 +23,8 @@ export default class ApplicationController extends Controller {
     // web app for dynamically loaded content
     // var sideNav = document.getElementsByTagName('app-sidenav')[0];
 
-    var sideNav = document.getElementsByTagName('app-sidenav')[0];
-
     document.addEventListener('side-nav-ready', (navReadyEvent) => {
+      var sideNav = document.getElementsByTagName('app-sidenav')[0];
       var anchorElements = sideNav.querySelectorAll('a');
       for (var i = 0; i < anchorElements.length; i++) {
         if (!anchorElements[i].href) {
