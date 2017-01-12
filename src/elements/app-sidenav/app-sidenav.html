@@ -106,10 +106,10 @@
           };
 
           var onEdgeTouchEnd = function(e) {
-            if (edgeTransform >= 1.5*TOUCH_SLOP) {
+            if (edgeTransform >= TOUCH_SLOP) {
               sideNav.open();
               return;
-            } else if (edgeTransform < 1.5*TOUCH_SLOP){
+            } else if (edgeTransform < TOUCH_SLOP){
               sideNav.close();
             }
           };
