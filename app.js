@@ -12,14 +12,16 @@
  */
 
 var serverController = require('./server/controllers/server-controller');
-var StaticPageController = require(
-  './server/controllers/static-page-controller');
+var StaticPageController = require('./server/controllers/static-page-controller');
 var APIController = require('./server/controllers/api-controller');
 
 // APIController serves up the HTML without any HTML body or head
 serverController.addEndpoint('/api*', new APIController(
   serverController.getHandleBarsInstance()
 ));
+
 // The static page controller serves the basic form of the pages
 serverController.addEndpoint('/*', new StaticPageController());
+
+// Start the server
 serverController.startServer(process.env.PORT);
