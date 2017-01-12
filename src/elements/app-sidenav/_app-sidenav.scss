@@ -76,12 +76,15 @@
 
 .side-nav__body {
   padding-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: calc(100% - 171px);
+  overflow-y: auto;
 }
 
 .side-nav__version {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
+  padding: 16px;
   font-size: 14px;
   opacity: .54;
 }

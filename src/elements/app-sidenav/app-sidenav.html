@@ -12,12 +12,13 @@
         </div>
 
         <div class="side-nav__body">
-          <a role="tab" tabindex="0" class="side-nav__blog-post" href="/">Index</a>
-          <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-1">URL 1</a>
-          <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-2">URL 2</a>
+          <div class="side-nav__links">
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/">Index</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-1">URL 1</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-2">URL 2</a>
+          </div>
+          <div class="side-nav__version">Version @VERSION@</div>
         </div>
-
-        <div class="side-nav__version">Version @VERSION@</div>
       </div>
     </section>
     <div class="side-nav__edgearea js-side-nav-edgearea"></div>
@@ -33,7 +34,6 @@
         this.rootElement = document.querySelector('.js-side-nav');
         this.sideNavContent = this.rootElement
           .querySelector('.js-side-nav-content');
-        this.sideNavBody = this.rootElement.querySelector('.side-nav__body');
         this.pin = this.rootElement.querySelector('.side-nav__pin');
         this.edge = document.querySelector('.js-side-nav-edgearea');
 
@@ -167,8 +167,6 @@
 
         if (this.hasUnprefixedTransform) {
           var onSideNavTransitionEnd = function(e) {
-            sideNav.sideNavBody.focus();
-
             sideNav.sideNavContent.classList.remove('side-nav__content--animatable');
             sideNav.sideNavContent.removeEventListener('transitionend',
                 onSideNavTransitionEnd);
