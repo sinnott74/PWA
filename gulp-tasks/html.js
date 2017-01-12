@@ -4,7 +4,7 @@ var minifyHtml = require('gulp-minify-html');
 var replace = require('gulp-replace');
 
 gulp.task('html:watch', function() {
-  gulp.watch(GLOBAL.config.src + '/**/*.html', ['html']);
+  gulp.watch(GLOBAL.config.src + '/**/*.html', ['vulcanize', 'html']);
 });
 
 // copies all html files into the dist directory
