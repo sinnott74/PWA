@@ -39,6 +39,8 @@
 
         this.sideNavContentWidth = this.sideNavContent.offsetWidth;
 
+        
+
         this.rootElement.addEventListener('click', function(e) {
           console.log('sidenav root element clicked - closing sidenav');
           sideNav.close();
@@ -47,6 +49,18 @@
         this.sideNavContent.addEventListener('click', function(e) {
           console.log('sidenav content clicked - stopping event propagation');
           e.stopPropagation();
+        });
+
+        var preventSlidingNavClose = false;
+        var scrollTimer;
+
+        // When content div is scrolling prevent sliding nav closed
+        this.sideNavContent.addEventListener('scroll', function(e){
+          preventSlidingNavClose = true;
+          clearTimeout(scrollTimer);
+          scrollTimer = setTimeout(function() {
+            preventSlidingNavClose = false;
+          }, 150);
         });
 
         this.hasUnprefixedTransform = 'transform' in document.documentElement.style;
@@ -65,11 +79,24 @@
             touchStartX = e.touches[0].pageX;
           };
 
-          var onSideNavTouchMove = function(e) {
+          var onSideNavTouchMove = function(e) { 
+
+            if(preventSlidingNavClose){
+              console.log("prevented slide");
+              return;
+            }
+
             var newTouchX = e.touches[0].pageX;
             sideNavTransform = Math.min(0, newTouchX - touchStartX);
             sideNav.sideNavContent.style.transform =
               'translateX(' + sideNavTransform + 'px)';
+            if(Math.abs(newTouchX - touchStartX) > (3 * window.devicePixelRatio)){
+              sideNav.sideNavContent.style.overflowY = 'hidden';
+              console.log("preventing scrolling");
+            } else {
+                console.log("in here");
+            }
+            
           };
 
           var onSideNavTouchEnd = function(e) {
@@ -79,6 +106,9 @@
             } else if (sideNavTransform < -window.devicePixelRatio/100){
               sideNav.open();
             }
+
+            // allow content scrolling again
+            sideNav.sideNavContent.style.overflowY = 'auto';
           };
 
           // Close nav touch
