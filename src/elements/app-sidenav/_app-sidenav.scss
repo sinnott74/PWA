@@ -37,6 +37,7 @@
   0 4px 8px rgba(0, 0, 0, .28);
   will-change: transform;
   transform: translateX(-102%);
+  overflow-y: auto;
 
   &.side-nav--visible {
     transform: translateX(0);
@@ -79,8 +80,7 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  height: calc(100% - 171px);
-  overflow-y: auto;
+  min-height: calc(100% - 171px);
 }
 
 .side-nav__version {
