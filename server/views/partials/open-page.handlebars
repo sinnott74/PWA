@@ -24,7 +24,7 @@
         if (!webComponentsSupported) {
             var script = document.createElement('script');
             script.src = 'https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.23/webcomponents-lite.min.js';
-            script.setAttribute('async', '');
+            script.async = true;
             document.head.appendChild(script);
         };
 
@@ -41,8 +41,8 @@
     {{!--<script src="https://www.promisejs.org/polyfills/promise-7.0.4.min.js"></script>--}}
     {{!--<script src="/lib/webcomponentsjs/webcomponents-lite.min.js"></script>--}}
     {{!--<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.23/webcomponents-lite.min.js"></script>--}}
-    <link rel="import" href="/elements/elements.html">
+    <link rel="import" href="/elements/elements.html" async>
     <style type="text/css">{{{data.inlineStyles}}}</style>
 </head>
-<body unresolved>
+<body>
     <app-header></app-header>

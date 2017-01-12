@@ -6,11 +6,10 @@
 //@import 'core/_side-nav';
 @import 'core/_main';
 //@import 'core/_header';
-//@import 'core/_loader';
+@import 'core/_loader';
 @import 'core/_z-index';
 //@import 'core/_toast';
 @import 'core/_grids';
 @import '../elements/app-header/_app-header';
 @import '../elements/app-sidenav/_app-sidenav';
 @import '../elements/app-toast/_app-toast';
-@import '../elements/app-loader/_app-loader';
