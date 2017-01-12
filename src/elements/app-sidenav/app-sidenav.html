@@ -20,6 +20,7 @@
         <div class="side-nav__version">Version @VERSION@</div>
       </div>
     </section>
+    <div class="side-nav__edgearea js-side-nav-edgearea"></div>
   </template>
 
   <!-- Creates the element's prototype and registers it -->
@@ -34,6 +35,9 @@
           .querySelector('.js-side-nav-content');
         this.sideNavBody = this.rootElement.querySelector('.side-nav__body');
         this.pin = this.rootElement.querySelector('.side-nav__pin');
+        this.edge = document.querySelector('.js-side-nav-edgearea');
+
+        this.sideNavContentWidth = this.sideNavContent.offsetWidth;
 
         this.rootElement.addEventListener('click', function(e) {
           console.log('sidenav root element clicked - closing sidenav');
@@ -53,39 +57,23 @@
           // 3 was added as a factor made up from what felt right.
           var TOUCH_SLOP = 8 * window.devicePixelRatio * 3;
 
+          var sideNavContentWidth = this.sideNavContentWidth;
           var touchStartX;
           var sideNavTransform;
 
           var onSideNavTouchStart = function(e) {
-            console.log('side nav content - onTouchStart');
-            
-            // e.preventDefault();
             sideNavTransform = 0;
             touchStartX = e.touches[0].pageX;
-
-            console.log('touchStartX - ' + touchStartX);
           };
 
           var onSideNavTouchMove = function(e) {
-            console.log('side nav content - onTouchMove');
-
-            // e.preventDefault();
-
             var newTouchX = e.touches[0].pageX;
-
-            console.log('newTouchX - ' + newTouchX);
-
             sideNavTransform = Math.min(0, newTouchX - touchStartX);
-
-            console.log('sideNavTransform - ' + sideNavTransform);
-
             sideNav.sideNavContent.style.transform =
               'translateX(' + sideNavTransform + 'px)';
           };
 
           var onSideNavTouchEnd = function(e) {
-
-            console.log('side nav content - onTouchEnd');
             if (sideNavTransform < -TOUCH_SLOP) {
               sideNav.close();
               return;
@@ -94,9 +82,39 @@
             }
           };
 
+          // Close nav touch
           this.sideNavContent.addEventListener('touchstart', onSideNavTouchStart);
           this.sideNavContent.addEventListener('touchmove', onSideNavTouchMove);
           this.sideNavContent.addEventListener('touchend', onSideNavTouchEnd);
+
+          var edgeTransform;
+
+          var onEdgeTouchStart = function(e) {
+            edgeTransform = 0;
+            sideNav.sideNavContent.style.transform = 'translateX(-95%)';
+          };
+
+          var onEdgeTouchMove = function(e) {
+            var newEdgeTouchX = e.touches[0].pageX;
+            var percentage = (newEdgeTouchX/sideNavContentWidth)*100;
+            edgeTransform = Math.min(95, percentage);
+            sideNav.sideNavContent.style.transform =
+               'translateX(' + (-95 + edgeTransform) + '%)';
+          };
+
+          var onEdgeTouchEnd = function(e) {
+            if (edgeTransform >= 25) {
+              sideNav.open();
+              return;
+            } else if (edgeTransform < 25){
+              sideNav.close();
+            }
+          };
+
+          // Edge touch
+          this.edge.addEventListener('touchstart', onEdgeTouchStart);
+          this.edge.addEventListener('touchmove', onEdgeTouchMove);
+          this.edge.addEventListener('touchend', onEdgeTouchEnd);
         }
 
         this.isOpen = this.isOpen.bind(this);
@@ -110,6 +128,7 @@
         var event = new Event('side-nav-ready');
         document.dispatchEvent(event);
       },
+
       isOpen: function() {
         return this.rootElement.classList.contains('side-nav--visible');
       },
