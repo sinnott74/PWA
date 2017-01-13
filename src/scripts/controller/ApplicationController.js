@@ -1,23 +1,11 @@
 import Controller from './Controller';
 import RouterSingleton from '../libs/RouterSingleton';
 import PageController from './PageController';
-// import NavDrawerView from './../view/NavDrawerView';
 
 export default class ApplicationController extends Controller {
 
   constructor() {
     super();
-
-    // var navDrawer = new NavDrawerView();
-
-    // var sideNavToggleButton = document.querySelector('.js-toggle-menu');
-    // sideNavToggleButton.addEventListener('click', () => {
-    //   navDrawer.toggle();
-    // });
-
-    // document.addEventListener('open-nav', () => {
-    //   navDrawer.toggle();
-    // });
 
     // TODO: Find more elegant solution to this and handling anchors in the
     // web app for dynamically loaded content
