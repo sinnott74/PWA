@@ -15,30 +15,30 @@
   bottom: 0;
   left: 0;
   word-wrap: normal;
-}
 
-.toast-view--visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+  &--visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-.toast-view__btn-close {
-  border: 0;
-  background-color: transparent;
-  font-size: 20px;
-  float: right;
-  cursor: pointer;
-
-  &:hover {
+  &__btn-close {
     border: 0;
     background-color: transparent;
-    color: #fff;
     font-size: 20px;
     float: right;
     cursor: pointer;
-  }
-}
 
-.toast-view__text {
-  width: calc(100% - 20px);
+    &:hover {
+      border: 0;
+      background-color: transparent;
+      color: #fff;
+      font-size: 20px;
+      float: right;
+      cursor: pointer;
+    }
+  }
+
+  &__text {
+    width: calc(100% - 20px);
+  }
 }

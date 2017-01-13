@@ -27,20 +27,6 @@ body {
   align-items: stretch;
   align-content: stretch;
   background: $background;
-
-  /*&::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    background: $background;
-    opacity: 0;
-    will-change: opacity;
-    transition: opacity .333s cubic-bezier(0, 0, .21, 1) .4s;
-  }*/
 }
 
 h1,
@@ -70,84 +56,5 @@ a {
 button {
   &::-moz-focus-inner {
     border: 0;
-  }
-}
-
-@media(min-width: 600px) {
-  .view-underpanel {
-    top: 0;
-    right: 0;
-    position: fixed;
-    width: 400px;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-
-    &__block {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 360px;
-      height: 100%;
-      background: $background;
-      box-shadow: 0 0 14px rgba(0, 0, 0, .24),
-      0 14px 28px rgba(0, 0, 0, .48);
-      transform: translateX(105%);
-      transition: transform .233s cubic-bezier(0, 0, .21, 1) .04s,
-      opacity .213s cubic-bezier(0, 0, .21, 1) .04s;
-      will-change: transform;
-      opacity: 0;
-
-      &::after {
-        content: '';
-        height: 144px;
-        width: 100%;
-        display: block;
-        background: $primary-dark;
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-    }
-  }
-
-  .view-underpanel--visible .view-underpanel__block,
-  .view-underpanel--locked .view-underpanel__block {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@media(min-width: 960px) {
-  .view-underpanel {
-    margin-top: 56px;
-    left: 46%;
-    right: auto;
-    position: fixed;
-    width: 520px;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-  }
-
-  .view-underpanel__block {
-    opacity: .0001;
-    width: 504px;
-    left: 8px;
-    transform: translateY(50px);
-    transition: transform .233s cubic-bezier(0, 0, .21, 1) .04s,
-    opacity .213s cubic-bezier(0, 0, .21, 1) .04s;
-
-    box-shadow: 0 0 6px rgba(0, 0, 0, .16),
-    0 6px 12px rgba(0, 0, 0, .32);
-
-    &::after {
-      height: 288px;
-    }
-  }
-
-  .view-underpanel--visible .view-underpanel__block,
-  .view-underpanel--locked .view-underpanel__block {
-    opacity: 1;
   }
 }
