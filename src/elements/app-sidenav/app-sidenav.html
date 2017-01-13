@@ -16,6 +16,34 @@
             <a role="tab" tabindex="0" class="side-nav__blog-post" href="/">Index</a>
             <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-1">URL 1</a>
             <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-2">URL 2</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/">Index</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-1">URL 1</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-2">URL 2</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/">Index</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-1">URL 1</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-2">URL 2</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/">Index</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-1">URL 1</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-2">URL 2</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/">Index</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-1">URL 1</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-2">URL 2</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/">Index</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-1">URL 1</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-2">URL 2</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/">Index</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-1">URL 1</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-2">URL 2</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/">Index</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-1">URL 1</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-2">URL 2</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/">Index</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-1">URL 1</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-2">URL 2</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/">Index</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-1">URL 1</a>
+            <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-2">URL 2</a>
+            
           </div>
           <div class="side-nav__version">Version @VERSION@</div>
         </div>
@@ -51,16 +79,16 @@
           e.stopPropagation();
         });
 
-        var preventSlidingNavClose = false;
         var scrollTimer;
+        var preventSlidingWhileScrolling = false;
+        var touching = true;
 
         // When content div is scrolling prevent sliding nav closed
         this.sideNavContent.addEventListener('scroll', function(e){
-          preventSlidingNavClose = true;
-          clearTimeout(scrollTimer);
-          scrollTimer = setTimeout(function() {
-            preventSlidingNavClose = false;
-          }, 150);
+          if(touching){
+            preventSlidingWhileScrolling = true;
+          }
+          console.log("scroll event called");
         });
 
         this.hasUnprefixedTransform = 'transform' in document.documentElement.style;
@@ -75,31 +103,33 @@
           var sideNavTransform;
 
           var onSideNavTouchStart = function(e) {
+            touching = true;
             sideNavTransform = 0;
             touchStartX = e.touches[0].pageX;
           };
 
           var onSideNavTouchMove = function(e) { 
 
-            if(preventSlidingNavClose){
-              console.log("prevented slide");
+            if(preventSlidingWhileScrolling){
               return;
             }
 
             var newTouchX = e.touches[0].pageX;
+
+            if(Math.abs(newTouchX - touchStartX) > (3 * window.devicePixelRatio)){
+              sideNav.sideNavContent.style.overflowY = 'hidden';
+            } 
+
             sideNavTransform = Math.min(0, newTouchX - touchStartX);
             sideNav.sideNavContent.style.transform =
               'translateX(' + sideNavTransform + 'px)';
-            if(Math.abs(newTouchX - touchStartX) > (3 * window.devicePixelRatio)){
-              sideNav.sideNavContent.style.overflowY = 'hidden';
-              console.log("preventing scrolling");
-            } else {
-                console.log("in here");
-            }
-            
           };
 
           var onSideNavTouchEnd = function(e) {
+
+            touching = false;
+            preventSlidingWhileScrolling = false;
+
             if (sideNavTransform < -TOUCH_SLOP) {
               sideNav.close();
               return;
@@ -112,9 +142,9 @@
           };
 
           // Close nav touch
-          this.sideNavContent.addEventListener('touchstart', onSideNavTouchStart);
-          this.sideNavContent.addEventListener('touchmove', onSideNavTouchMove);
-          this.sideNavContent.addEventListener('touchend', onSideNavTouchEnd);
+          this.sideNavContent.addEventListener('touchstart', onSideNavTouchStart, {passive: true});
+          this.sideNavContent.addEventListener('touchmove', onSideNavTouchMove, {passive: true});
+          this.sideNavContent.addEventListener('touchend', onSideNavTouchEnd, {passive: true});
 
           var edgeTransform;
           var edgeTouchStartX;
@@ -145,9 +175,9 @@
           };
 
           // Edge touch
-          this.edge.addEventListener('touchstart', onEdgeTouchStart);
-          this.edge.addEventListener('touchmove', onEdgeTouchMove);
-          this.edge.addEventListener('touchend', onEdgeTouchEnd);
+          this.edge.addEventListener('touchstart', onEdgeTouchStart, {passive: true});
+          this.edge.addEventListener('touchmove', onEdgeTouchMove, {passive: true});
+          this.edge.addEventListener('touchend', onEdgeTouchEnd, {passive: true});
         }
 
         this.isOpen = this.isOpen.bind(this);
