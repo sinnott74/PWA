@@ -12,6 +12,10 @@ $grids: (
 );
 
 $spans: (
+  'main': (
+    'small': 4,
+    'big': 12
+  ),
   'header': (
     'small': 4,
     'big': 12
@@ -57,7 +61,7 @@ $spans: (
   .#{$class} {
     @include span(map-get($span, 'small'), 'small');
 
-    @include mq(900px) {
+    @include mq($big-screen) {
       @include span(map-get($span, 'big'), 'big');
     }
   }

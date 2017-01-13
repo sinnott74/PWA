@@ -44,7 +44,7 @@
   }
 }
 
-@media(min-width: 900px) {
+@media(min-width: $big-screen) {
 
   .side-nav__content {
     max-width: 450px;
