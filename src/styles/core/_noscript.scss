@@ -1,0 +1,16 @@
+.noscript {
+
+    &__container {
+        display: flex;
+        z-index: 1000;
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        align-items: center;
+  justify-content: center;
+    }
+
+    &__message {
+        color: $warning;
+    }
+}
