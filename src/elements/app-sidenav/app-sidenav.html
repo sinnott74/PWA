@@ -100,6 +100,32 @@
         document.dispatchEvent(event);
       },
 
+      properties: {
+        opened: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true,
+          observer: '_openedChanged'
+        }
+      },
+
+      openedHandler: function(opened){
+        this.opened = opened;
+      },
+
+      _openedChanged: function(newValue, oldValue){
+        if(oldValue === undefined){
+          return;
+        }
+        
+        if(newValue === true){
+          this.open();
+        } else{
+          this.close();
+        }
+
+      },
+
       handleSideNavContentScroll: function(e){
         if(this.touching){
             this.preventSlidingWhileScrolling = true;
@@ -183,6 +209,7 @@
 
       close: function() {
         console.log("nav close called");
+        this.opened = false;
         this.rootElement.classList.remove('side-nav--visible');
         this.sideNavContent.classList.add('side-nav__content--animatable');
 
@@ -197,6 +224,7 @@
       },
 
       open: function() {
+        this.opened = true;
         var sideNav = this;
         console.log("nav open called");
         this.rootElement.classList.add('side-nav--visible');
