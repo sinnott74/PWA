@@ -6,6 +6,10 @@ var vulcanize = require('gulp-vulcanize');
 
 gulp.task('vulcanize', ['bower'], function() {
   return gulp.src(GLOBAL.config.src + '/elements/elements.html')
-    .pipe(vulcanize())
+    .pipe(vulcanize({
+      stripComments: true,
+      inlineScripts: true,
+      inlineCss: true
+    }))
     .pipe(gulp.dest(GLOBAL.config.dest + '/elements'));
 });
