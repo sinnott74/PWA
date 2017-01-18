@@ -8,7 +8,7 @@
         <button role="tab" class="header__menu js-toggle-menu" on-click="handleClick">
           Toggle nav menu
         </button>
-      <h1 class="header__title">App Shell</h1>
+      <h1 class="header__title">[[title]]</h1>
     </header>
 
   </template>
@@ -17,12 +17,22 @@
   <script>
     Polymer({
       is: 'app-header',
-      handleClick : function(e, detail) {
 
-        console.log('Clicked header side nav open button');
+      properties: {
 
-        var event = new Event('open-nav');
-        document.dispatchEvent(event);
+        // title displayed in the header
+        title: {
+          type: String,
+          refectToAttribute: true
+        }
+      },
+
+      /**
+      * Handles the side navigation button click. 
+      * Dispatches a custom open-nav event, which should open the side-nav
+      **/
+      handleClick : function(e) {
+        document.dispatchEvent(new Event('open-nav'));
       }
     });
   </script>
