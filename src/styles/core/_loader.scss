@@ -4,9 +4,9 @@
   position: fixed;
   transform: translate(-50%, -50%);
 
-  #spinner {
+  .spinner {
     box-sizing: border-box;
-    stroke: #673ab7;
+    stroke: $primary;
     stroke-width: 3px;
     transform-origin: 50%;
 
