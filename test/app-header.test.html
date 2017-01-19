@@ -18,6 +18,15 @@
         <script>
             var appHeader = document.querySelector('app-header');
 
+            // holds a reference to an event handlers we apply during the tests
+            var testEventHandler;
+
+            // removes the event handler after each test
+            teardown(function(){
+                    document.removeEventListener('open-nav', testEventHandler);
+                }
+            );
+
             /**
             * Suite of tests for the app-header element
             **/
@@ -27,12 +36,16 @@
                 *   Test to assure the correct event is thrown when the handleClick method is called
                 **/
                 test('handleClick', function(done) {
-                    
-                    document.addEventListener('open-nav', function(e){
+
+                    // Create event handler
+                    testEventHandler = function(e){
                         assert.ok(e, 'Event should be defined');
                         assert.equal(e.type, 'open-nav', 'Event type should be open-nav');
                         done();
-                    })
+                    };
+                    
+                    document.addEventListener('open-nav', testEventHandler);
+
                     appHeader.handleClick();
                 });
                 /*--------------------------------------------------------------------------------*/
@@ -44,11 +57,14 @@
 
                     var button = appHeader.querySelector('.js-toggle-menu');
                     
-                    document.addEventListener('open-nav', function(e){
-                        assert.ok(e);
+                     // Create event handler
+                    testEventHandler = function(e){
+                        assert.ok(e, 'Event should be defined');
                         assert.equal(e.type, 'open-nav', 'Event type should be open-nav');
                         done();
-                    })
+                    };
+                    
+                    document.addEventListener('open-nav', testEventHandler);
                     button.click();
                 });
                 /*--------------------------------------------------------------------------------*/
