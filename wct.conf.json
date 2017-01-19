@@ -2,6 +2,7 @@
   "testTimeout": 300000,
   "plugins": {
     "local": {
+      "disabled": true,
       "browsers": ["chrome"]
     },
     "sauce": {
