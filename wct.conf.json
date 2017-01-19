@@ -1,0 +1,22 @@
+{
+  "testTimeout": 300000,
+  "plugins": {
+    "local": {
+      "browsers": ["chrome"]
+    },
+    "sauce": {
+      "disabled": true,
+      "browsers": [
+        "Windows 7/chrome",
+        "Windows 10/internet explorer",
+        "Windows 10/firefox",
+        "Windows 10/chrome",
+        "Windows 10/microsoftedge",
+        "OS X 10.12/chrome",
+        "OS X 10.12/firefox",
+        "OS X 10.12/safari"
+      ]
+    }
+  },
+  "enforceJsonConf": true
+}
