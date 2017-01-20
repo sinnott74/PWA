@@ -23,9 +23,6 @@ bower_components
 # Public folder
 dist
 
-# Test folder
-tests
-
 # IDE specific folders
 .vscode
 
