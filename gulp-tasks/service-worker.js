@@ -6,29 +6,31 @@ var swPrecache = require('sw-precache');
 // This is used as the cacheID, worth only reading the file once.
 var packageName = JSON.parse(fs.readFileSync('./package.json', 'utf8')).name;
 
-gulp.task('service-worker:watch', function(cb) {
+gulp.task('service-worker:watch', function() {
   gulp.watch(GLOBAL.config.dest + '/**/*.*', ['service-worker']);
-  gulp.watch(GLOBAL.config.src + '/../server/views/**/*.*',
-    ['service-worker']);
+  gulp.watch(GLOBAL.config.src + '/../server/views/**/*.*', ['service-worker']);
+  gulp.watch(GLOBAL.config.src + '/../gulp-tasks/service-worker.js', ['service-worker']);
 });
 
 gulp.task('service-worker', function(cb) {
+  console.log(GLOBAL.config.dest + '/styles/core.css');
+
   swPrecache.write(path.join(GLOBAL.config.dest, 'sw.js'), {
     staticFileGlobs: [
       GLOBAL.config.dest + '/**/*.{js,html,css,png,jpg,jpeg,gif,svg}',
       GLOBAL.config.dest + '/manifest.json'
     ],
     dynamicUrlToDependencies: {
-      '/app-shell': ['server/views/layouts/app-shell.handlebars', 'server/views/partials/open-page.handlebars', 'server/views/partials/close-page.handlebars'],
+      '/app-shell': ['server/views/layouts/app-shell.handlebars', 'server/views/partials/open-page.handlebars', 'server/views/partials/close-page.handlebars', GLOBAL.config.dest + '/styles/core.css'],
       '/api/': [
         'server/views/index.handlebars',
         GLOBAL.config.dest + '/styles/core.css'
       ],
       '/api/url-1': [
-        'server/views/url-1.handlebars'
+        'server/views/url-1.handlebars',
       ],
       '/api/url-2': [
-        'server/views/url-2.handlebars'
+        'server/views/url-2.handlebars',
       ]
     },
     stripPrefix: GLOBAL.config.dest,
