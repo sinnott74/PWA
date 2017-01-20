@@ -5,7 +5,7 @@
   <<!-- link rel="stylesheet" type="text/css" href="app-sidenav.css"> -->
   <template>
     <section class="side-nav js-side-nav">
-      <div class="side-nav__content js-side-nav-content" on-scroll="handleSideNavContentScroll" on-touchstart="handleSideNavTouchStart" on-touchmove="handleSideNavTouchMove" on-touchend="handleSideNavTouchEnd">
+      <div class="side-nav__content js-side-nav-content" on-scroll="_handleSideNavContentScroll" on-touchstart="_handleSideNavTouchStart" on-touchmove="_handleSideNavTouchMove" on-touchend="_handleSideNavTouchEnd">
         <div class="side-nav__header">
           <button class="side-nav__pin" on-click="togglePin"></button>
           <h1 class="side-nav__title">App shell</h1>
@@ -49,7 +49,7 @@
         </div>
       </div>
     </section>
-    <div class="side-nav__edgearea js-side-nav-edgearea" on-touchstart="handleEdgeTouchStart" on-touchmove="handleEdgeTouchMove" on-touchend="handleEdgeTouchEnd"></div>
+    <div class="side-nav__edgearea js-side-nav-edgearea" on-touchstart="_handleEdgeTouchStart" on-touchmove="_handleEdgeTouchMove" on-touchend="_handleEdgeTouchEnd"></div>
   </template>
 
   <!-- Creates the element's prototype and registers it -->
@@ -65,7 +65,7 @@
         this.sideNavContentWidth = this.sideNavContent.offsetWidth;
 
         this.addEventListener('click', function(e) {
-          this.close();
+          this._close();
         });
 
         this.sideNavContent.addEventListener('click', function(e) {
@@ -82,13 +82,12 @@
         this.TOUCH_SLOP = 8 * window.devicePixelRatio * 3;;
         this.hasUnprefixedTransform = 'transform' in document.documentElement.style;
 
-        this.toggle = this.toggle.bind(this);
-        this.close = this.close.bind(this);
-        this.open = this.open.bind(this);
+        this._close = this._close.bind(this);
+        this._open = this._open.bind(this);
 
-        document.addEventListener('open-nav', this.open);
-        document.addEventListener('close-nav', this.close);
-
+        document.addEventListener('open-nav', this._open);
+        document.addEventListener('close-nav', this._close);
+        
         var event = new Event('side-nav-ready');
         document.dispatchEvent(event);
       },
@@ -108,30 +107,32 @@
       },
 
      _openedChanged: function(newValue, oldValue){
+
+        // prevents updating sidenav when value is set upon instantiation
         if(oldValue === undefined){
           return;
         }
         
         if(newValue === true){
-          this.open();
+          this._open();
         } else{
-          this.close();
+          this._close();
         }
       },
 
-      handleSideNavContentScroll: function(e){
+      _handleSideNavContentScroll: function(e){
         if(this.touching){
             this.preventSlidingWhileScrolling = true;
           }
       },
 
-      handleSideNavTouchStart: function(e) {
+      _handleSideNavTouchStart: function(e) {
         this.touching = true;
         this.sideNavTransform = 0;
         this.touchStartX = e.touches[0].pageX;
       },
 
-      handleSideNavTouchMove: function(e) {
+      _handleSideNavTouchMove: function(e) {
         if(this.preventSlidingWhileScrolling){
           return;
         }
@@ -147,41 +148,41 @@
           'translate3d(' + this.sideNavTransform + 'px, 0, 0)';
       },
 
-      handleSideNavTouchEnd: function(e) {
+      _handleSideNavTouchEnd: function(e) {
         
         this.touching = false;
         this.preventSlidingWhileScrolling = false;
 
         if (this.sideNavTransform < -this.TOUCH_SLOP) {
-          this.close();
+          this._close();
         } else if (this.sideNavTransform < -window.devicePixelRatio/100){
-          this.open();
+          this._opened();
         }
 
         // allow content scrolling again
         this.sideNavContent.style.overflowY = 'auto';
       },
 
-      handleEdgeTouchStart: function(e) {
+      _handleEdgeTouchStart: function(e) {
         this.sideNavContentWidth = this.sideNavContent.offsetWidth;
         this.edgeTransform = 0;
         this.edgeTouchStartX = e.touches[0].pageX;; 
         this.sideNavContent.style.transform = 'translate3d(-95%, 0 , 0)';
       },
 
-      handleEdgeTouchMove: function(e) {
+      _handleEdgeTouchMove: function(e) {
         var newEdgeTouchX = e.touches[0].pageX;;
         this.edgeTransform = Math.min(this.sideNavContentWidth, newEdgeTouchX - this.edgeTouchStartX);
         this.sideNavContent.style.transform =
           'translate3d(' + (-this.sideNavContentWidth + this.edgeTransform) + 'px, 0, 0)';
       },
 
-      handleEdgeTouchEnd: function(e) {
+      _handleEdgeTouchEnd: function(e) {
         if (this.edgeTransform >= this.TOUCH_SLOP) {
-          this.open();
+          this._open();
           return;
         } else if (this.edgeTransform < this.TOUCH_SLOP){
-          this.close();
+          this._close();
         }
       },
 
@@ -189,44 +190,19 @@
         this.opened = !this.opened;
       },
 
-      close: function() {
+      _close: function() {
         console.log("nav close called");
         this.opened = false;
         this.sideNavContent.style.transform = 'translate3d(-100%, 0, 0)';
-        // this.rootElement.classList.remove('side-nav--visible');
-        // this.sideNavContent.classList.add('side-nav__content--animatable');
-
-        if (this.hasUnprefixedTransform) {
-          this.sideNavContent.style.transform = 'translate3d(-100%, 0, 0)';
-        } else {
-           this.sideNavContent.classList.remove('side-nav--visible');
+        if (!this.hasUnprefixedTransform) {
+          this.sideNavContent.classList.remove('side-nav--visible');
         }
       },
 
-      open: function() {
+      _open: function() {
         this.opened = true;
-        
-        // var sideNav = this;
-        // console.log("nav open called");
-        // this.rootElement.classList.add('side-nav--visible');
-
-        if (this.hasUnprefixedTransform) {
-        //   var onSideNavTransitionEnd = function(e) {
-        //     sideNav.sideNavContent.classList.remove('side-nav__content--animatable');
-        //     sideNav.sideNavContent.removeEventListener('transitionend',
-        //         onSideNavTransitionEnd);
-        //   };
-
-        //   this.sideNavContent.classList.add('side-nav__content--animatable');
-        //   this.sideNavContent.addEventListener('transitionend',
-        //         onSideNavTransitionEnd);
-
-        //   requestAnimationFrame( function() {
-        //     sideNav.sideNavContent.style.transform = 'translateX(0px)';
-        //     console.log('set transform to 0px');
-        //   });
-          this.sideNavContent.style.transform = 'translate3d(0, 0, 0)';
-        } else {
+        this.sideNavContent.style.transform = 'translate3d(0, 0, 0)';
+        if (!this.hasUnprefixedTransform) {
           this.sideNavContent.classList.add('side-nav--visible');
         }
       },
