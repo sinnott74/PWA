@@ -37,7 +37,7 @@ app-sidenav[opened] .side-nav {
 }
 
 app-sidenav[opened] .side-nav__content {
-  transform: translateX(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .side-nav__content {
@@ -48,7 +48,7 @@ app-sidenav[opened] .side-nav__content {
   box-shadow: 0 0 4px rgba(0, 0, 0, .14),
   0 4px 8px rgba(0, 0, 0, .28);
   will-change: transform;
-  transform: translateX(-100%);
+  transform: translate3d(-100%, 0, 0);
   transition: transform .233s cubic-bezier(0, 0, .21, 1);
   overflow-y: auto;
 }

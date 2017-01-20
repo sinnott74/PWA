@@ -144,7 +144,7 @@
 
         this.sideNavTransform = Math.min(0, newTouchX - this.touchStartX);
         this.sideNavContent.style.transform =
-          'translateX(' + this.sideNavTransform + 'px)';
+          'translate3d(' + this.sideNavTransform + 'px, 0, 0)';
       },
 
       handleSideNavTouchEnd: function(e) {
@@ -166,14 +166,14 @@
         this.sideNavContentWidth = this.sideNavContent.offsetWidth;
         this.edgeTransform = 0;
         this.edgeTouchStartX = e.touches[0].pageX;; 
-        this.sideNavContent.style.transform = 'translateX(-95%)';
+        this.sideNavContent.style.transform = 'translate3d(-95%, 0 , 0)';
       },
 
       handleEdgeTouchMove: function(e) {
         var newEdgeTouchX = e.touches[0].pageX;;
         this.edgeTransform = Math.min(this.sideNavContentWidth, newEdgeTouchX - this.edgeTouchStartX);
         this.sideNavContent.style.transform =
-          'translateX(' + (-this.sideNavContentWidth + this.edgeTransform) + 'px)';
+          'translate3d(' + (-this.sideNavContentWidth + this.edgeTransform) + 'px, 0, 0)';
       },
 
       handleEdgeTouchEnd: function(e) {
@@ -192,12 +192,12 @@
       close: function() {
         console.log("nav close called");
         this.opened = false;
-        this.sideNavContent.style.transform = 'translateX(-100%)';
+        this.sideNavContent.style.transform = 'translate3d(-100%, 0, 0)';
         // this.rootElement.classList.remove('side-nav--visible');
         // this.sideNavContent.classList.add('side-nav__content--animatable');
 
         if (this.hasUnprefixedTransform) {
-          this.sideNavContent.style.transform = 'translateX(-100%)';
+          this.sideNavContent.style.transform = 'translate3d(-100%, 0, 0)';
         } else {
            this.sideNavContent.classList.remove('side-nav--visible');
         }
@@ -225,7 +225,7 @@
         //     sideNav.sideNavContent.style.transform = 'translateX(0px)';
         //     console.log('set transform to 0px');
         //   });
-          this.sideNavContent.style.transform = 'translateX(0)';
+          this.sideNavContent.style.transform = 'translate3d(0, 0, 0)';
         } else {
           this.sideNavContent.classList.add('side-nav--visible');
         }
