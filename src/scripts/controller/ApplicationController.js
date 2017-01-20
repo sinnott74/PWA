@@ -25,8 +25,7 @@ export default class ApplicationController extends Controller {
           clickEvent.stopPropagation();
           clickEvent.preventDefault();
 
-          var closeNavEvent = new Event('close-nav');
-          document.dispatchEvent(closeNavEvent);
+          sideNav.opened = false;
 
           var router = RouterSingleton.getRouter();
           router.goToPath(clickEvent.target.href);

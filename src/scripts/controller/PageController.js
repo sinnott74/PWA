@@ -43,9 +43,9 @@ export default class PageController {
         }
 
         // Add style element to the document head
-        var styleElement = document.createElement('style');
-        styleElement.textContent = responseObject.partialinlinestyles;
-        document.head.appendChild(styleElement);
+        // var styleElement = document.createElement('style');
+        // styleElement.textContent = responseObject.partialinlinestyles;
+        // document.head.appendChild(styleElement);
 
         // Add content from partial to page
         this.mainContainer.innerHTML = responseObject.partialhtml;
