@@ -21,6 +21,7 @@
   },
   "resolutions": {
     "mocha": "3.2.0",
-    "async": "1.5.2"
+    "async": "1.5.2",
+    "chai": "3.5.0"
   }
 }
