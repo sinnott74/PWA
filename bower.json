@@ -20,6 +20,7 @@
     "web-component-tester": "Polymer/web-component-tester#^5.0.0"
   },
   "resolutions": {
-    "mocha": "3.2.0"
+    "mocha": "3.2.0",
+    "async": "1.5.2"
   }
 }
