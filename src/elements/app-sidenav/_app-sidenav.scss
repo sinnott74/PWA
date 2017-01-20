@@ -20,14 +20,6 @@
   }
 }
 
-// .side-nav--visible {
-//   pointer-events: auto;
-
-//   &::before {
-//     opacity: .7;
-//   }
-// }
-
 app-sidenav[opened] .side-nav {
   pointer-events: auto;
 
