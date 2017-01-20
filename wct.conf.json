@@ -1,6 +1,5 @@
 {
   "testTimeout": 300000,
-  "persistent": true,
   "plugins": {
     "local": {
       "disabled": true,
