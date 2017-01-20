@@ -16,7 +16,7 @@ gulp.task('images:clean', function(cb) {
 
 gulp.task('images', ['images:clean'], function() {
   return gulp.src(GLOBAL.config.src + '/**/*.{png,jpg,jpeg,gif,svg}')
-    .pipe(gulpif(GLOBAL.config.env == 'prod', imagemin({
+    .pipe(gulpif(GLOBAL.config.env === 'prod', imagemin({
       progressive: true,
       interlaced: true,
       svgoPlugins: [{removeViewBox: false}],

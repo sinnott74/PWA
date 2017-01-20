@@ -117,7 +117,6 @@ gulp.task('scripts:es6', function(cb) {
 gulp.task('scripts:es5', function() {
   return gulp.src([GLOBAL.config.src + '/**/*.es5.js'])
     .pipe(gulpif(GLOBAL.config.env !== 'prod', sourcemaps.init()))
-    .pipe(sourcemaps.init())
 
     // Remove the .es5 from the end of the file name using gulp-rename
     .pipe(rename(function(filePath) {
@@ -130,7 +129,6 @@ gulp.task('scripts:es5', function() {
     .pipe(gulpif(GLOBAL.config.env === 'prod', uglify()))
     .pipe(license(GLOBAL.config.license, {tiny: true}))
     .pipe(gulpif(GLOBAL.config.env !== 'prod', sourcemaps.write()))
-    .pipe(sourcemaps.write())
     .pipe(gulp.dest(GLOBAL.config.dest));
 });
 
