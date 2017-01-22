@@ -193,11 +193,13 @@
         console.log("nav close called");
         this.opened = false;
         this.sideNavContent.removeAttribute('style');
+        document.body.style.overflowY = 'auto';
       },
 
       _open: function() {
         this.opened = true;
         this.sideNavContent.removeAttribute('style');
+        document.body.style.overflowY = 'hidden';
       },
 
       togglePin: function(e) {
