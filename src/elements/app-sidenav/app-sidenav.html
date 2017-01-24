@@ -4,7 +4,7 @@
   <!-- Defines the element's style and local DOM -->
   <<!-- link rel="stylesheet" type="text/css" href="app-sidenav.css"> -->
   <template>
-    <div class="side-nav__content js-side-nav-content" on-scroll="_handleSideNavContentScroll" on-touchstart="_handleSideNavTouchStart" on-touchmove="_handleSideNavTouchMove" on-touchend="_handleSideNavTouchEnd">
+    <div class="side-nav__content js-side-nav-content" on-touchstart="_handleSideNavTouchStart" on-touchmove="_handleSideNavTouchMove" on-touchend="_handleSideNavTouchEnd">
       <div class="side-nav__header">
         <button class="side-nav__pin" on-click="togglePin"></button>
         <h1 class="side-nav__title">App shell</h1>
@@ -72,7 +72,6 @@
           e.stopPropagation();
         });
 
-        this.preventSlidingWhileScrolling = false;
         this.touching = false;
 
         // Touch slop is a variable that is defined to suggest anything larger
@@ -83,6 +82,7 @@
 
         this._close = this._close.bind(this);
         this._open = this._open.bind(this);
+        this._updateUI = this._updateUI.bind(this);
 
         document.addEventListener('open-nav', this._open);
         document.addEventListener('close-nav', this._close);
@@ -119,42 +119,58 @@
         }
       },
 
-      _handleSideNavContentScroll: function(e){
-        if(this.touching){
-            this.preventSlidingWhileScrolling = true;
-          }
-      },
-
       _handleSideNavTouchStart: function(e) {
         this.touching = true;
         this.sideNavTransform = 0;
         this.touchStartX = e.touches[0].pageX;
+        this.touchStartY = e.touches[0].pageY;
+        this.translateX = 0;
+        this.translateY = 0;
+        this.direction = "";
       },
 
       _handleSideNavTouchMove: function(e) {
-        if(this.touching){
-          if(this.preventSlidingWhileScrolling){
-            return;
+        var newTouchX = e.touches[0].pageX;
+        var newTouchY = e.touches[0].pageY;
+
+        this.translateX = newTouchX - this.touchStartX;
+        this.translateY = newTouchY - this.touchStartY;
+
+        if(!this.direction){
+
+          if(Math.abs(this.translateX) >= Math.abs(this.translateY)){
+            this.direction = "horizontal";
+          } else {
+            this.direction = "vertical";
           }
-
-          var newTouchX = e.touches[0].pageX;
-
-          if(Math.abs(newTouchX - this.touchStartX) > (3 * window.devicePixelRatio)){
-            this.sideNavContent.style.overflowY = 'hidden';
-          } 
-
-          this.sideNavTransform = Math.min(0, newTouchX - this.touchStartX);
-          this.sideNavContent.style.transform =
-            'translate3d(' + this.sideNavTransform + 'px, 0, 0)';
-
-          requestAnimationFrame(_handleSideNavTouchMove);
         }
+
+        if(this.direction == "horizontal"){
+
+          e.preventDefault();
+          requestAnimationFrame(this._updateUI);
+        }
+      },
+
+      _updateUI: function() {
+         if(this.touching){
+
+            if(Math.abs(this.translateX) > (3 * window.devicePixelRatio)){
+              this.sideNavContent.style.overflowY = 'hidden';
+            } 
+
+            this.sideNavTransform = Math.min(0, this.translateX);
+            this.sideNavContent.style.transform =
+              'translate3d(' + this.sideNavTransform + 'px, 0, 0)';
+
+            requestAnimationFrame(this._updateUI);
+          }
       },
 
       _handleSideNavTouchEnd: function(e) {
         
         this.touching = false;
-        this.preventSlidingWhileScrolling = false;
+        this.direction = "";
 
         if (this.sideNavTransform < -this.TOUCH_SLOP) {
           this._close();
@@ -169,18 +185,40 @@
       _handleEdgeTouchStart: function(e) {
         this.sideNavContentWidth = this.sideNavContent.offsetWidth;
         this.edgeTransform = 0;
-        this.edgeTouchStartX = e.touches[0].pageX;; 
+        this.direction = "";
+        this.edgeTouchStartX = e.touches[0].pageX; 
+        this.edgeTouchStartY = e.touches[0].pageY;
         this.sideNavContent.style.transform = 'translate3d(-95%, 0 , 0)';
       },
 
       _handleEdgeTouchMove: function(e) {
-        var newEdgeTouchX = e.touches[0].pageX;;
-        this.edgeTransform = Math.min(this.sideNavContentWidth, newEdgeTouchX - this.edgeTouchStartX);
-        this.sideNavContent.style.transform =
-          'translate3d(' + (-this.sideNavContentWidth + this.edgeTransform) + 'px, 0, 0)';
+        var newEdgeTouchX = e.touches[0].pageX;
+        var newEdgeTouchY = e.touches[0].pageY;
+
+        var translateX = newEdgeTouchX - this.edgeTouchStartX;
+        var translateY = newEdgeTouchY - this.edgeTouchStartY;
+
+        if(!this.direction){
+
+          if(Math.abs(translateX) >= Math.abs(translateY)){
+            this.direction = "horizontal";
+          } else {
+            this.direction = "vertical";
+          }
+        }
+
+        if(this.direction === "horizontal"){
+
+          e.preventDefault();
+
+          this.edgeTransform = Math.min(this.sideNavContentWidth, newEdgeTouchX - this.edgeTouchStartX);
+          this.sideNavContent.style.transform =
+            'translate3d(' + (-this.sideNavContentWidth + this.edgeTransform) + 'px, 0, 0)';
+        }
       },
 
       _handleEdgeTouchEnd: function(e) {
+        this.direction = "";
         if (this.edgeTransform >= this.TOUCH_SLOP) {
           this._open();
           return;
