@@ -1,19 +1,15 @@
 
 app-sidenav {
   overflow-y: hidden;
-}
-
-.side-nav {
   position: fixed;
   pointer-events: none;
   left: 0;
   top: 0;
   bottom: 0;
   right: 0;
-  overflow-y: auto;
   transform : translate3d(0, 0, 0);
 
-  &::before {
+   &::before {
     content: '';
     width: 100%;
     height: 100%;
@@ -26,7 +22,11 @@ app-sidenav {
   }
 }
 
-app-sidenav[opened] .side-nav {
+.side_nav--animatable .side-nav__content{
+  transition: all 130ms ease-in;
+}
+
+app-sidenav[opened] {
   pointer-events: auto;
 
   &::before {
@@ -45,7 +45,6 @@ app-sidenav[opened] .side-nav__content {
   0 4px 8px rgba(0, 0, 0, .28);
   will-change: transform;
   transform: translate3d(-100%, 0, 0);
-  transition: transform .233s cubic-bezier(0, 0, .21, 1);
   overflow-y: auto;
 }
 
@@ -152,21 +151,23 @@ app-sidenav[opened] .side-nav__content {
   line-height: 48px;
   text-decoration: none;
 }
+.side-nav__edgearea {
 
-app-sidenav[position="left"] .side-nav__edgearea {
+  pointer-events: auto;
   position: fixed;
-  left: 0;
   top: 0;
   bottom: 0;
   width: 16px;
   z-index: 10;
+
+}
+
+app-sidenav[position="left"] .side-nav__edgearea {
+  right: auto;
+  left: 0;
 }
 
 app-sidenav[position="right"] .side-nav__edgearea {
-  position: fixed;
   right: 0;
-  top: 0;
-  bottom: 0;
-  width: 16px;
-  z-index: 10;
+  left: auto;
 }
