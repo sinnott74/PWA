@@ -19,11 +19,12 @@ app-sidenav {
     position: absolute;
     will-change: opacity;
     transition: opacity .233s cubic-bezier(0, 0, .21, 1);
+    overflow-y: hidden;
   }
 }
 
 .side_nav--animatable .side-nav__content{
-  transition: all 130ms ease-in;
+  transition: all 130ms linear;
 }
 
 app-sidenav[opened] {
@@ -45,7 +46,7 @@ app-sidenav[opened] .side-nav__content {
   0 4px 8px rgba(0, 0, 0, .28);
   will-change: transform;
   transform: translate3d(-100%, 0, 0);
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 @media(min-width: $big-screen) {
@@ -85,6 +86,8 @@ app-sidenav[opened] .side-nav__content {
   justify-content: space-between;
   flex-direction: column;
   min-height: calc(100% - 171px);
+  max-height: calc(100% - 171px);
+  overflow-y: auto;
 }
 
 .side-nav__version {
