@@ -10,7 +10,7 @@
         <h1 class="side-nav__title">App shell</h1>
       </div>
 
-      <div class="side-nav__body">
+      <div class="side-nav__body js-side-nav-body">
         <div class="side-nav__links">
           <a role="tab" tabindex="0" class="side-nav__blog-post" href="/">Index</a>
           <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-1">URL 1</a>
@@ -58,7 +58,7 @@
         this.sideNavContent = this.querySelector('.js-side-nav-content');
         this.pin = this.querySelector('.side-nav__pin');
         this.edge = document.querySelector('.js-side-nav-edgearea');
-
+        this.body = this.querySelector('.js-side-nav-body');
         this.addEventListener('transitionend', this.onTransitionEnd, false);
         
 
@@ -71,6 +71,18 @@
         this.sideNavContent.addEventListener('click', function(e) {
           e.stopPropagation();
         });
+
+        this.addEventListener('scroll', function(e) {
+          e.stopPropagation();
+        });
+
+        this.body.addEventListener('scroll', function(e) {
+          e.stopPropagation();
+        });
+
+        // this.addEventListener('touchmove', function(e){
+        //   e.preventDefault();
+        // });
 
         this.touching = false;
 
@@ -155,9 +167,9 @@
       _updateUI: function() {
          if(this.touching){
 
-            if(Math.abs(this.translateX) > (3 * window.devicePixelRatio)){
-              this.sideNavContent.style.overflowY = 'hidden';
-            } 
+            // if(Math.abs(this.translateX) > (3 * window.devicePixelRatio)){
+            //   this.sideNavContent.style.overflowY = 'hidden';
+            // } 
 
             this.sideNavTransform = Math.min(0, this.translateX);
             this.sideNavContent.style.transform =
@@ -179,7 +191,7 @@
         }
 
         // allow content scrolling again
-        this.sideNavContent.style.overflowY = 'auto';
+        // this.sideNavContent.style.overflowY = 'auto';
       },
 
       _handleEdgeTouchStart: function(e) {
@@ -248,6 +260,7 @@
       togglePin: function(e) {
         this.pin.classList.toggle('pinned');
       },
+
       onTransitionEnd : function() {
 	      this.classList.remove("side_nav--animatable");
       }

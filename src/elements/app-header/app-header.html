@@ -1,92 +1,25 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../../bower_components/iron-icon/iron-icon.html">
-  <link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
-  <link rel="import" href="../../../bower_components/app-layout/app-toolbar/app-toolbar.html">
-  <link rel="import" href="../../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-  <link rel="import" href="../../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
 
-<dom-module id="app-header2">
+<dom-module id="app-header">
   <!-- Defines the element's style and local DOM -->
 <!--   <link rel="stylesheet" type="text/css" href="app-header.css"> -->
   <template>
-    <!--<header class="header">
-        <button role="tab" class="header__menu js-toggle-menu" on-click="handleClick">
+    <header class="header">
+        <paper-icon-button role="tab" class="header__menu js-toggle-menu" on-click="handleClick">
           Toggle nav menu
-        </button>
+        </paper-icon-button>
       <h1 class="header__title">[[title]]</h1>
-    </header>-->
-
-    <style>
-    
-        app-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 212px;
-      color: #fff;
-      background-color: #3f51b5;
-      --app-header-background-front-layer: {
-        background-image: url('/images/side-nav-bg@2x.jpg');
-        background-position: left center;
-      };
-    }
-    paper-icon-button {
-      --paper-icon-button-ink-color: white;
-    }
-    app-toolbar.tall {
-      height: 148px;
-    }
-    sample-content {
-      padding-top: 212px;
-    }
-    [main-title] {
-      font-weight: lighter;
-      margin-left: 108px;
-    }
-    [condensed-title] {
-      font-weight: lighter;
-      margin-left: 30px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    [condensed-title] i {
-      font-weight: 100;
-      font-style: normal;
-    }
-    @media (max-width: 639px) {
-      [main-title] {
-        margin-left: 50px;
-        font-size: 30px;
-      }
-      [condensed-title] {
-        font-size: 15px;
-      }
-    }
-    
-    </style>
-
-
-  <app-header condenses reveals effects="waterfall resize-title blend-background parallax-background">
-    <app-toolbar>
-      <paper-icon-button src="/images/ic_menu_24px.svg" on-tap="handleClick" class="js-toggle-menu"></paper-icon-button>
-      <h4 condensed-title class="header__title">[[title]]</h4>
-      <paper-icon-button icon="search"></paper-icon-button>
-    </app-toolbar>
-    <app-toolbar class="tall">
-      <h1 main-title>App Shell by Sinnott</h1>
-    </app-toolbar>
-  </app-header>
-
+    </header>
   </template>
 
   <!-- Creates the element's prototype and registers it -->
   <script>
     Polymer({
-      is: 'app-header2',
+      is: 'app-header',
 
       properties: {
-
         // title displayed in the header
         title: {
           type: String,
