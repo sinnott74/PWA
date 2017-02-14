@@ -35,8 +35,9 @@ gulp.task('styles:clean', function(cb) {
 
 gulp.task('styles:sass', function() {
   return gulp.src(GLOBAL.config.src + '/**/*.scss')
-    .pipe(sasslint())
-    .pipe(sasslint.format())
+    // output sass lint if in dev
+    .pipe(gulpif(GLOBAL.config.env === 'dev', sasslint()))
+    .pipe(gulpif(GLOBAL.config.env === 'dev', sasslint.format()))
     // Only create sourcemaps for dev
     .pipe(gulpif(GLOBAL.config.env !== 'prod', sourcemaps.init()))
     .pipe(sass().on('error', sass.logError))
