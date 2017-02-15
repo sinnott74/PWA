@@ -1,0 +1,31 @@
+*** Postgresql Notes ***
+
+Install:
+    brew install postgresql
+
+To Start:
+    Manually:
+        pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
+    via homebrew:
+        brew services start postgresql
+
+To Stop:
+    Manually:
+        pg_ctl -D /usr/local/var/postgres stop -s -m fast
+    via homebrew:
+        brew services stop postgresql
+
+Init:
+    initdb /usr/local/var/postgres
+
+Create Database:
+    createdb <databasename>
+
+Open Database:
+    psql <databasename>
+
+Quit Database:
+    \q
+
+Default port:
+    5432
