@@ -49,10 +49,9 @@ function ServerController() {
   }
 
   // Define static assets path - i.e. styles, scripts etc.
-  expressApp.use('/',
-    express.static(path.join(__dirname + '/../../dist/')));
+  expressApp.use('/', express.static(path.join(__dirname + '/../../dist/')));
 
-  // Define route
+  // Define routes
   expressApp.use('/api*', apiRouter);
   expressApp.use('/*', pageRouter);
 
@@ -98,13 +97,6 @@ ServerController.prototype.startServer = function(port) {
     console.log('Server running on port ' + serverPort);
   });
   this.setExpressServer(server);
-};
-
-ServerController.prototype.addEndpoint = function(endpoint, controller) {
-  // Add the endpoint and call the onRequest method when a request is made
-  this.getExpressApp().get(endpoint, function(req, res) {
-    controller.onRequest(req, res);
-  });
 };
 
 module.exports = new ServerController();
