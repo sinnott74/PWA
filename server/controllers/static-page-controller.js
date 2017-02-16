@@ -16,7 +16,6 @@ StaticPageController.prototype.onRequest = function(req, res) {
     return;
   }
 
-
   switch (req.baseUrl) {
   case '/app-shell':
     // Render with app-shell layout and include no initial content
