@@ -36,14 +36,6 @@ function ServerController() {
     next();
   });
 
-  // Define static assets path - i.e. styles, scripts etc.
-  expressApp.use('/',
-    express.static(path.join(__dirname + '/../../dist/')));
-
-  // Define route
-  expressApp.use('/api*', apiRouter);
-  expressApp.use('/*', pageRouter);
-
   // force https on Bluemix
   if (!cfenv.getAppEnv().isLocal) {
     expressApp.use(function(req, res, next) {
@@ -55,6 +47,14 @@ function ServerController() {
       }
     });
   }
+
+  // Define static assets path - i.e. styles, scripts etc.
+  expressApp.use('/',
+    express.static(path.join(__dirname + '/../../dist/')));
+
+  // Define route
+  expressApp.use('/api*', apiRouter);
+  expressApp.use('/*', pageRouter);
 
   var expressServer = null;
 
