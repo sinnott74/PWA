@@ -3,11 +3,12 @@
 var cfApp = require('cfenv').getAppEnv();
 var postgresqlProductionConfig = cfApp.getServices('postgresql');
 console.log(JSON.stringify(postgresqlProductionConfig));
-var productionDbCredentials;
+var productionDbUri;
 
-if(postgresqlProductionConfig['postgresql-2v']) {
+if(postgresqlProductionConfig['postgresql-2v']
+  && postgresqlProductionConfig['postgresql-2v'].credentials) {
   console.log(JSON.stringify(postgresqlProductionConfig['postgresql-2v']));
-  productionDbCredentials = postgresqlProductionConfig['postgresql-2v'].credentials;
+  productionDbUri = postgresqlProductionConfig['postgresql-2v'].credentials;
 }
 console.log(JSON.stringify(postgresqlProductionConfig['postgresql-2v']));
 
@@ -35,7 +36,7 @@ module.exports = {
 
   production: {
     client: 'pg',
-    connection: productionDbCredentials.uri,
+    connection: productionDbUri,
     debug: true
   }
 };
