@@ -10,7 +10,8 @@ if (process.env.NODE_ENV === 'production') {
   console.log('not production');
   dbConfig = knexConfig.development;
 }
-console.log('databaseconfig used: ' + dbConfig);
+console.log('dbConfig used:');
+console.log(dbConfig.connection);
 var knex = require('knex')(dbConfig);
 
 module.exports = knex;
