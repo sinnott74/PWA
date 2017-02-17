@@ -21,7 +21,7 @@ bower_components
 *.pyc
 
 # Public folder
-dist
+build
 
 # IDE specific folders
 .vscode

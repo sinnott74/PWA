@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, maximum-scale=1">
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+    <!--import element-->
+    <link rel="import" href="../src/elements/app-header/app-header.html">
+  </head>
+  <body>
+
+    <!--instantiate element-->
+    <app-header></app-header>
+
+    <!--test script-->
+    <script>
+      var appHeader = document.querySelector('app-header');
+
+      // holds a reference to an event handlers we apply during the tests
+      var testEventHandler;
+
+      // removes the event handler after each test
+      teardown(function(){
+          document.removeEventListener('open-nav', testEventHandler);
+        }
+      );
+
+      /**
+      * Suite of tests for the app-header element
+      **/
+      suite('<app-header>', function() {
+
+        /**
+        *   Test to assure the correct event is thrown when the handleClick method is called
+        **/
+        test('handleClick', function(done) {
+
+          // Create event handler
+          testEventHandler = function(e){
+              assert.ok(e, 'Event should be defined');
+              assert.equal(e.type, 'open-nav', 'Event type should be open-nav');
+              done();
+          };
+          
+          document.addEventListener('open-nav', testEventHandler);
+
+          appHeader.handleClick();
+        });
+        /*--------------------------------------------------------------------------------*/
+
+        /**
+        *   Test to assure the correct event is thrown when the button is clicked
+        **/
+        test('onClick Event', function(done) {
+
+          var button = appHeader.querySelector('.js-toggle-menu');
+          
+            // Create event handler
+          testEventHandler = function(e){
+              assert.ok(e, 'Event should be defined');
+              assert.equal(e.type, 'open-nav', 'Event type should be open-nav');
+              done();
+          };
+          
+          document.addEventListener('open-nav', testEventHandler);
+          button.click();
+        });
+        /*--------------------------------------------------------------------------------*/
+
+        /**
+        *   Test to title attribute correctly sets the title
+        **/
+        test('Title attribute', function() {
+
+          var expectedText = "TEST";
+          appHeader.setAttribute('title', expectedText);
+
+          var headerTitle = appHeader.querySelector('.header__title');
+          var actualText = headerTitle.textContent
+
+          assert.equal(actualText, expectedText, 'app-header title attribute should be reflected in H1 text content')
+        });
+        /*--------------------------------------------------------------------------------*/
+      });
+    </script>
+  </body>
+</html>

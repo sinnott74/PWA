@@ -35,7 +35,7 @@ var pathConfigs = {
 function getFileContents(files) {
   // Concat inline styles for document <head>
   var flattenedContents = '';
-  var pathPrefix = '/../../dist/';
+  var pathPrefix = '/../../../build/';
   files.forEach(function(file) {
     flattenedContents += fs.readFileSync(path.resolve(__dirname) +
       pathPrefix + file);

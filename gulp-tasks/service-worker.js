@@ -13,24 +13,22 @@ gulp.task('service-worker:watch', function() {
 });
 
 gulp.task('service-worker', function(cb) {
-  console.log(GLOBAL.config.dest + '/styles/core.css');
-
   swPrecache.write(path.join(GLOBAL.config.dest, 'sw.js'), {
     staticFileGlobs: [
       GLOBAL.config.dest + '/**/*.{js,html,css,png,jpg,jpeg,gif,svg}',
       GLOBAL.config.dest + '/manifest.json'
     ],
     dynamicUrlToDependencies: {
-      '/app-shell': ['server/views/layouts/app-shell.handlebars', 'server/views/partials/open-page.handlebars', 'server/views/partials/close-page.handlebars', GLOBAL.config.dest + '/styles/core.css'],
+      '/app-shell': ['server/src/views/layouts/app-shell.handlebars', 'server/src/views/partials/open-page.handlebars', 'server/src/views/partials/close-page.handlebars', GLOBAL.config.dest + '/styles/core.css'],
       '/api/': [
-        'server/views/index.handlebars',
+        'server/src/views/index.handlebars',
         GLOBAL.config.dest + '/styles/core.css'
       ],
       '/api/url-1': [
-        'server/views/url-1.handlebars',
+        'server/src/views/url-1.handlebars',
       ],
       '/api/url-2': [
-        'server/views/url-2.handlebars',
+        'server/src/views/url-2.handlebars',
       ]
     },
     stripPrefix: GLOBAL.config.dest,

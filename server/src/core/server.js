@@ -49,7 +49,7 @@ function ServerController() {
   }
 
   // Define static assets path - i.e. styles, scripts etc.
-  expressApp.use('/', express.static(path.join(__dirname + '/../../dist/')));
+  expressApp.use('/', express.static(path.join(__dirname + '/../../../build/')));
 
   // Define routes
   expressApp.get('/api*', function(req, res) {
