@@ -8,15 +8,15 @@ function StaticPageController() {
 // This method looks at the request path and renders the appropriate handlebars
 // template
 StaticPageController.prototype.onRequest = function(req, res) {
-  console.log('Page request for: ' + req.baseUrl);
+  console.log('Page request for: ' + req.path);
 
-  var pathConfig = pathConfigs.getConfig(req.baseUrl);
+  var pathConfig = pathConfigs.getConfig(req.path);
   if (!pathConfig) {
     res.status(404).send();
     return;
   }
 
-  switch (req.baseUrl) {
+  switch (req.path) {
   case '/app-shell':
     // Render with app-shell layout and include no initial content
     pathConfig.layout = 'app-shell';

@@ -1,18 +1,18 @@
 'use strict';
 
 var path = require('path');
-var server = require('../core/server');
 var pathConfigs = require('../models/path-config.js');
 
-function APIController() {
+function APIController(handleBarsInstance) {
+  this.handlebarsInstance = handleBarsInstance;
 }
 
 // This method looks at the request path and renders the appropriate handlebars
 // template
 APIController.prototype.onRequest = function(req, res) {
-  console.log('API request for: ' + req.baseUrl);
+  console.log('API request for: ' + req.path);
 
-  var urlSections = req.baseUrl.split('/');
+  var urlSections = req.path.split('/');
   urlSections = urlSections.filter(function(sectionString) {
     return sectionString.length > 0;
   });
@@ -36,7 +36,7 @@ APIController.prototype.onRequest = function(req, res) {
     pathConfig.data.view + '.handlebars'
   );
 
-  server.handlebarsInstance.render(viewPath, pathConfig)
+  this.handlebarsInstance.render(viewPath, pathConfig)
     .then(function(renderedTemplate) {
       res.json({
         title: pathConfig.data.title,

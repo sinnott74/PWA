@@ -8,8 +8,8 @@ var compression = require('compression');
 var cfenv = require('cfenv');
 
 // routers
-var apiRouter = require('../routers/api-router');
-var pageRouter = require('../routers/page-router');
+var APIController = require('../controllers/api-controller');
+var PageController = require('../controllers/static-page-controller');
 
 // initiate database connection
 // require('./database');
@@ -52,8 +52,8 @@ function ServerController() {
   expressApp.use('/', express.static(path.join(__dirname + '/../../dist/')));
 
   // Define routes
-  expressApp.use('/api*', apiRouter);
-  expressApp.use('/*', pageRouter);
+  expressApp.get('/api*', new APIController(handleBarsInstance).onRequest);
+  expressApp.get('/*', new PageController().onRequest);
 
   var expressServer = null;
 
