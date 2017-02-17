@@ -35,6 +35,7 @@ module.exports = {
 
   production: {
     client: 'pg',
-    connection: productionDbCredentials.uri
+    connection: productionDbCredentials.uri,
+    debug: true
   }
 };
