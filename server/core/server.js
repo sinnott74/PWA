@@ -53,8 +53,13 @@ function ServerController() {
   expressApp.use('/', express.static(path.join(__dirname + '/../../dist/')));
 
   // Define routes
-  expressApp.get('/api*', new APIController(handleBarsInstance).onRequest);
-  expressApp.get('/*', new PageController().onRequest);
+  expressApp.get('/api*', function(req, res) {
+    new APIController(handleBarsInstance).onRequest(req, res);
+  });
+  expressApp.get('/*', function(req, res) {
+    new PageController().onRequest(req, res);
+  })
+;
 
   var expressServer = null;
 
