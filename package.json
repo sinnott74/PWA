@@ -13,7 +13,7 @@
     "postinstall": "gulp",
     "monitor": "gulp dev",
     "gulp": "gulp",
-    "test": "wct client/test --plugin sauce"
+    "test": "wct webclient/test --plugin sauce"
   },
   "dependencies": {
     "babel-preset-es2015": "^6.0.15",
