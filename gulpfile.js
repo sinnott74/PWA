@@ -26,7 +26,7 @@ var projectPackage = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 GLOBAL.config = {
   env: 'prod',
   port: 8080,
-  src: 'client/src',
+  src: 'webclient/src',
   dest: 'build',
   version: projectPackage.version,
   license: 'Apache'
