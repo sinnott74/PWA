@@ -2,7 +2,7 @@
 
 var cfApp = require('cfenv').getAppEnv();
 var postgresqlProductionConfig = cfApp.getServices('postgresql');
-console.log(postgresqlProductionConfig);
+console.log(JSON.stringify(postgresqlProductionConfig));
 var productionDbCredentials;
 
 if(postgresqlProductionConfig[0]) {
