@@ -13,5 +13,6 @@ if (process.env.NODE_ENV === 'production') {
 console.log('dbConfig used:');
 console.log(dbConfig.connection);
 var knex = require('knex')(dbConfig);
+console.log('knex set up');
 
 module.exports = knex;
