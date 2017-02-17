@@ -1,5 +1,14 @@
 'use strict';
 
+var cfApp = require('cfenv').getAppEnv();
+var postgresqlProductionConfig = cfApp.getServices('postgresql');
+console.log(postgresqlProductionConfig);
+var productionDbUri;
+
+if(postgresqlProductionConfig[0]) {
+  productionDbUri = postgresqlProductionConfig[0].credentials.uri;
+}
+
 // Database connection object
 module.exports = {
 
@@ -20,5 +29,10 @@ module.exports = {
       directory: './seeds'
     },
     debug: true
+  },
+
+  production: {
+    client: 'pg',
+    connection: productionDbUri
   }
 };

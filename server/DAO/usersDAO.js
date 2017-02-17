@@ -24,6 +24,7 @@ usersDAO.read = function(id) {
  * @returns {Promise}
  */
 usersDAO.create = function(user) {
+  console.log('creating user');
   // check required paramater is supplied
   if(!user) {
     throw new Error('ID paramater required');
