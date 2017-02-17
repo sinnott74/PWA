@@ -23,6 +23,7 @@ Create Database:
 
 Open Database:
     psql <databasename>
+    psql -h <host> -p <port> -U <user> -W <databasename>    // Note: -W specifies a password will be prompted
 
 Quit Database:
     \q
