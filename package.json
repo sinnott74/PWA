@@ -12,8 +12,8 @@
     "start": "node app.js",
     "postinstall": "gulp",
     "monitor": "gulp dev",
-    "gulp": "gulp",
-    "test": "wct --plugin sauce"
+    "gulp": "gulp"
+    // "test": "wct --plugin sauce"
   },
   "dependencies": {
     "babel-preset-es2015": "^6.0.15",

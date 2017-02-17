@@ -5,9 +5,11 @@ var postgresqlProductionConfig = cfApp.getServices('postgresql');
 console.log(JSON.stringify(postgresqlProductionConfig));
 var productionDbCredentials;
 
-if(postgresqlProductionConfig[0]) {
+if(postgresqlProductionConfig['postgresql-2v']) {
+  console.log(JSON.stringify(postgresqlProductionConfig['postgresql-2v']));
   productionDbCredentials = postgresqlProductionConfig['postgresql-2v'].credentials;
 }
+console.log(JSON.stringify(postgresqlProductionConfig['postgresql-2v']));
 
 // Database connection object
 module.exports = {
