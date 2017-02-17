@@ -8,7 +8,7 @@ var productionDbUri;
 if(postgresqlProductionConfig['ElephantSQL-nx']
   && postgresqlProductionConfig['ElephantSQL-nx'].credentials) {
   console.log(JSON.stringify(postgresqlProductionConfig['ElephantSQL-nx']));
-  productionDbUri = postgresqlProductionConfig['ElephantSQL-nx'].credentials;
+  productionDbUri = postgresqlProductionConfig['ElephantSQL-nx'].credentials.uri;
 }
 console.log(JSON.stringify(postgresqlProductionConfig['ElephantSQL-nx']));
 
