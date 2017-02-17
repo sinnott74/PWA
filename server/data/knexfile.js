@@ -6,7 +6,7 @@ console.log(JSON.stringify(postgresqlProductionConfig));
 var productionDbCredentials;
 
 if(postgresqlProductionConfig[0]) {
-  productionDbCredentials = postgresqlProductionConfig[0]['postgresql-2v'].credentials;
+  productionDbCredentials = postgresqlProductionConfig['postgresql-2v'].credentials;
 }
 
 // Database connection object
