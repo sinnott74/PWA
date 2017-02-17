@@ -5,12 +5,12 @@ var postgresqlProductionConfig = cfApp.getServices('postgresql');
 console.log(JSON.stringify(postgresqlProductionConfig));
 var productionDbUri;
 
-if(postgresqlProductionConfig['postgresql-2v']
-  && postgresqlProductionConfig['postgresql-2v'].credentials) {
-  console.log(JSON.stringify(postgresqlProductionConfig['postgresql-2v']));
-  productionDbUri = postgresqlProductionConfig['postgresql-2v'].credentials;
+if(postgresqlProductionConfig['ElephantSQL-nx']
+  && postgresqlProductionConfig['ElephantSQL-nx'].credentials) {
+  console.log(JSON.stringify(postgresqlProductionConfig['ElephantSQL-nx']));
+  productionDbUri = postgresqlProductionConfig['ElephantSQL-nx'].credentials;
 }
-console.log(JSON.stringify(postgresqlProductionConfig['postgresql-2v']));
+console.log(JSON.stringify(postgresqlProductionConfig['ElephantSQL-nx']));
 
 // Database connection object
 module.exports = {
