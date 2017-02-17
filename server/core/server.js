@@ -13,7 +13,6 @@ var PageController = require('../controllers/static-page-controller');
 
 // initiate database connection
 var knex = require('./database');
-var userDAO = require('../DAO/usersDAO');
 
 function ServerController() {
   var expressApp = express();
@@ -78,19 +77,6 @@ function ServerController() {
   this.getHandleBarsInstance = function() {
     return handleBarsInstance;
   };
-
-  knex.schema.createTableIfNotExists('users', function(table) {
-    table.increments();
-    table.string('name');
-    table.timestamps();
-  })
-  .then(function() {
-    return userDAO.create({name: 'test'});
-  })
-  .then(userDAO.list)
-  .then(function(rows) {
-    console.log(rows);
-  });
 }
 
 ServerController.prototype.startServer = function(port) {
