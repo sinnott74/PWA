@@ -1,16 +1,10 @@
 'use strict';
 
 var cfApp = require('cfenv').getAppEnv();
-var postgresqlProductionConfig = cfApp.getServices('postgresql');
-console.log(JSON.stringify(postgresqlProductionConfig));
-var productionDbUri;
-
-if(postgresqlProductionConfig['ElephantSQL-nx']
-  && postgresqlProductionConfig['ElephantSQL-nx'].credentials) {
-  console.log(JSON.stringify(postgresqlProductionConfig['ElephantSQL-nx']));
-  productionDbUri = postgresqlProductionConfig['ElephantSQL-nx'].credentials.uri;
-}
-console.log(JSON.stringify(postgresqlProductionConfig['ElephantSQL-nx']));
+var services = cfApp.getServices('postgresql') || {};
+var dbConfig = services['ElephantSQL-nx'] || {};
+var credentials = dbConfig.credentials || {};
+var uri = credentials.uri || '';
 
 // Database connection object
 module.exports = {
@@ -36,7 +30,7 @@ module.exports = {
 
   production: {
     client: 'pg',
-    connection: productionDbUri,
+    connection: uri,
     debug: true
   }
 };
