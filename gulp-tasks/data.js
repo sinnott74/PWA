@@ -33,6 +33,7 @@ gulp.task('data:latest', function() {
   .catch(function(err) {
     console.error(err);
     knexInstance.destroy();
+    return process.exit(1);
   });
 });
 
@@ -58,6 +59,7 @@ gulp.task('data:seed', function() {
   .catch(function(err) {
     console.error(err);
     knexInstance.destroy();
+    return process.exit(1);
   });
 });
 
