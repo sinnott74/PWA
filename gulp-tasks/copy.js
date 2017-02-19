@@ -8,16 +8,16 @@ gulp.task('copy:watch', function() {
 
 gulp.task('copy:cleanRoot', function(cb) {
   del([GLOBAL.config.dest + '/*.{json,txt,ico}'], {dot: true})
-    .then(function() {
-      cb();
-    });
+  .then(function() {
+    cb();
+  });
 });
 
 gulp.task('copy:root', ['copy:cleanRoot'], function() {
   return gulp.src([
-      GLOBAL.config.src + '/*.{json,txt,ico}',
-    ])
-    .pipe(gulp.dest(GLOBAL.config.dest));
+    GLOBAL.config.src + '/*.{json,txt,ico}'
+  ])
+  .pipe(gulp.dest(GLOBAL.config.dest));
 });
 
 gulp.task('copy', function(cb) {
