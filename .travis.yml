@@ -14,15 +14,10 @@ cache:
 services:
   - postgresql
 
-postgres:
-  adapter: postgresql
-  database: pwadb
-  username: postgres
-
 # creates the database
 before_script:
+  - echo 'in before before_script'
   - psql -c 'create database pwadb;' -U postgres
-
 
 # Deploy
 # Bluemix
