@@ -30,13 +30,13 @@ APIController.prototype.onRequest = function(req, res) {
     return;
   }
 
-  var viewPath = path.join(
-    __dirname,
-    '/../views',
-    pathConfig.data.view + '.handlebars'
-  );
+  // var viewPath = path.join(
+  //   __dirname,
+  //   '/../views',
+  //   pathConfig.data.view + '.handlebars'
+  // );
 
-  this.handlebarsInstance.render(viewPath, pathConfig)
+  this.handlebarsInstance.render(pathConfig.data.view, pathConfig)
     .then(function(renderedTemplate) {
       res.json({
         title: pathConfig.data.title,
