@@ -12,6 +12,11 @@ cache:
 services:
   - postgresql
 
+# creates the database
+before_script:
+  - psql -c 'create database pwadb;' -U postgres
+
+
 # Deploy
 # Bluemix
 deploy:
