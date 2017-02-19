@@ -1,0 +1,8 @@
+*** Migration Notes ***
+
+Create a migration file:
+  node_modules/knex/bin/cli.js migrate:make <tablename> --knexfile ./server/src/data/knexfile.js
+
+Create a seed file:
+  node_modules/knex/bin/cli.js seed:make <seedname> --knexfile ./server/src/data/knexfile.js
+
