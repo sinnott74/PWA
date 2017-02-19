@@ -50,7 +50,7 @@ gulp.task('data:rollback', function() {
   });
 });
 
-gulp.task('data:seed', function() {
+gulp.task('data:seed', ['data:latest'], function() {
   var knexInstance = knex();
   return knexInstance.seed.run(seedConfig)
   .then(function() {
