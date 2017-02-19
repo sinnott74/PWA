@@ -22,7 +22,7 @@ Create Database:
     createdb <databasename>
 
 Open Database:
-    psql <databasename>
+    psql <databasename> -U postgres
     psql -h <host> -p <port> -U <user> -W <databasename>    // Note: -W specifies a password will be prompted
 
 Quit Database:
@@ -30,3 +30,7 @@ Quit Database:
 
 Default port:
     5432
+
+Created default development user:
+    CREATE USER postgres PASSWORD '';
+    GRANT ALL ON ALL TABLES IN SCHEMA public TO postgres;
