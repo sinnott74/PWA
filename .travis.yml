@@ -15,10 +15,8 @@ services:
   - postgresql
 
 # creates the database
-before_script:
+before_install:
   - psql -c 'create database pwadb;' -U postgres
-script:
-  - echo 'in script'
 
 # Deploy
 # Bluemix
