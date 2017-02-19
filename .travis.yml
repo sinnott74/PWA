@@ -2,6 +2,8 @@ language: node_js
 node_js:
   - '4.1'
 
+sudo: required
+
 # Cache npm inbetween builds to improve build time
 # Documentaion - https://docs.travis-ci.com/user/caching/
 cache:
@@ -11,6 +13,11 @@ cache:
 # registering to user postgresql database
 services:
   - postgresql
+
+postgres:
+  adapter: postgresql
+  database: pwadb
+  username: postgres
 
 # creates the database
 before_script:
