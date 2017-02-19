@@ -44,7 +44,7 @@
     "gulp-if": "^2.0.0",
     "gulp-imagemin": "^2.3.0",
     "gulp-license": "^1.0.0",
-    "gulp-minify-css": "^1.2.1",
+    "gulp-clean-css": "^3.0.2",
     "gulp-minify-html": "^1.0.4",
     "gulp-nodemon": "^2.0.4",
     "gulp-rename": "^1.2.2",

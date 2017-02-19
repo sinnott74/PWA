@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var del = require('del');
 var gulpif = require('gulp-if');
 var runSequence = require('run-sequence');
-var minifyCSS = require('gulp-minify-css');
+var cleanCSS = require('gulp-clean-css');
 var autoprefixer = require('gulp-autoprefixer');
 var sass = require('gulp-sass');
 var sasslint = require('gulp-sass-lint');
@@ -42,7 +42,7 @@ gulp.task('styles:sass', function() {
     .pipe(gulpif(GLOBAL.config.env !== 'prod', sourcemaps.init()))
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer(AUTOPREFIXER_BROWSERS))
-    .pipe(gulpif(GLOBAL.config.env === 'prod', minifyCSS()))
+    .pipe(gulpif(GLOBAL.config.env === 'prod', cleanCSS()))
     .pipe(license(GLOBAL.config.license, {tiny: true}))
     .pipe(gulpif(GLOBAL.config.env !== 'prod', sourcemaps.write()))
     .pipe(gulp.dest(GLOBAL.config.dest));
