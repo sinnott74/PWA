@@ -12,6 +12,7 @@ module.exports = {
   development: {
     client: 'pg',
     connection: {
+      username: 'postgres',
       database: 'pwadb',
       host: 'localhost'
     },
