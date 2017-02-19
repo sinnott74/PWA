@@ -1,18 +1,12 @@
 'use strict';
 
 var knexConfig = require('../data/knexfile.js');
-var dbConfig;
+var mode = process.env.NODE_ENV || 'development';
+var dbConfig = knexConfig[mode];
 
-if (process.env.NODE_ENV === 'production') {
-  console.log('production');
-  dbConfig = knexConfig.production;
-} else {
-  console.log('not production');
-  dbConfig = knexConfig.development;
-}
+console.log('Database mode used: ' + mode);
 console.log('dbConfig used:');
 console.log(dbConfig.connection);
 var knex = require('knex')(dbConfig);
-console.log('knex set up');
 
 module.exports = knex;
