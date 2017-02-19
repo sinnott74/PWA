@@ -2,9 +2,6 @@
 
 var pathConfigs = require('../models/path-config.js');
 
-var userDAO = require('../DAO/usersDAO');
-var knex = require('../core/database');
-
 function StaticPageController() {
 }
 
@@ -12,19 +9,6 @@ function StaticPageController() {
 // template
 StaticPageController.prototype.onRequest = function(req, res) {
   console.log('Page request for: ' + req.path);
-
-  knex.schema.createTableIfNotExists('users', function(table) {
-    table.increments();
-    table.string('name');
-    table.timestamps();
-  })
-  .then(function() {
-    return userDAO.create({name: 'test'});
-  })
-  .then(userDAO.list)
-  .then(function(rows) {
-    console.log(rows);
-  });
 
   var pathConfig = pathConfigs.getConfig(req.path);
   if (!pathConfig) {
