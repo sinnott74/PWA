@@ -30,11 +30,11 @@ function ServerController() {
   // use compression
   expressApp.use(compression());
 
-  // log all paths
-  expressApp.use(function(req, res, next) {
-    console.log(req.path);
-    next();
-  });
+  // // log all paths
+  // expressApp.use(function(req, res, next) {
+  //   console.log(req.path);
+  //   next();
+  // });
 
   // force https on Bluemix
   if (!cfenv.getAppEnv().isLocal) {
