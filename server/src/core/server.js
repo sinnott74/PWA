@@ -26,6 +26,9 @@ expressApp.set('views', path.join(__dirname, '/../views'));
 expressApp.engine('handlebars', handleBarsInstance.engine);
 expressApp.set('view engine', 'handlebars');
 
+// prevents express setting x-powered-by header
+expressApp.disable('x-powered-by');
+
 // use compression
 expressApp.use(compression());
 
