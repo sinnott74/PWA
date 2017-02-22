@@ -9,12 +9,12 @@
     <meta id="theme-color" name="theme-color" content="#4527A0">
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/images/chrome-touch-icon-192x192.png" sizes="192x192" type="image/png">
-    
+
 
     <script>
         (function(document) {
         'use strict';
-        
+
         // Feature detection
         // Check if Web Components are supported
         var webComponentsSupported = ('registerElement' in document
@@ -43,7 +43,7 @@
 
     {{!-- Styling app-header to look like itself before its upgraded to a polymer element & fully styled--}}
     <style>
-        app-header:unresolved {
+        app-header {
            height: 56px;
            width: 100%;
            position: fixed;
