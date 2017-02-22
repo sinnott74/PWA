@@ -54,16 +54,8 @@ if (!cfenv.getAppEnv().isLocal) {
 expressApp.use('/', express.static(path.join(__dirname + '/../../../build/')));
 
 // Define routes
-// expressApp.get('/api*', function(req, res) {
-//   new APIController(handleBarsInstance).onRequest(req, res);
-// });
-
 expressApp.use('/api', apiRouter);
 expressApp.use('/', staticPageRouter);
-
-// expressApp.get('/*', function(req, res) {
-//   new PageController().onRequest(req, res);
-// });
 
 var serverController = {};
 serverController.startServer = function(port) {
