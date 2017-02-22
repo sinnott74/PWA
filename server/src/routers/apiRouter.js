@@ -1,5 +1,5 @@
 var express = require('express');
-var router = express.Router();
+var router = new express.Router();
 var APIController = require('../controllers/api-controller');
 
 router.get('/*', function(req, res) {
