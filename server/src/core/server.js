@@ -7,11 +7,11 @@ var compression = require('compression');
 var cfenv = require('cfenv'); // cloud foundry environment variables
 
 // routers
-var APIController = require('../controllers/api-controller');
-var PageController = require('../controllers/static-page-controller');
+var apiRouter = require('../routers/apiRouter');
+var staticPageRouter = require('../routers/staticPageRouter');
 
 // initiate database connection
-var knex = require('./database');
+require('./database');
 
 var expressApp = express();
 
@@ -54,12 +54,16 @@ if (!cfenv.getAppEnv().isLocal) {
 expressApp.use('/', express.static(path.join(__dirname + '/../../../build/')));
 
 // Define routes
-expressApp.get('/api*', function(req, res) {
-  new APIController(handleBarsInstance).onRequest(req, res);
-});
-expressApp.get('/*', function(req, res) {
-  new PageController().onRequest(req, res);
-});
+// expressApp.get('/api*', function(req, res) {
+//   new APIController(handleBarsInstance).onRequest(req, res);
+// });
+
+expressApp.use('/api', apiRouter);
+expressApp.use('/', staticPageRouter);
+
+// expressApp.get('/*', function(req, res) {
+//   new PageController().onRequest(req, res);
+// });
 
 var serverController = {};
 serverController.startServer = function(port) {
