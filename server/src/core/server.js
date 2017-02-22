@@ -5,6 +5,7 @@ var express = require('express');
 var exphbs = require('express-handlebars');
 var compression = require('compression');
 var cfenv = require('cfenv'); // cloud foundry environment variables
+var forceHttps = require('../middleware/forceHttps');
 
 // routers
 var apiRouter = require('../routers/apiRouter');
@@ -40,14 +41,7 @@ expressApp.use(compression());
 
 // force https on Bluemix
 if (!cfenv.getAppEnv().isLocal) {
-  expressApp.use(function(req, res, next) {
-    if (req.secure || req.headers['x-forwarded-proto'] === 'https') {
-      // returns true if protocol = https
-      next();
-    } else {
-      res.redirect('https://' + req.headers.host + req.url);
-    }
-  });
+  expressApp.use(forceHttps);
 }
 
 // Define static assets path - i.e. styles, scripts etc.
