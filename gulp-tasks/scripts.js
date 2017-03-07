@@ -41,7 +41,7 @@ function compileES6Bundles(browserifyBundles, cb) {
         .on('error', function(err) {
           gutil.log('Browserify Error', err);
           this.emit('end');
-        }) 
+        })
         .pipe(source(bundle.outputFilename))
         .pipe(replace(/@VERSION@/g, GLOBAL.config.version))
 
