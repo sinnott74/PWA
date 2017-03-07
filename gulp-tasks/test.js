@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var eslint = require('gulp-eslint');
-var gutil = require('gulp-util');
 
 // the following line exposes two gulp tasks test:local & test:remote
 // These run the web component tester locally or using sauce labs respectively
@@ -25,10 +24,10 @@ gulp.task('test:eslint', function() {
     .pipe(eslint.failAfterError());
 });
 
-// check if SAUCE_USERNAME & SAUCE_ACCESS_KEY environment variable are set, run wct using sauce labs
-// otherwise run local wct
+// check if running in CI environment before running WCT through saucelabs
+// otherwise run WCT locally
 var wctTask;
-if(gutil.env.SAUCE_USERNAME && gutil.env.SAUCE_ACCESS_KEY) {
+if(process.env.CI) {
   wctTask = 'test:remote';
 } else {
   wctTask = 'test:local';
