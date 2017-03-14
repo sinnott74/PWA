@@ -36,11 +36,16 @@ class DAO {
 
   /**
    * Create a entry on this table
-   * @paramater {object} entity
+   * @param {object} entity
    * @returns {Promise<Number>} A promise which resolves to an ID of an entity
    */
   create(entity) {
+    // validate the entity
     this.validate(entity);
+
+    // pre create hook point
+    this.preCreate(entity);
+
     return knex(this.tableName).insert(entity).returning('id')
     .then((idArray) => {
       // check that only 1 ID is returned
@@ -56,11 +61,13 @@ class DAO {
 
   /**
    * Reads a entry from this table
-   * @paramater {number} id of an entity
+   * @param {number} id of an entity
    * @returns {Promise<Object>} A promise which resolves to entity
    */
   read(id) {
+    // validate the ID
     this.validateID(id);
+
     return knex(this.tableName).where('id', id)
     .then((entityArray) => {
       // check that only 1 entity is returned
@@ -76,22 +83,26 @@ class DAO {
 
   /**
    * Updates a entry on this table
-   * @paramater {object} entity containing a valid id and the details to update to
+   * @param {object} entity containing a valid id and the details to update to
    * @returns {Promise}
    */
   update(entity) {
+    // validate the ID
     this.validateID(entity.id);
+
     this.validate(entity);
     return knex(this.tableName).update(entity).where('id', entity.id);
   }
 
   /**
    * Deletes a entry on this table
-   * @paramater {object} entity containing a valid id
+   * @param {object} entity containing a valid id
    * @returns {Promise}
    */
   delete(entity) {
+    // validate the ID
     this.validateID(entity.id);
+
     this.validate(entity);
     return knex(this.tableName).del().where('id', entity.id);
   }
@@ -106,7 +117,7 @@ class DAO {
 
   /**
    * Validates that the given parameter is a number
-   * @paramater {number} id of an entity
+   * @param {number} id of an entity
    * @throws {TypeError} if given id is not a number
    */
   validateID(id) {
@@ -114,6 +125,13 @@ class DAO {
     if(isNaN(id)) {
       throw new TypeError('ID must be a number');
     }
+  }
+
+  /**
+   * Hook point called before creating a record on the database.
+   * @param {*} entity
+   */
+  preCreate(entity) {
   }
 }
 
