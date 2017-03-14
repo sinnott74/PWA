@@ -28,6 +28,8 @@ GLOBAL.config = {
   port: 8080,
   src: 'webclient/src',
   dest: 'build',
+  serverSrc: 'server/src',
+  serverTest: 'server/test',
   version: projectPackage.version,
   license: 'Apache'
 };
