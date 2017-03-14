@@ -2,10 +2,15 @@ var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 var mocha = require('gulp-mocha');
 var util = require('gulp-util');
+var cfenv = require('cfenv');
 
-// the following line exposes two gulp tasks test:local & test:remote
-// These run the web component tester locally or using sauce labs respectively
-require('web-component-tester').gulp.init(gulp);
+// If running in Bluemix don't load WCT
+if(cfenv.getAppEnv().isLocal) {
+  // the following line exposes two gulp tasks test:local & test:remote
+  // These run the web component tester locally or using sauce labs respectively
+  require('web-component-tester').gulp.init(gulp);
+}
+
 
 // check if running in CI environment before running WCT through saucelabs
 // otherwise run WCT locally
