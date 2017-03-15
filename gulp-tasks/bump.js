@@ -4,7 +4,7 @@ var fs = require('fs');
 
 gulp.task('update-pkg', function() {
   return gulp.src('./package.json')
-    .pipe(bump({type:'patch'}))
+    .pipe(bump({type: 'patch'}))
     .pipe(gulp.dest('./'));
 });
 
