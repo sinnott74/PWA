@@ -37,7 +37,7 @@ gulp.task('service-worker', ['styles', 'images', 'scripts', 'vulcanize'], functi
       ]
     },
     stripPrefix: GLOBAL.config.dest,
-    navigateFallback: '/app-shell',
+    // navigateFallback: '/app-shell',
     cacheId: packageName,
 
     // Turn on service worker for production only
