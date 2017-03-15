@@ -33,6 +33,14 @@ var pathConfigs = {
     remoteStyles: [],
     remoteScripts: ['/scripts/core.js'],
     entity: 'users'
+  },
+  '/404': {
+    view: '404',
+    title: '404',
+    inlineStyles: getFileContents(['/styles/core.css']),
+    remoteStyles: [],
+    remoteScripts: ['/scripts/core.js'],
+    entity: 'users'
   }
 };
 
@@ -59,6 +67,12 @@ module.exports = {
 
     return {
       'data': object
+    };
+  },
+
+  get404: function() {
+    return {
+      'data': pathConfigs['/404']
     };
   }
 };

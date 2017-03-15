@@ -1,7 +1,7 @@
 'use strict';
 
 var path = require('path');
-var pathConfigManager = require('../core/PathConfigManager');
+var pathConfigs = require('../models/path-config.js');
 var handlebarsInstance = require('../core/handlebars');
 
 function APIController() {
@@ -26,7 +26,11 @@ APIController.prototype.onRequest = function(req, res) {
 
   // var urlPath = req.path;
 
-  var pathConfig = pathConfigManager.getConfig(req, res);
+  var pathConfig = pathConfigs.getConfig(req.path);
+  if (!pathConfig) {
+    res.status(404).send();
+    return;
+  }
 
   var viewPath = path.join(
     __dirname,
@@ -35,19 +39,18 @@ APIController.prototype.onRequest = function(req, res) {
   );
 
   handlebarsInstance.render(viewPath, pathConfig)
-    .then(function(renderedTemplate) {
-      res.json({
-        title: pathConfig.data.title,
-        partialinlinestyles: pathConfig.data.inlineStyles,
-        partialremotestyles: pathConfig.data.remoteStyles,
-        partialscripts: pathConfig.data.remoteScripts,
-        partialhtml: renderedTemplate
-      });
-    })
-    .catch(function(err) {
-      res.status(500).send();
-    }
-  );
+  .then(function(renderedTemplate) {
+    res.json({
+      title: pathConfig.data.title,
+      partialinlinestyles: pathConfig.data.inlineStyles,
+      partialremotestyles: pathConfig.data.remoteStyles,
+      partialscripts: pathConfig.data.remoteScripts,
+      partialhtml: renderedTemplate
+    });
+  })
+  .catch(function(err) {
+    res.status(500).send();
+  });
 };
 
 module.exports = APIController;
