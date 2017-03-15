@@ -52,10 +52,7 @@ class DAO {
       if (idArray.length !== 1) {
         throw new Error(this.tableName + ' insertion failed');
       }
-      // return a promise containing that single ID
-      return new Promise(function(resolve, reject) {
-        resolve(idArray[0]);
-      });
+      return idArray[0];
     });
   }
 
@@ -74,10 +71,7 @@ class DAO {
       if (entityArray.length !== 1) {
         throw new Error(this.tableName + ' read failed');
       }
-      // return a promise containing that single entity
-      return new Promise(function(resolve, reject) {
-        resolve(entityArray[0]);
-      });
+      return entityArray[0];
     });
   }
 
