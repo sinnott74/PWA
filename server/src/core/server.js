@@ -2,10 +2,10 @@
 
 var path = require('path');
 var express = require('express');
-var exphbs = require('express-handlebars');
 var compression = require('compression');
 var cfenv = require('cfenv'); // cloud foundry environment variables
 var forceHttps = require('../middleware/forceHttps');
+var handleBarsInstance = require('./handlebars');
 
 // routers
 var apiRouter = require('../routers/apiRouter');
@@ -15,12 +15,6 @@ var staticPageRouter = require('../routers/staticPageRouter');
 require('./database');
 
 var expressApp = express();
-
-var handleBarsInstance = exphbs.create({
-  defaultLayout: 'default',
-  layoutsDir: path.join(__dirname, '/../views/layouts'),
-  partialsDir: path.join(__dirname, '/../views/partials')
-});
 
 // Set up the use of handle bars and set the path for views and layouts
 expressApp.set('views', path.join(__dirname, '/../views'));
