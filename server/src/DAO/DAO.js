@@ -66,13 +66,14 @@ class DAO {
     this.validateID(id);
 
     return knex(this.tableName).where('id', id)
-    .then((entityArray) => {
-      // check that only 1 entity is returned
-      if (entityArray.length !== 1) {
-        throw new Error(this.tableName + ' read failed');
+      .then((entityArray) => {
+        // check that only 1 entity is returned
+        if (entityArray.length !== 1) {
+          throw new Error(this.tableName + ' read failed');
+        }
+        return entityArray[0];
       }
-      return entityArray[0];
-    });
+    );
   }
 
   /**
@@ -83,7 +84,7 @@ class DAO {
   update(entity) {
     // validate the ID
     this.validateID(entity.id);
-
+    // call subclasses validate implemenation
     this.validate(entity);
     return knex(this.tableName).update(entity).where('id', entity.id);
   }
@@ -96,7 +97,7 @@ class DAO {
   delete(entity) {
     // validate the ID
     this.validateID(entity.id);
-
+    // call subclasses validate implemenation
     this.validate(entity);
     return knex(this.tableName).del().where('id', entity.id);
   }
@@ -115,7 +116,7 @@ class DAO {
    * @throws {TypeError} if given id is not a number
    */
   validateID(id) {
-    console.log(id);
+    // check its a number
     if(isNaN(id)) {
       throw new TypeError('ID must be a number');
     }
