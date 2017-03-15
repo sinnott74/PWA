@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var gutil = require('gulp-util');
 var path = require('path');
 var fs = require('fs');
 var swPrecache = require('sw-precache');
@@ -39,6 +40,7 @@ gulp.task('service-worker', ['styles', 'images', 'scripts', 'vulcanize'], functi
     stripPrefix: GLOBAL.config.dest,
     // navigateFallback: '/app-shell',
     cacheId: packageName,
+    logger: gutil.log,
 
     // Turn on service worker for production only
     handleFetch: (GLOBAL.config.env === 'prod')
