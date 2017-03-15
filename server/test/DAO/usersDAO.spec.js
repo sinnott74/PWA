@@ -1,5 +1,5 @@
 'use strict';
-// node_modules/mocha/bin/mocha server/test/DAO/userDAO.spec.js
+// node_modules/mocha/bin/mocha server/test/DAO/usersDAO.spec.js
 var assert = require('assert');
 var userDAO = require('../../src/DAO/usersDAO');
 
@@ -88,7 +88,10 @@ describe('userDAO tests', function() {
     userDAO.preCreate(user);
     console.log(`Password was ${testPassword}, but then became ${user.password}`);
 
+    // check password changed
     assert.notEqual(user.password, testPassword);
+    // check its same length as expected hash length
+    assert.equal(user.password.length, 60);
   });
 });
 
