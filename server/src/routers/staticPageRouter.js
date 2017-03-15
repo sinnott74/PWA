@@ -2,8 +2,10 @@ var express = require('express');
 var router = new express.Router();
 var PageController = require('../controllers/static-page-controller');
 
-router.get('/*', function(req, res) {
-  new PageController().onRequest(req, res);
+var pageController = new PageController();
+
+router.all('/*', function(req, res) {
+  pageController.onRequest(req, res);
 });
 
 module.exports = router;

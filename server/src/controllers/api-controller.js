@@ -1,10 +1,10 @@
 'use strict';
 
 var path = require('path');
-var pathConfigs = require('../models/path-config.js');
+var pathConfigManager = require('../core/PathConfigManager');
+var handlebarsInstance = require('../core/handlebars');
 
-function APIController(handleBarsInstance) {
-  this.handlebarsInstance = handleBarsInstance;
+function APIController() {
 }
 
 // This method looks at the request path and renders the appropriate handlebars
@@ -12,23 +12,21 @@ function APIController(handleBarsInstance) {
 APIController.prototype.onRequest = function(req, res) {
   console.log('API request for: ' + req.path);
 
-  var urlSections = req.path.split('/');
-  urlSections = urlSections.filter(function(sectionString) {
-    return sectionString.length > 0;
-  });
+  // var urlSections = req.path.split('/');
+  // urlSections = urlSections.filter(function(sectionString) {
+  //   return sectionString.length > 0;
+  // });
 
-  var urlPath = null;
-  if (urlSections.length === 1) {
-    urlPath = '/';
-  } else {
-    urlPath = '/' + urlSections[1];
-  }
+  // var urlPath = null;
+  // if (urlSections.length === 1) {
+  //   urlPath = '/';
+  // } else {
+  //   urlPath = '/' + urlSections[1];
+  // }
 
-  var pathConfig = pathConfigs.getConfig(urlPath);
-  if (!pathConfig) {
-    res.status(404).send();
-    return;
-  }
+  // var urlPath = req.path;
+
+  var pathConfig = pathConfigManager.getConfig(req, res);
 
   var viewPath = path.join(
     __dirname,
@@ -36,7 +34,7 @@ APIController.prototype.onRequest = function(req, res) {
     pathConfig.data.view + '.handlebars'
   );
 
-  this.handlebarsInstance.render(viewPath, pathConfig)
+  handlebarsInstance.render(viewPath, pathConfig)
     .then(function(renderedTemplate) {
       res.json({
         title: pathConfig.data.title,
@@ -48,7 +46,8 @@ APIController.prototype.onRequest = function(req, res) {
     })
     .catch(function(err) {
       res.status(500).send();
-    });
+    }
+  );
 };
 
 module.exports = APIController;

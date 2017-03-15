@@ -1,6 +1,6 @@
 'use strict';
 
-var pathConfigs = require('../models/path-config.js');
+var pathConfigManager = require('../core/PathConfigManager');
 
 function StaticPageController() {
 }
@@ -10,11 +10,7 @@ function StaticPageController() {
 StaticPageController.prototype.onRequest = function(req, res) {
   console.log('Page request for: ' + req.path);
 
-  var pathConfig = pathConfigs.getConfig(req.path);
-  if (!pathConfig) {
-    res.status(404).send();
-    return;
-  }
+  var pathConfig = pathConfigManager.getConfig(req, res);
 
   switch (req.path) {
   case '/app-shell':
