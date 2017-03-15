@@ -90,14 +90,5 @@ describe('userDAO tests', function() {
 
     assert.notEqual(user.password, testPassword);
   });
-
-  /**
-   * Tests usersDAO#first.
-   */
-  it('should call first', function() {
-    var user = userDAO.first(14).toSQL();
-
-    console.log(user);
-  });
 });
 
