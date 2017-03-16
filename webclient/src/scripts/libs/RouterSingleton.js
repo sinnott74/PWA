@@ -15,7 +15,7 @@ export default class RouterSingleton {
 class Router {
   constructor() {
     this.routes = {};
-    this.currentPath = null;
+    this.currentPath = window.location.pathname;
     this.defaultActivity = null;
 
     window.addEventListener('popstate', (e) => {
