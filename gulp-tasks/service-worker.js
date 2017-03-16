@@ -20,6 +20,12 @@ gulp.task('service-worker', ['styles', 'images', 'scripts', 'vulcanize'], functi
       GLOBAL.config.dest + '/manifest.json'
     ],
     dynamicUrlToDependencies: {
+      '/': [
+        'server/src/views/layouts/default.handlebars',
+        'server/src/views/partials/open-page.handlebars',
+        'server/src/views/partials/close-page.handlebars',
+        GLOBAL.config.dest + '/styles/core.css'
+      ],
       '/app-shell': [
         'server/src/views/layouts/app-shell.handlebars',
         'server/src/views/partials/open-page.handlebars',
@@ -38,7 +44,7 @@ gulp.task('service-worker', ['styles', 'images', 'scripts', 'vulcanize'], functi
       ]
     },
     stripPrefix: GLOBAL.config.dest,
-    // navigateFallback: '/app-shell',
+    // navigateFallback: '/',
     cacheId: packageName,
     logger: gutil.log,
 
