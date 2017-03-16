@@ -7,40 +7,35 @@ var pathConfigs = {
     title: 'Index',
     inlineStyles: getFileContents(['/styles/core.css']),
     remoteStyles: [],
-    remoteScripts: ['/scripts/core.js'],
-    entity: 'users'
+    remoteScripts: []
   },
   '/url-1': {
     view: 'url-1',
     title: 'URL 1',
     inlineStyles: getFileContents(['/styles/core.css']),
     remoteStyles: [],
-    remoteScripts: ['/scripts/core.js'],
-    entity: 'users'
+    remoteScripts: []
   },
   '/url-2': {
     view: 'url-2',
     title: 'URL 2',
     inlineStyles: getFileContents(['/styles/core.css']),
     remoteStyles: [],
-    remoteScripts: ['/scripts/core.js'],
-    entity: 'users'
+    remoteScripts: []
   },
   '/app-shell': {
     view: '',
     title: 'App Shell',
     inlineStyles: getFileContents(['/styles/core.css']),
     remoteStyles: [],
-    remoteScripts: ['/scripts/core.js'],
-    entity: 'users'
+    remoteScripts: []
   },
   '/404': {
     view: '404',
     title: '404',
     inlineStyles: getFileContents(['/styles/core.css']),
     remoteStyles: [],
-    remoteScripts: ['/scripts/core.js'],
-    entity: 'users'
+    remoteScripts: []
   }
 };
 
