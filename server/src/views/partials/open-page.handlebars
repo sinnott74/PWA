@@ -20,57 +20,11 @@
     <meta name="msapplication-TileImage" content="images/ms-touch-icon-144x144.png">
     <meta name="msapplication-TileColor" content="#4527A0">
 
-    <script>
-        (function(document) {
-        'use strict';
-
-        // Feature detection
-        // Check if Web Components are supported
-        var isWebComponentsSupported = ('registerElement' in document
-            && 'import' in document.createElement('link')
-            && 'content' in document.createElement('template'));
-        // Load Web Components when not supported
-        if (!isWebComponentsSupported) {
-            var script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.23/webcomponents-lite.min.js';
-            script.async = true;
-            document.head.appendChild(script);
-        };
-
-        // Promise feature detect
-        var isPromiseSupported = (typeof Promise !== "undefined");
-        if(!isPromiseSupported) {
-            var script = document.createElement('script');
-            script.src = 'https://www.promisejs.org/polyfills/promise-7.0.4.min.js';
-            document.head.appendChild(script);
-        }
-
-        // Fetch feature detect
-        var isFetchSupported = window.fetch;
-        if(!isFetchSupported) {
-            var script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js';
-            document.head.appendChild(script);
-        }
-
-        })(document);
-    </script>
+    {{> polyfills}}
 
     <link rel="import" href="/elements/elements.html" async>
 
-    {{!-- Styling app-header to look like itself before its upgraded to a polymer element & fully styled--}}
-    <style>
-        app-header {
-           height: 56px;
-           width: 100%;
-           position: fixed;
-           z-index:1;
-           background: #3f51b5;
-           box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14),
-                       0 2px 9px 1px rgba(0, 0, 0, .12),
-                       0 4px 2px -2px rgba(0, 0, 0, .2);
-        }
-    </style>
+    {{> unresolved-web-compontent-styles}}
 
     <style type="text/css">{{{data.inlineStyles}}}</style>
 </head>
