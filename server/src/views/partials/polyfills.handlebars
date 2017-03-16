@@ -1,0 +1,35 @@
+<script>
+    (function(document) {
+    'use strict';
+
+    // Feature detection
+    // Check if Web Components are supported
+    var isWebComponentsSupported = ('registerElement' in document
+        && 'import' in document.createElement('link')
+        && 'content' in document.createElement('template'));
+    // Load Web Components when not supported
+    if (!isWebComponentsSupported) {
+        var script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.23/webcomponents-lite.min.js';
+        script.async = true;
+        document.head.appendChild(script);
+    };
+
+    // Promise feature detect
+    var isPromiseSupported = (typeof Promise !== "undefined");
+    if(!isPromiseSupported) {
+        var script = document.createElement('script');
+        script.src = 'https://www.promisejs.org/polyfills/promise-7.0.4.min.js';
+        document.head.appendChild(script);
+    }
+
+    // Fetch feature detect
+    var isFetchSupported = window.fetch;
+    if(!isFetchSupported) {
+        var script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js';
+        document.head.appendChild(script);
+    }
+
+    })(document);
+</script>
