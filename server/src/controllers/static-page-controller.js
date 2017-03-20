@@ -15,6 +15,7 @@ StaticPageController.prototype.onRequest = function(req, res) {
     pathConfig = pathConfigs.get404();
   }
 
+  // NOTE res.render has access to res.locals - which is where the model is stored
   if(pathConfig) {
     switch (req.path) {
     case '/app-shell':

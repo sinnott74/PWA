@@ -32,6 +32,10 @@ APIController.prototype.onRequest = function(req, res) {
     return;
   }
 
+  // rendering html using handlebars instead of delegating to express
+  // must set model manually
+  pathConfig.model = res.locals.model;
+
   var viewPath = path.join(
     __dirname,
     '/../views',
