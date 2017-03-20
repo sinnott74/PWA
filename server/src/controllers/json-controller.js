@@ -1,7 +1,5 @@
 'use strict';
 
-var pathConfigs = require('../models/path-config.js');
-
 function JSONController() {
 }
 
