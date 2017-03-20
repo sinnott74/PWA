@@ -9,6 +9,7 @@ var handleBarsInstance = require('./handlebars');
 
 // routers
 var apiRouter = require('../routers/apiRouter');
+var jsonRouter = require('../routers/jsonRouter');
 var staticPageRouter = require('../routers/staticPageRouter');
 
 // initiate database connection
@@ -43,6 +44,7 @@ expressApp.use('/', express.static(path.join(__dirname + '/../../../build/')));
 
 // Define routes
 expressApp.use('/api', apiRouter);
+expressApp.use('/json', jsonRouter);
 expressApp.use('/', staticPageRouter);
 
 var serverController = {};
