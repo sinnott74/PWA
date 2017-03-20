@@ -19,7 +19,7 @@ gulp.task('images', ['images:clean'], function() {
     .pipe(gulpif(GLOBAL.config.env === 'prod', imagemin({
       progressive: true,
       interlaced: true,
-      svgoPlugins: [{removeViewBox: false}],
+      svgoPlugins: [{removeViewBox: false}]
     })))
     .pipe(gulp.dest(GLOBAL.config.dest));
 });
