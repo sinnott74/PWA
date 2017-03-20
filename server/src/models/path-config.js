@@ -23,6 +23,13 @@ var pathConfigs = {
     remoteStyles: [],
     remoteScripts: []
   },
+  '/users': {
+    view: 'users',
+    title: 'Users',
+    inlineStyles: getFileContents(['/styles/core.css']),
+    remoteStyles: [],
+    remoteScripts: []
+  },
   '/app-shell': {
     view: '',
     title: 'App Shell',
