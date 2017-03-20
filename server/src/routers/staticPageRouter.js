@@ -5,10 +5,8 @@ var businessLogic = require('../facades/businessLogicMiddleware');
 
 var pageController = new PageController();
 
-router.all('/*', businessLogic);
-
-router.all('/*', function(req, res) {
-  pageController.onRequest(req, res);
-});
+router.route('/*')
+  .all(businessLogic)
+  .all(pageController.onRequest);
 
 module.exports = router;

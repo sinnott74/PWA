@@ -5,10 +5,8 @@ var businessLogic = require('../facades/businessLogicMiddleware');
 
 var jsonController = new JSONController();
 
-router.all('/*', businessLogic);
-
-router.all('/*', function(req, res) {
-  jsonController.onRequest(req, res);
-});
+router.route('/*')
+  .all(businessLogic)
+  .all(jsonController.onRequest);
 
 module.exports = router;

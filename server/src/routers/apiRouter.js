@@ -5,10 +5,8 @@ var businessLogic = require('../facades/businessLogicMiddleware');
 
 var apiController = new APIController();
 
-router.all('/*', businessLogic);
-
-router.all('/*', function(req, res) {
-  apiController.onRequest(req, res);
-});
+router.route('/*')
+  .all(businessLogic)
+  .all(apiController.onRequest);
 
 module.exports = router;
