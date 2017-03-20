@@ -4,12 +4,12 @@
 
 <dom-module id="app-header">
   <!-- Defines the element's style and local DOM -->
-<!--   <link rel="stylesheet" type="text/css" href="app-header.css"> -->
+  <!-- <link rel="stylesheet" type="text/css" href="app-header.css"> -->
   <template>
     <header class="header">
-        <paper-icon-button role="tab" class="header__menu js-toggle-menu" on-click="handleClick">
-          Toggle nav menu
-        </paper-icon-button>
+      <paper-icon-button role="tab" class="header__menu js-toggle-menu" on-click="handleClick">
+        Toggle nav menu
+      </paper-icon-button>
       <h1 class="header__title">[[title]]</h1>
     </header>
   </template>
@@ -28,7 +28,7 @@
       },
 
       /**
-      * Handles the side navigation button click. 
+      * Handles the side navigation button click.
       * Dispatches a custom open-nav event, which should open the side-nav
       **/
       handleClick : function(e) {
