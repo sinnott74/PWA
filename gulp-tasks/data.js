@@ -5,7 +5,6 @@ var knexConfig = require('../server/src/data/knexfile.js');
 // ie. development/production
 var mode = process.env.NODE_ENV || 'development';
 var dbConfig = knexConfig[mode];
-dbConfig.debug = false;
 
 var knex = function() {
   return require('knex')(dbConfig);
