@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, maximum-scale=1">
-    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="../../bower_components/web-component-tester/browser.js"></script>
+    <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../bower_components/web-component-tester/browser.js"></script>
 
     <!--import element-->
-    <link rel="import" href="../src/elements/app-header/app-header.html">
+    <link rel="import" href="../../src/elements/app-header/app-header.html">
   </head>
   <body>
 
@@ -43,7 +43,7 @@
               assert.equal(e.type, 'open-nav', 'Event type should be open-nav');
               done();
           };
-          
+
           document.addEventListener('open-nav', testEventHandler);
 
           appHeader.handleClick();
@@ -56,14 +56,14 @@
         test('onClick Event', function(done) {
 
           var button = appHeader.querySelector('.js-toggle-menu');
-          
+
             // Create event handler
           testEventHandler = function(e){
               assert.ok(e, 'Event should be defined');
               assert.equal(e.type, 'open-nav', 'Event type should be open-nav');
               done();
           };
-          
+
           document.addEventListener('open-nav', testEventHandler);
           button.click();
         });

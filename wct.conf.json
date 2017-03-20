@@ -1,6 +1,6 @@
 {
   "testTimeout": 300000,
-  "suites": ["webclient/test/"],
+  "suites": ["webclient/test/elements"],
   "plugins": {
     "local": {
       "disabled": false,
