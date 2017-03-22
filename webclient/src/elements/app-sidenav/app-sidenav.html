@@ -15,6 +15,7 @@
           <a role="tab" tabindex="0" class="side-nav__blog-post" href="/">Index</a>
           <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-1">URL 1</a>
           <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-2">URL 2</a>
+          <a role="tab" tabindex="0" class="side-nav__blog-post" href="/users">Users</a>
           <a role="tab" tabindex="0" class="side-nav__blog-post" href="/">Index</a>
           <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-1">URL 1</a>
           <a role="tab" tabindex="0" class="side-nav__blog-post" href="/url-2">URL 2</a>
@@ -60,7 +61,7 @@
         this.edge = document.querySelector('.js-side-nav-edgearea');
         this.body = this.querySelector('.js-side-nav-body');
         this.addEventListener('transitionend', this.onTransitionEnd, false);
-        
+
 
         this.sideNavContentWidth = this.sideNavContent.offsetWidth;
 
@@ -98,7 +99,7 @@
 
         document.addEventListener('open-nav', this._open);
         document.addEventListener('close-nav', this._close);
-        
+
         var event = new Event('side-nav-ready');
         document.dispatchEvent(event);
       },
@@ -123,7 +124,7 @@
         if(oldValue === undefined){
           return;
         }
-        
+
         if(newValue === true){
           this._open();
         } else{
@@ -169,7 +170,7 @@
 
             // if(Math.abs(this.translateX) > (3 * window.devicePixelRatio)){
             //   this.sideNavContent.style.overflowY = 'hidden';
-            // } 
+            // }
 
             this.sideNavTransform = Math.min(0, this.translateX);
             this.sideNavContent.style.transform =
@@ -180,7 +181,7 @@
       },
 
       _handleSideNavTouchEnd: function(e) {
-        
+
         this.touching = false;
         this.direction = "";
 
@@ -198,7 +199,7 @@
         this.sideNavContentWidth = this.sideNavContent.offsetWidth;
         this.edgeTransform = 0;
         this.direction = "";
-        this.edgeTouchStartX = e.touches[0].pageX; 
+        this.edgeTouchStartX = e.touches[0].pageX;
         this.edgeTouchStartY = e.touches[0].pageY;
         this.sideNavContent.style.transform = 'translate3d(-95%, 0 , 0)';
       },
