@@ -33,9 +33,9 @@
       suite('<app-header>', function() {
 
         /**
-        *   Test to assure the correct event is thrown when the handleClick method is called
+        *   Test to assure the correct event is thrown when the handleMenuClick method is called
         **/
-        test('handleClick', function(done) {
+        test('handleMenuClick', function(done) {
 
           // Create event handler
           testEventHandler = function(e){
@@ -46,7 +46,7 @@
 
           document.addEventListener('open-nav', testEventHandler);
 
-          appHeader.handleClick();
+          appHeader.handleMenuClick();
         });
         /*--------------------------------------------------------------------------------*/
 
