@@ -1,4 +1,29 @@
 app-options {
-  position: relative;
+  position: absolute;
   background-color: white;
+  top: $header-height;
+  right: 10px;
+  width: 200px;
+}
+
+.options-view {
+  outline: none;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
+    0 3px 1px -2px rgba(0, 0, 0, .2),
+    0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+.options__item {
+  font-size: 14px;
+  outline: none;
+  height: 48px;
+  width: 100%;
+  text-align: left;
+  display: block;
+  border: 0;
+  color: $text-dark;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
