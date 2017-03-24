@@ -39,7 +39,6 @@
     &:focus,
     &:hover {
       opacity: 1;
-      //border: 1px solid white;
     }
   }
 
@@ -54,6 +53,11 @@
     transition: opacity .333s cubic-bezier(0, 0, .21, 1);
     border: 0;
     outline: none;
+
+    &:focus,
+    &:hover {
+      opacity: 1;
+    }
   }
 
   &__title {
