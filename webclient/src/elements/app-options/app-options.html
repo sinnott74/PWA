@@ -1,0 +1,74 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+
+<dom-module id="app-options">
+
+  <!-- Defines the element's style and local DOM -->
+  <!-- <link rel="stylesheet" type="text/css" href="app-toast.css"> -->
+  <template>
+    <aside class="options-view js-options-view" tabindex="0" focusable>
+      <div class="options__item">Option 1</div>
+      <div class="options__item">Option 2</div>
+      <div class="options__item">Option 3</div>
+      <div class="options__item">Option 4</div>
+    </aside>
+  </template>
+
+  <!-- Creates the element's prototype and registers it -->
+  <script>
+    Polymer({
+      is: 'app-options',
+
+      properties: {
+        opened: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true,
+          observer: '_openedChanged'
+        }
+      },
+
+      ready: function() {
+        this.view = this.querySelector('.js-options-view');
+        this.style.display = 'none';
+
+        this._open = this._open.bind(this);
+        this._close = this._close.bind(this);
+        this.setOpen = this.setOpen.bind(this);
+        this.setClose = this.setClose.bind(this);
+
+         this.view.addEventListener("blur", this.setClose);
+
+      },
+
+      _openedChanged: function(newValue, oldValue){
+        // prevents updating options when value is set upon instantiation
+        if(oldValue === undefined){
+          return;
+        }
+
+        if(newValue === true){
+          this._open();
+        } else{
+          this._close();
+        }
+      },
+
+      setOpen: function() {
+        this.opened = true;
+      },
+
+      setClose: function() {
+        this.opened = false;
+      },
+
+      _open: function() {
+        this.style.display = 'block';
+        this.view.focus();
+      },
+
+      _close: function() {
+        this.style.display = 'none';
+      }
+    });
+  </script>
+</dom-module>
