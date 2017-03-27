@@ -34,8 +34,8 @@
   cursor: pointer;
   will-change: transform;
   transition:
-      transform 0.1s cubic-bezier(0, 0, 0.31, 1),
-      opacity 0.2s cubic-bezier(0, 0, 0.31, 1);
+      transform 0.1s cubic-bezier(0, 0, 0.31, 1);
+      // opacity 0.2s cubic-bezier(0, 0, 0.31, 1);
 
   &:focus,
   &:hover {
@@ -118,7 +118,7 @@ li:hover {
 }
 
 .item__contents--expanded .expando__btn {
-  transform: rotate(180deg);
+  // transform: rotate(180deg);
   opacity: 0;
   pointer-events: none;
 }
