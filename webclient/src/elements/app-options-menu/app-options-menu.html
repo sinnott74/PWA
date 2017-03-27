@@ -57,7 +57,7 @@
           return;
         }
         this._isExpanded = true;
-        this._applyAnimation({expand: true});
+        this._expand();
         this._el.focus();
       },
 
@@ -66,7 +66,7 @@
           return;
         }
         this._isExpanded = false;
-        this._applyAnimation({expand: false});
+        this._callapse();
       },
 
       toggle: function() {
@@ -77,7 +77,7 @@
         this.expand();
       },
 
-      _applyAnimation: function({expand}=opts) {
+      _removeClasses: function() {
         this._elInner.classList.remove('item--expanded');
         this._elInner.classList.remove('item--collapsed');
         this._elInnerInverter.classList.remove('item__contents--expanded');
@@ -86,12 +86,16 @@
         // Force a recalc styles here so the classes take hold.
         window.getComputedStyle(this._elInner).transform;
 
-        if (expand) {
-          this._elInner.classList.add('item--expanded');
-          this._elInnerInverter.classList.add('item__contents--expanded');
-          return;
-        }
+      },
 
+      _expand: function() {
+        this._removeClasses();
+        this._elInner.classList.add('item--expanded');
+        this._elInnerInverter.classList.add('item__contents--expanded');
+      },
+
+      _callapse: function() {
+        this._removeClasses();
         this._elInner.classList.add('item--collapsed');
         this._elInnerInverter.classList.add('item__contents--collapsed');
       },
@@ -186,13 +190,14 @@
         return ease;
       },
 
-      _append: function({
-            i,
-            step,
-            start,
-            end,
-            outerAnimation,
-            innerAnimation}=opts) {
+      _append: function(opts) {
+
+        var i = opts.i;
+        var step = opts.step;
+        var start = opts.start;
+        var end = opts.end;
+        var outerAnimation = opts.outerAnimation;
+        var innerAnimation = opts.innerAnimation;
 
         var scale = start + (end - start) * step;
         var invScale = 1 / scale;
@@ -214,7 +219,9 @@
         return Math.max(min, Math.min(max, value));
       },
 
-      _ease: function(v, pow=4) {
+      _ease: function(v, pow) {
+        pow = pow || 4;
+
         v = this._clamp(v, 0, 1);
 
         return 1 - Math.pow(1 - v, pow);
