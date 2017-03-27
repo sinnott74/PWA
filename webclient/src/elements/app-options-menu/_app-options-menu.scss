@@ -1,0 +1,124 @@
+.expando {
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+  will-change: transform;
+  color: $text-dark;
+  outline: none;
+}
+
+.expando__inner {
+  top: 0px;
+  right: 0px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  will-change: transform;
+}
+
+.expando__inner-inverter {
+  will-change: transform;
+}
+
+.expando__btn {
+  width: $header-height;
+  height: $header-height;
+  opacity: 0.54;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: url('/images/ic_options_24px.svg') center center no-repeat;
+  border: none;
+  outline: none;
+  pointer-events: auto;
+  cursor: pointer;
+  will-change: transform;
+  transition:
+      transform 0.1s cubic-bezier(0, 0, 0.31, 1),
+      opacity 0.2s cubic-bezier(0, 0, 0.31, 1);
+
+  &:focus,
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.expando__content {
+  position: absolute;
+  right: 0px;
+  top: -10px;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+  transition:
+      transform 0.3s cubic-bezier(0, 0, 0.31, 1),
+      opacity 0.3s cubic-bezier(0, 0, 0.31, 1);
+}
+
+.expando__close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.expando__content-list {
+  width: 140px;
+  margin: 0;
+  padding: 30px 0 20px 0;
+  list-style: none;
+  overflow: hidden;
+}
+
+li {
+  line-height: 1.9;
+  padding: 0 20px;
+}
+
+li:hover {
+  background: #555;
+  color: #FFF;
+}
+
+.item--expanded {
+  animation-name: expandAnimation;
+  animation-duration: 0.7s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  background-color: #FFF;
+}
+
+.item__contents--expanded {
+  animation-name: expandContentsAnimation;
+  animation-duration: 0.7s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.item--collapsed {
+  animation-name: collapseAnimation;
+  animation-duration: 0.2s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.item__contents--collapsed {
+  animation-name: collapseContentsAnimation;
+  animation-duration: 0.2s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.item__contents--expanded .expando__content {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.item__contents--expanded .expando__btn {
+  transform: rotate(180deg);
+  opacity: 0;
+  pointer-events: none;
+}

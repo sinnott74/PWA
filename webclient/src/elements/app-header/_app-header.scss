@@ -25,8 +25,6 @@
 
   &__menu {
     background: url('/images/ic_menu_24px.svg') center center no-repeat;
-    width: 24px;
-    height: 24px;
     padding: $header-height / 2;
     text-indent: -30000px;
     overflow: hidden;
@@ -44,8 +42,6 @@
 
   &__options {
     background: url('/images/ic_options_24px.svg') center center no-repeat;
-    width: 24px;
-    height: 24px;
     padding: $header-height / 2;
     text-indent: -30000px;
     overflow: hidden;
