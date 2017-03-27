@@ -114,16 +114,16 @@
         this._scale = (exRadius - colRadius) / colRadius;
 
         // Set initial sizes.
-        this._el.style.width = `${expandedWidth}px`;
-        this._el.style.height = `${expandedHeight}px`;
+        this._el.style.width = expandedWidth + 'px';
+        this._el.style.height = expandedHeight+ 'px';
 
-        this._elInner.style.width = `${collapsedWidth}px`;
-        this._elInner.style.height = `${collapsedHeight}px`;
+        this._elInner.style.width = collapsedWidth +'px';
+        this._elInner.style.height = collapsedHeight + 'px';
 
         this._elInner.style.transformOrigin =
-            `${collapsedWidth * 0.5}px ${collapsedHeight * 0.5}px`;
+            (collapsedWidth * 0.5) + 'px ' + (collapsedHeight * 0.5) + 'px';
         this._elInnerInverter.style.transformOrigin =
-            `${collapsedWidth * 0.5}px ${collapsedHeight * 0.5}px`;
+            (collapsedWidth * 0.5) + 'px ' + (collapsedHeight * 0.5) + 'px';
 
       },
 
@@ -166,19 +166,21 @@
           });
         }
 
-        ease.textContent = `
-          @keyframes expandAnimation {
-            ${expandAnimation.join('')}
-          }
-          @keyframes expandContentsAnimation {
-            ${expandContentsAnimation.join('')}
-          }
-          @keyframes collapseAnimation {
-            ${collapseAnimation.join('')}
-          }
-          @keyframes collapseContentsAnimation {
-            ${collapseContentsAnimation.join('')}
-          }`;
+        // ease.textContent = `
+        //   @keyframes expandAnimation {
+        //     ${expandAnimation.join('')}
+        //   }
+        //   @keyframes expandContentsAnimation {
+        //     ${expandContentsAnimation.join('')}
+        //   }
+        //   @keyframes collapseAnimation {
+        //     ${collapseAnimation.join('')}
+        //   }
+        //   @keyframes collapseContentsAnimation {
+        //     ${collapseContentsAnimation.join('')}
+        //   }`;
+
+        ease.textContent = '@keyframes expandAnimation { ' + expandAnimation.join('') + '} @keyframes expandContentsAnimation { ' + expandContentsAnimation.join('') + '} @keyframes collapseAnimation { ' + collapseAnimation.join('') + '}  @keyframes collapseContentsAnimation { ' + collapseContentsAnimation.join('') + '}';
 
         document.head.appendChild(ease);
         return ease;
@@ -195,15 +197,17 @@
         var scale = start + (end - start) * step;
         var invScale = 1 / scale;
 
-        outerAnimation.push(`
-          ${i}% {
-            transform: scale(${scale});
-          }`);
+        // outerAnimation.push(`
+        //   ${i}% {
+        //     transform: scale(${scale});
+        //   }`);
+        outerAnimation.push(i + '% {transform: scale(' + scale + ');}');
 
-        innerAnimation.push(`
-          ${i}% {
-            transform: scale(${invScale});
-          }`);
+        // innerAnimation.push(`
+        //   ${i}% {
+        //     transform: scale(${invScale});
+        //   }`);
+        innerAnimation.push(i + '% {transform: scale(' + invScale + ');}');
       },
 
       _clamp: function(value, min, max) {
