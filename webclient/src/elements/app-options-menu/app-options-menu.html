@@ -128,7 +128,7 @@
       },
 
       _createEaseAnimations: function() {
-        let ease = document.querySelector('.ease');
+        var ease = document.querySelector('.ease');
         if (ease) {
           return ease;
         }
@@ -142,7 +142,7 @@
         var collapseAnimation = [];
         var collapseContentsAnimation = [];
         var collapseCircleAnimation = [];
-        for (let i = 0; i <= 100; i++) {
+        for (var i = 0; i <= 100; i++) {
           var step = this._ease(i/100);
 
           // Expand animation.
