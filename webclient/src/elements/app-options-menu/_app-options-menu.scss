@@ -7,6 +7,12 @@
   outline: none;
 }
 
+.expando-expanded {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
+              0 3px 1px -2px rgba(0, 0, 0, .2),
+              0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
 .expando__inner {
   top: 0px;
   right: 0px;
@@ -34,8 +40,8 @@
   cursor: pointer;
   will-change: transform;
   transition:
-      transform 0.1s cubic-bezier(0, 0, 0.31, 1);
-      // opacity 0.2s cubic-bezier(0, 0, 0.31, 1);
+      transform 0.1s cubic-bezier(0, 0, 0.31, 1),
+      opacity .333s cubic-bezier(0, 0, .21, 1);
 
   &:focus,
   &:hover {
@@ -46,7 +52,7 @@
 .expando__content {
   position: absolute;
   right: 0px;
-  top: -10px;
+  top: 0px;
   pointer-events: none;
   opacity: 0;
   will-change: transform;
@@ -55,20 +61,11 @@
       opacity 0.3s cubic-bezier(0, 0, 0.31, 1);
 }
 
-.expando__close {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  outline: none;
-  border: none;
-  background: none;
-  cursor: pointer;
-}
-
 .expando__content-list {
-  width: 140px;
+  width: 30vw;
+  max-width: 200px;
   margin: 0;
-  padding: 30px 0 20px 0;
+  padding: 0;;
   list-style: none;
   overflow: hidden;
 }
@@ -85,7 +82,7 @@ li:hover {
 
 .item--expanded {
   animation-name: expandAnimation;
-  animation-duration: 0.7s;
+  animation-duration: 0.333s;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
   background-color: #FFF;
@@ -93,21 +90,21 @@ li:hover {
 
 .item__contents--expanded {
   animation-name: expandContentsAnimation;
-  animation-duration: 0.7s;
+  animation-duration: 0.333s;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
 }
 
 .item--collapsed {
   animation-name: collapseAnimation;
-  animation-duration: 0.2s;
+  animation-duration: 0.1s;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
 }
 
 .item__contents--collapsed {
   animation-name: collapseContentsAnimation;
-  animation-duration: 0.2s;
+  animation-duration: 0.1s;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
 }

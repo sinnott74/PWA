@@ -13,9 +13,10 @@
               <li>Two</li>
               <li>Three</li>
               <li>Four</li>
+              <li>Four</li>
+              <li>Four</li>
+              <li>Four</li>
             </ul>
-
-            <!--<button class="expando__close js-expando-collapse-btn">Close</button>-->
           </div>
 
           <paper-icon-button class="expando__btn js-expando-expand-btn">
@@ -43,7 +44,6 @@
         this.collapse = this.collapse.bind(this);
 
         this._expandBtn.addEventListener('click', this.expand);
-        // this._collapseBtn.addEventListener('click', this.collapse);
         this._el.addEventListener('blur', this.collapse);
       },
 
@@ -65,8 +65,8 @@
         if (!this._isExpanded) {
           return;
         }
-        this._isExpanded = false;
         this._collapse();
+        this._isExpanded = false;
       },
 
       toggle: function() {
@@ -78,6 +78,7 @@
       },
 
       _removeClasses: function() {
+        this._el.classList.remove('expando-expanded');
         this._elInner.classList.remove('item--expanded');
         this._elInner.classList.remove('item--collapsed');
         this._elInnerInverter.classList.remove('item__contents--expanded');
@@ -92,6 +93,7 @@
         this._removeClasses();
         this._elInner.classList.add('item--expanded');
         this._elInnerInverter.classList.add('item__contents--expanded');
+        this._el.classList.add('expando-expanded');
       },
 
       _collapse: function() {
@@ -128,7 +130,6 @@
             (collapsedWidth * 0.5) + 'px ' + (collapsedHeight * 0.5) + 'px';
         this._elInnerInverter.style.transformOrigin =
             (collapsedWidth * 0.5) + 'px ' + (collapsedHeight * 0.5) + 'px';
-
       },
 
       _createEaseAnimations: function() {
@@ -183,7 +184,6 @@
         //   @keyframes collapseContentsAnimation {
         //     ${collapseContentsAnimation.join('')}
         //   }`;
-
         ease.textContent = '@keyframes expandAnimation { ' + expandAnimation.join('') + '} @keyframes expandContentsAnimation { ' + expandContentsAnimation.join('') + '} @keyframes collapseAnimation { ' + collapseAnimation.join('') + '}  @keyframes collapseContentsAnimation { ' + collapseContentsAnimation.join('') + '}';
 
         document.head.appendChild(ease);
