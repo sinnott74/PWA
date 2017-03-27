@@ -97,19 +97,19 @@
       },
 
       _calculate: function() {
-        const elBCR = this._el.getBoundingClientRect();
-        const collapsed = this._expandBtn.getBoundingClientRect();
-        const expanded = this._content.getBoundingClientRect();
+        var elBCR = this._el.getBoundingClientRect();
+        var collapsed = this._expandBtn.getBoundingClientRect();
+        var expanded = this._content.getBoundingClientRect();
 
-        const expandedWidth = Math.abs(expanded.left - elBCR.right);
-        const expandedHeight = Math.abs(expanded.bottom - elBCR.top);
+        var expandedWidth = Math.abs(expanded.left - elBCR.right);
+        var expandedHeight = Math.abs(expanded.bottom - elBCR.top);
 
-        const collapsedWidth = collapsed.width;
-        const collapsedHeight = collapsed.height;
+        var collapsedWidth = collapsed.width;
+        var collapsedHeight = collapsed.height;
 
-        const exRadius = Math.sqrt(expandedWidth * expandedWidth +
+        var exRadius = Math.sqrt(expandedWidth * expandedWidth +
             expandedHeight * expandedHeight);
-        const colRadius = collapsedWidth * 0.5;
+        var colRadius = collapsedWidth * 0.5;
 
         this._scale = (exRadius - colRadius) / colRadius;
 
@@ -136,14 +136,14 @@
         ease = document.createElement('style');
         ease.classList.add('ease');
 
-        const expandAnimation = [];
-        const expandContentsAnimation = [];
-        const expandCircleAnimation = [];
-        const collapseAnimation = [];
-        const collapseContentsAnimation = [];
-        const collapseCircleAnimation = [];
+        var expandAnimation = [];
+        var expandContentsAnimation = [];
+        var expandCircleAnimation = [];
+        var collapseAnimation = [];
+        var collapseContentsAnimation = [];
+        var collapseCircleAnimation = [];
         for (let i = 0; i <= 100; i++) {
-          const step = this._ease(i/100);
+          var step = this._ease(i/100);
 
           // Expand animation.
           this._append({
@@ -192,8 +192,8 @@
             outerAnimation,
             innerAnimation}=opts) {
 
-        const scale = start + (end - start) * step;
-        const invScale = 1 / scale;
+        var scale = start + (end - start) * step;
+        var invScale = 1 / scale;
 
         outerAnimation.push(`
           ${i}% {
