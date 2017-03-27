@@ -66,7 +66,7 @@
           return;
         }
         this._isExpanded = false;
-        this._callapse();
+        this._collapse();
       },
 
       toggle: function() {
@@ -94,7 +94,7 @@
         this._elInnerInverter.classList.add('item__contents--expanded');
       },
 
-      _callapse: function() {
+      _collapse: function() {
         this._removeClasses();
         this._elInner.classList.add('item--collapsed');
         this._elInnerInverter.classList.add('item__contents--collapsed');
@@ -151,8 +151,8 @@
 
           // Expand animation.
           this._append({
-            i,
-            step,
+            i: i,
+            step: step,
             start: 1,
             end: this._scale,
             outerAnimation: expandAnimation,
@@ -161,8 +161,8 @@
 
           // Collapse animation.
           this._append({
-            i,
-            step,
+            i: i,
+            step: step,
             start: this._scale,
             end: 1,
             outerAnimation: collapseAnimation,
@@ -191,7 +191,6 @@
       },
 
       _append: function(opts) {
-
         var i = opts.i;
         var step = opts.step;
         var start = opts.start;
