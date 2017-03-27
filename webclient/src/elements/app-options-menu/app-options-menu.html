@@ -52,7 +52,7 @@
         this._createEaseAnimations();
       },
 
-      expand () {
+      expand: function() {
         if (this._isExpanded) {
           return;
         }
@@ -61,7 +61,7 @@
         this._el.focus();
       },
 
-      collapse () {
+      collapse: function() {
         if (!this._isExpanded) {
           return;
         }
@@ -69,7 +69,7 @@
         this._applyAnimation({expand: false});
       },
 
-      toggle () {
+      toggle: function() {
         if (this._isExpanded) {
           return this.collapse();
         }
@@ -77,7 +77,7 @@
         this.expand();
       },
 
-      _applyAnimation ({expand}=opts) {
+      _applyAnimation: function({expand}=opts) {
         this._elInner.classList.remove('item--expanded');
         this._elInner.classList.remove('item--collapsed');
         this._elInnerInverter.classList.remove('item__contents--expanded');
@@ -96,7 +96,7 @@
         this._elInnerInverter.classList.add('item__contents--collapsed');
       },
 
-      _calculate () {
+      _calculate: function() {
         const elBCR = this._el.getBoundingClientRect();
         const collapsed = this._expandBtn.getBoundingClientRect();
         const expanded = this._content.getBoundingClientRect();
@@ -127,7 +127,7 @@
 
       },
 
-      _createEaseAnimations () {
+      _createEaseAnimations: function() {
         let ease = document.querySelector('.ease');
         if (ease) {
           return ease;
@@ -184,7 +184,7 @@
         return ease;
       },
 
-      _append ({
+      _append: function({
             i,
             step,
             start,
@@ -206,11 +206,11 @@
           }`);
       },
 
-      _clamp (value, min, max) {
+      _clamp: function(value, min, max) {
         return Math.max(min, Math.min(max, value));
       },
 
-      _ease (v, pow=4) {
+      _ease: function(v, pow=4) {
         v = this._clamp(v, 0, 1);
 
         return 1 - Math.pow(1 - v, pow);
