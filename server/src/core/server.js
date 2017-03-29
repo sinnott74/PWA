@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Module dependencies.
+ */
 var path = require('path');
 var express = require('express');
 var compression = require('compression');
@@ -7,14 +10,21 @@ var cfenv = require('cfenv'); // cloud foundry environment variables
 var forceHttps = require('../middleware/forceHttps');
 var handleBarsInstance = require('./handlebars');
 
-// routers
+/**
+ * Routers.
+ */
 var apiRouter = require('../routers/apiRouter');
 var jsonRouter = require('../routers/jsonRouter');
 var staticPageRouter = require('../routers/staticPageRouter');
 
-// initiate database connection
+/**
+ * Connect to database.
+ */
 require('./database');
 
+/**
+ * Create Express server.
+ */
 var expressApp = express();
 
 // Set up the use of handle bars and set the path for views and layouts
@@ -42,11 +52,16 @@ if (!cfenv.getAppEnv().isLocal) {
 // Define static assets path - i.e. styles, scripts etc.
 expressApp.use('/', express.static(path.join(__dirname + '/../../../build/')));
 
-// Define routes
+/**
+ * Define routes.
+ */
 expressApp.use('/api', apiRouter);
 expressApp.use('/json', jsonRouter);
 expressApp.use('/', staticPageRouter);
 
+/**
+ * Start Express server.
+ */
 var serverController = {};
 serverController.startServer = function(port) {
   // As a failsafe use port 0 if the input isn't defined
