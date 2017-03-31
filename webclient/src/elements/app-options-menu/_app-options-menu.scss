@@ -67,7 +67,8 @@
   margin: 0;
   padding: 0;;
   list-style: none;
-  overflow: hidden;
+  overflow-y: auto;
+  max-height: 100vh;
 }
 
 @media(min-width: $big-screen) {
