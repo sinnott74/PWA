@@ -62,12 +62,18 @@
 }
 
 .expando__content-list {
-  width: 30vw;
+  width: 40vw;
   max-width: 200px;
   margin: 0;
   padding: 0;;
   list-style: none;
   overflow: hidden;
+}
+
+@media(min-width: $big-screen) {
+  .expando__content-list {
+    max-width: 300px;
+  }
 }
 
 li {
