@@ -1,12 +1,12 @@
 var express = require('express');
 var router = new express.Router();
-var PageController = require('../controllers/static-page-controller');
-var businessLogic = require('../facades/businessLogicMiddleware');
-
-var pageController = new PageController();
+var staticPageController = require('../controllers/static-page-controller');
+var businessLogic = require('../middleware/businessLogicMiddleware');
+var pathConfiguration = require('../middleware/configurationMiddleware');
 
 router.route('/*')
+  .all(pathConfiguration)
   .all(businessLogic)
-  .all(pageController.onRequest);
+  .all(staticPageController.onRequest);
 
 module.exports = router;
