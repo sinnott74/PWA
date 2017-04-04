@@ -41,19 +41,17 @@ class DAO {
    */
   create(entity) {
     // validate the entity
-    this.validate(entity);
-
-    // pre create hook point
-    this.preCreate(entity);
-
-    return knex(this.tableName).insert(entity).returning('id')
-    .then((idArray) => {
-      // check that only 1 ID is returned
-      if (idArray.length !== 1) {
-        throw new Error(this.tableName + ' insertion failed');
+    return this.validate(entity)
+      .then(() => this.preCreate(entity))
+      .then(() => knex(this.tableName).insert(entity).returning('id'))
+      .then((idArray) => {
+        // check that only 1 ID is returned
+        if (idArray.length !== 1) {
+          throw new Error(this.tableName + ' insertion failed');
+        }
+        return idArray[0];
       }
-      return idArray[0];
-    });
+    );
   }
 
   /**
@@ -63,15 +61,16 @@ class DAO {
    */
   read(id) {
     // validate the ID
-    this.validateID(id);
-
-    return knex(this.tableName).where('id', id)
+    return this.validateID(id)
+      .then(() => knex(this.tableName).where('id', id))
       .then((entityArray) => {
-        // check that only 1 entity is returned
-        if (entityArray.length !== 1) {
-          throw new Error(this.tableName + ' read failed');
-        }
-        return entityArray[0];
+        return new Promise(function(resolve, reject) {
+          // check that only 1 entity is returned
+          if (entityArray.length !== 1) {
+            throw new Error(this.tableName + ' read failed');
+          }
+          return resolve(entityArray[0]);
+        });
       }
     );
   }
@@ -83,10 +82,10 @@ class DAO {
    */
   update(entity) {
     // validate the ID
-    this.validateID(entity.id);
-    // call subclasses validate implemenation
-    this.validate(entity);
-    return knex(this.tableName).update(entity).where('id', entity.id);
+    return this.validateID(entity.id)
+      // call subclasses validate implemenation
+      .then(() => this.validate(entity))
+      .then(() => knex(this.tableName).update(entity).where('id', entity.id));
   }
 
   /**
@@ -96,10 +95,10 @@ class DAO {
    */
   delete(entity) {
     // validate the ID
-    this.validateID(entity.id);
-    // call subclasses validate implemenation
-    this.validate(entity);
-    return knex(this.tableName).del().where('id', entity.id);
+    return this.validateID(entity.id)
+      // call subclasses validate implemenation
+      .then(() => this.validate(entity))
+      .then(() => knex(this.tableName).del().where('id', entity.id));
   }
 
   /**
@@ -116,10 +115,13 @@ class DAO {
    * @throws {TypeError} if given id is not a number
    */
   validateID(id) {
-    // check its a number
-    if(isNaN(id)) {
-      throw new TypeError('ID must be a number');
-    }
+    return new Promise(function(resolve, reject) {
+      // check its a number
+      if(isNaN(id)) {
+        throw new TypeError('Invalid ID - ' + id);
+      }
+      return resolve();
+    });
   }
 
   /**

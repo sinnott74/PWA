@@ -33,9 +33,7 @@ describe('userDAO tests', function() {
       assert.equal(dbUser.firstname, user.firstname);
       assert.equal(dbUser.lastname, user.lastname);
       assert.equal(dbUser.dob.getTime(), user.dob.getTime());
-      return new Promise(function(resolve, reject) {
-        resolve(dbUser);
-      });
+      return Promise.resolve(dbUser);
     })
     // delete user
     .then((dbUser) => userDAO.delete(dbUser))
@@ -47,7 +45,7 @@ describe('userDAO tests', function() {
    * Tests usersDAO#validate.
    * User is a valid entity
    */
-  it('should not throw a TypeError for valid user', function() {
+  it('should not throw a TypeError for valid user', function(done) {
     var user = {
       username: 'testUsername',
       password: 'testPassword',
@@ -56,18 +54,23 @@ describe('userDAO tests', function() {
       dob: new Date( 2017, 1, 1)
     };
 
-    userDAO.validate(user);
+    userDAO.validate(user)
+    .then(() => {
+      done();
+    });
   });
 
   /**
    * Tests usersDAO#validate
    * User is invalid
    */
-  it('should throw type error for invalid/null user', function() {
+  it('should throw type error for invalid/null user', function(done) {
     var user = null;
-    assert.throws(function() {
-      userDAO.validate(user);
-    }, TypeError, 'User is invalid');
+    userDAO.validate(user)
+    .catch((error) => {
+      assert.equal(error.message, 'User object invalid');
+      done();
+    });
   });
 
   /**
@@ -80,19 +83,44 @@ describe('userDAO tests', function() {
   /**
    * Tests usersDAO#preCreate.
    */
-  it('should replace password with hashed password', function() {
+  it('should replace password with hashed password', function(done) {
     var testPassword = 'password';
     var user = {
       password: testPassword
     };
 
-    userDAO.preCreate(user);
-    console.log(`Password was ${testPassword}, but then became ${user.password}`);
+    userDAO.preCreate(user)
+    .then(() => {
+       // check password changed
+      assert.notEqual(user.password, testPassword);
+      // check its same length as expected hash length
+      assert.equal(user.password.length, 60);
+      done();
+    });
+  });
 
-    // check password changed
-    assert.notEqual(user.password, testPassword);
-    // check its same length as expected hash length
-    assert.equal(user.password.length, 60);
+  it('should validate the ID & resolve', function(done) {
+    var ID = 123;
+    userDAO.validateID(ID)
+    .then(() => done());
+  });
+
+  it('should validate the ID as a string & resolve', function(done) {
+    var ID = '123';
+    userDAO.validateID(ID)
+    .then(() => done());
+  });
+
+  it('should validate the ID as a string & reject', function(done) {
+    var ID = '123a';
+    userDAO.validateID(ID)
+    .catch(() => done());
+  });
+
+  it('should validate the ID as a undefined & reject', function(done) {
+    var ID;
+    userDAO.validateID(ID)
+    .catch(() => done());
   });
 });
 

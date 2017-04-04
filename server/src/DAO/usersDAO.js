@@ -24,9 +24,12 @@ class UsersDAO extends DAO {
   * @throws {TypeError} if the given user is invalid
   */
   validate(user) {
-    if(!user) {
-      throw new TypeError('User object invalid');
-    }
+    return new Promise(function(resolve, reject) {
+      if(!user) {
+        throw new TypeError('User object invalid');
+      }
+      return resolve();
+    });
   }
 
 /**
@@ -35,9 +38,14 @@ class UsersDAO extends DAO {
  * @param {*} user
  */
   preCreate(user) {
-    var salt = bcrypt.genSaltSync();
-    var hash = bcrypt.hashSync(user.password, salt);
-    user.password = hash;
+    return bcrypt.genSalt()
+      .then((salt) => {
+        return bcrypt.hash(user.password, salt);
+      })
+      .then((hash) => {
+        user.password = hash;
+      }
+    );
   }
 }
 
