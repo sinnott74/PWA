@@ -1,11 +1,10 @@
 'use strict';
 
-function JSONController() {
-}
+var jsonController = {};
 
 // This method looks at the request path and renders the appropriate handlebars
 // template
-JSONController.prototype.onRequest = function(req, res) {
+jsonController.onRequest = function(req, res) {
   console.log('JSON request for: ' + req.path);
 
   var model = res.locals.model;
@@ -19,4 +18,4 @@ JSONController.prototype.onRequest = function(req, res) {
   return;
 };
 
-module.exports = JSONController;
+module.exports = jsonController;

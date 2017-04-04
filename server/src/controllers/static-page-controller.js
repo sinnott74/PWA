@@ -2,15 +2,14 @@
 
 var pathConfigs = require('../models/path-config.js');
 
-function StaticPageController() {
-}
+var staticPageController = {};
 
 // This method looks at the request path and renders the appropriate handlebars
 // template
-StaticPageController.prototype.onRequest = function(req, res) {
+staticPageController.onRequest = function(req, res) {
   console.log('Page request for: ' + req.path);
 
-  var pathConfig = pathConfigs.getConfig(req.path);
+  var pathConfig = res.locals.config;
   if (!pathConfig) {
     pathConfig = pathConfigs.get404();
   }
@@ -31,4 +30,4 @@ StaticPageController.prototype.onRequest = function(req, res) {
   }
 };
 
-module.exports = StaticPageController;
+module.exports = staticPageController;
