@@ -5,6 +5,8 @@ var pathConfigs = {
   '/': {
     view: 'index',
     title: 'Index',
+    facade: '',
+    operation: {},
     inlineStyles: getFileContents(['/styles/core.css']),
     remoteStyles: [],
     remoteScripts: []
@@ -12,6 +14,8 @@ var pathConfigs = {
   '/url-1': {
     view: 'url-1',
     title: 'URL 1',
+    facade: '',
+    operation: {},
     inlineStyles: getFileContents(['/styles/core.css']),
     remoteStyles: [],
     remoteScripts: []
@@ -19,6 +23,8 @@ var pathConfigs = {
   '/url-2': {
     view: 'url-2',
     title: 'URL 2',
+    facade: '../facades/testFacade',
+    operation: {},
     inlineStyles: getFileContents(['/styles/core.css']),
     remoteStyles: [],
     remoteScripts: []
@@ -26,6 +32,22 @@ var pathConfigs = {
   '/users': {
     view: 'users',
     title: 'Users',
+    facade: '../facades/usersFacade',
+    operation: {
+      name: 'listAllUsers'
+    },
+    inlineStyles: getFileContents(['/styles/core.css']),
+    remoteStyles: [],
+    remoteScripts: []
+  },
+  '/users/:id': {
+    view: 'user',
+    title: 'Users',
+    facade: '../facades/usersFacade',
+    operation: {
+      name: 'readByID',
+      input: ['id']
+    },
     inlineStyles: getFileContents(['/styles/core.css']),
     remoteStyles: [],
     remoteScripts: []
@@ -33,6 +55,8 @@ var pathConfigs = {
   '/app-shell': {
     view: '',
     title: 'App Shell',
+    facade: '',
+    operation: {},
     inlineStyles: getFileContents(['/styles/core.css']),
     remoteStyles: [],
     remoteScripts: []
@@ -40,6 +64,8 @@ var pathConfigs = {
   '/404': {
     view: '404',
     title: '404',
+    facade: '',
+    operation: {},
     inlineStyles: getFileContents(['/styles/core.css']),
     remoteStyles: [],
     remoteScripts: []
@@ -76,5 +102,9 @@ module.exports = {
     return {
       'data': pathConfigs['/404']
     };
+  },
+
+  getAllURLs: function() {
+    return Object.keys(pathConfigs);
   }
 };
