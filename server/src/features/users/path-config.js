@@ -10,7 +10,7 @@ var pathConfigs = {
     remoteStyles: [],
     remoteScripts: []
   },
-  '/users/:id': {
+  '/users/:id(\\d+)': {
     view: 'user',
     title: 'Users',
     facade: '../features/users/usersFacade',
