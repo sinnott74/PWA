@@ -1,27 +1,17 @@
 'user strict';
 
 /**
- * This middleware is responsible for reading the configuration for each configured path
- * & adding them on the relevent response locals config object
+ * This middleware is responsible for reading the configuration for the path
+ * & adding them on the configuration onto the response locals config object.
  */
-
-var express = require('express');
-var router = new express.Router();
 var pathConfigs = require('../core/pathConfigs.js');
 
-var urls = pathConfigs.getAllURLs();
-
-// Loop through each url configured in path-config.js
-urls.forEach(function(url) {
-  // read the configuration
-  var config = pathConfigs.getConfig(url);
-
-  // tell router to use this function for the configured url
-  router.use(url, function(req, res, next) {
-    // add the configuration onto the response locals object
-    res.locals.config = config;
-    next();
-  });
-});
-
-module.exports = router;
+/**
+ * Adds the path configuration object on the response.
+ */
+module.exports = function(req, res, next) {
+  var url = req.route.path;
+  var pathConfig = pathConfigs.getConfig(url);
+  res.locals.config = pathConfig;
+  next();
+};

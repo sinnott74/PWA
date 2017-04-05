@@ -1,20 +1,14 @@
 'user strict';
 
 /**
- * This middleware is responsible for reading the configurated facade for each path
- * And telling the router to call it & add the result to the reponse locals entity object.
+ * This middleware is responsible check if a facade is configured
+ * Then converting req parameters into facade input parameters
+ * The calling the facade & adding the returned entity onto the response locals entity object.
+ * This middleware is should be called after configurationMiddleware.js
  */
 
-var express = require('express');
-var router = new express.Router();
-var pathConfigs = require('../core/pathConfigs.js');
-
-var urls = pathConfigs.getAllURLs();
-
 /**
- * Checks if a facade operation has been configured.
- * @param {*} config
- * @returns true if both a facade & operation are on the config data object, false otherwise
+ * Checks if a facade is configured
  */
 function isFacadeOperationConfigured(config) {
   if(config && config.data.facade && config.data.operation && config.data.operation.name) {
@@ -23,6 +17,11 @@ function isFacadeOperationConfigured(config) {
   return false;
 }
 
+/**
+ * Converts the req paremeters i.e. params/body/query into a facade input
+ * @param {*} req
+ * @param {*} properties
+ */
 function createFacadeInput(req, properties) {
   var facadeInput = {};
 
@@ -36,33 +35,28 @@ function createFacadeInput(req, properties) {
   return facadeInput;
 }
 
-// Loop through each url configured in path-config.js
-// Check is a facade operation is configurated
-// Tell router to use that opertation for that path
-urls.forEach(function(url) {
-  var config = pathConfigs.getConfig(url);
+/**
+ * Calls the configured facade if there is one.
+ */
+module.exports = function(req, res, next) {
+  //
+  var pathConfig = res.locals.config;
 
-  // check facade is configured
-  if(isFacadeOperationConfigured(config)) {
-    // require that facade
-    var facade = require(config.data.facade);
+  if(isFacadeOperationConfigured(pathConfig)) {
+    var facade = require(pathConfig.data.facade);
 
-    // tell router to use this function for the configured url
-    router.use(url, function(req, res, next) {
-      // create facade input class and add req parameters onto it
-      if(config.data.operation.input) {
-        var facadeInputObject = createFacadeInput(req, config.data.operation.input);
-      }
+    if(pathConfig.data.operation.input) {
+      var facadeInputObject = createFacadeInput(req, pathConfig.data.operation.input);
+    }
 
-      // call the facade which returns a promise for an entity
-      facade[config.data.operation.name](facadeInputObject)
-      .then((entity) => {
-        // Add that entity onto the response locals object so it can be access from the view
-        res.locals.model = entity;
-        next();
-      });
+    // call the facade which returns a promise for an entity
+    facade[pathConfig.data.operation.name](facadeInputObject)
+    .then((entity) => {
+      // Add that entity onto the response locals object so it can be access from the view
+      res.locals.model = entity;
+      next();
     });
+  } else {
+    next();
   }
-});
-
-module.exports = router;
+};
