@@ -1,0 +1,23 @@
+{
+  "/users": {
+   "view": "users",
+    "title": "Users",
+    "facade": "../features/users/usersFacade",
+    "operation": {
+      "name": "listAllUsers"
+    },
+    "remoteStyles": [],
+    "remoteScripts": []
+  },
+  "/users/:id(\\d+)": {
+    "view": "user",
+    "title": "Users",
+    "facade": "../features/users/usersFacade",
+    "operation": {
+      "name": "readByID",
+      "input": ["id"]
+    },
+    "remoteStyles": [],
+    "remoteScripts": []
+  }
+}

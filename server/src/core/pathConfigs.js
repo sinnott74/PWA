@@ -29,26 +29,24 @@ var pathConfigs = {
 /**
  * Search for path-config files
  */
-var featureConfigPaths = glob.sync('server/src/features/**/path-config.js');
+var featurePathConfigPaths = glob.sync('server/src/features/**/path-config.json');
 
 /**
  * Add each configured path into the master pathConfigs object
  */
-for(var index in featureConfigPaths) {
-  // featureConfigPaths is the path from server .i.e server/src/etc..
-  var relativeFeatureConfigPath = path.relative(__dirname, featureConfigPaths[index]);
-  var featurePathConfig = require(relativeFeatureConfigPath);
-  Object.assign(pathConfigs, featurePathConfig);
-}
+featurePathConfigPaths.forEach((featurePathConfigPath) => {
+  var relativeConfigPath = path.relative(__dirname, featurePathConfigPath);
+  var featureConfig = require(relativeConfigPath);
+  Object.assign(pathConfigs, featureConfig);
+});
 
 /**
  * Add the inline styles to each path
  */
-for(var pathIndex in pathConfigs) {
-  var pathConfig = pathConfigs[pathIndex];
+for(var url in pathConfigs) {
+  var pathConfig = pathConfigs[url];
   pathConfig.inlineStyles = getFileContents(['/styles/core.css']);
 }
-
 
 function getFileContents(files) {
   // Concat inline styles for document <head>
