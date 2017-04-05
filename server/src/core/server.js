@@ -28,9 +28,9 @@ require('./database');
 var expressApp = express();
 
 // Set up the use of handle bars and set the path for views and layouts
-expressApp.set('views', path.join(__dirname, '/../views'));
 expressApp.engine('handlebars', handleBarsInstance.engine);
-expressApp.set('view engine', 'handlebars');
+expressApp.set('view engine', 'handlebars'); // .handlebar filename
+expressApp.set('views', path.join(__dirname, '/../views'));
 
 // prevents express setting x-powered-by header
 expressApp.disable('x-powered-by');
