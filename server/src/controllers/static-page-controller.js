@@ -1,6 +1,6 @@
 'use strict';
 
-var pathConfigs = require('../models/path-config.js');
+var pathConfigs = require('../core/pathConfigManager.js');
 
 var staticPageController = {};
 
