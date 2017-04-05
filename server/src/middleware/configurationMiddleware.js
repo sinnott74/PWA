@@ -7,7 +7,7 @@
 
 var express = require('express');
 var router = new express.Router();
-var pathConfigs = require('../core/pathConfigManager.js');
+var pathConfigs = require('../core/pathConfigs.js');
 
 var urls = pathConfigs.getAllURLs();
 
