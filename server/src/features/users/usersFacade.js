@@ -1,6 +1,6 @@
 'user strict';
 
-var userDAO = require('../DAO/usersDAO');
+var userDAO = require('./usersDAO');
 
 // router.get('/:id', (req, res, next) => {
 //   console.log('In user get - ID: ' + req.params.id);

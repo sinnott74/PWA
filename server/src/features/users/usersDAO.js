@@ -1,5 +1,5 @@
 'use strict';
-var DAO = require('./DAO');
+var DAO = require('../../core/DAO');
 var bcrypt = require('bcryptjs');
 
 /**

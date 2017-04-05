@@ -1,8 +1,8 @@
 'use strict';
-// node_modules/mocha/bin/mocha server/test/DAO/usersDAO.spec.js
-require('../serverTestFramework');
+// node_modules/mocha/bin/mocha server/test/features/users/usersDAO.spec.js
+require('../../serverTestFramework');
 var assert = require('assert');
-var userDAO = require('../../src/DAO/usersDAO');
+var userDAO = require('../../../src/features/users/usersDAO');
 
 describe('userDAO tests', function() {
   /**
