@@ -45,11 +45,13 @@ class DAO {
       .then(() => this.preCreate(entity))
       .then(() => knex(this.tableName).insert(entity).returning('id'))
       .then((idArray) => {
-        // check that only 1 ID is returned
-        if (idArray.length !== 1) {
-          throw new Error(this.tableName + ' insertion failed');
-        }
-        return idArray[0];
+        return new Promise(function(resolve, reject) {
+          // check that only 1 ID is returned
+          if (idArray.length !== 1) {
+            throw new Error(this.tableName + ' insertion failed');
+          }
+          resolve(idArray[0]);
+        });
       }
     );
   }
@@ -69,7 +71,7 @@ class DAO {
           if (entityArray.length !== 1) {
             throw new Error(this.tableName + ' read failed');
           }
-          return resolve(entityArray[0]);
+          resolve(entityArray[0]);
         });
       }
     );
@@ -120,7 +122,7 @@ class DAO {
       if(isNaN(id)) {
         throw new TypeError('Invalid ID - ' + id);
       }
-      return resolve();
+      resolve();
     });
   }
 
