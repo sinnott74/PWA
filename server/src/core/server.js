@@ -6,6 +6,8 @@
 var path = require('path');
 var express = require('express');
 var compression = require('compression');
+var bodyParser = require('body-parser');
+var expressValidator = require('express-validator');
 var cfenv = require('cfenv'); // cloud foundry environment variables
 var forceHttps = require('../middleware/forceHttps');
 var handleBarsInstance = require('./handlebars');
@@ -26,6 +28,18 @@ require('./database');
  * Create Express server.
  */
 var expressApp = express();
+
+/**
+ * Body parser
+ */
+expressApp.use(bodyParser.urlencoded({extended: false})); // application/x-www-form-urlencoded
+expressApp.use(bodyParser.json()); // parse application/json
+
+/**
+ * Express Validator.
+ * Must be set directly after body parser
+ */
+expressApp.use(expressValidator());
 
 // Set up the use of handle bars and set the path for views and layouts
 expressApp.engine('handlebars', handleBarsInstance.engine);
