@@ -1,3 +1,13 @@
+'use strict';
+/**
+ * This module is responsible for all interactions with path configurations.
+ * It will read the path-config.json for all features
+ * And merge them into a single path configuration object.
+ */
+
+/**
+ * Required modules
+ */
 var fs = require('fs');
 var path = require('path');
 var glob = require('glob');

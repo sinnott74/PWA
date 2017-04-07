@@ -1,5 +1,13 @@
 'use strict';
+/**
+ * This module is responsible for defining the abstact Class DAO.
+ * DAO should be extended by all entity DAOs.
+ * This class controls access to the database.
+ */
 
+/**
+ * Required modules
+ */
 var knex = require('../core/database');
 
 /**

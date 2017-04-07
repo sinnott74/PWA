@@ -41,7 +41,10 @@ expressApp.use(bodyParser.json()); // parse application/json
  */
 expressApp.use(expressValidator());
 
-// Set up the use of handle bars and set the path for views and layouts
+/**
+ * Configure express app to use handlebars.
+ * Set the file name to use & the location of the views
+ */
 expressApp.engine('handlebars', handleBarsInstance.engine);
 expressApp.set('view engine', 'handlebars'); // .handlebar filename
 expressApp.set('views', path.join(__dirname, '/../views'));
