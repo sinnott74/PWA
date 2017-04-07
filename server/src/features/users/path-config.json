@@ -11,7 +11,7 @@
   },
   "/users/:id(\\d+)": {
     "view": "user",
-    "title": "Users",
+    "title": "User",
     "facade": "../features/users/usersFacade",
     "operation": {
       "name": "readByID",
