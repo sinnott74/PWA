@@ -5,6 +5,7 @@
  */
 var path = require('path');
 var express = require('express');
+var helmet = require('helmet');
 var compression = require('compression');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
@@ -30,6 +31,18 @@ require('./database');
 var expressApp = express();
 
 /**
+ * Force https when not localhost
+ */
+if (!cfenv.getAppEnv().isLocal) {
+  expressApp.use(forceHttps);
+}
+
+/**
+ * Use helmet for security
+ */
+expressApp.use(helmet());
+
+/**
  * Body parser
  */
 expressApp.use(bodyParser.urlencoded({extended: false})); // application/x-www-form-urlencoded
@@ -52,7 +65,9 @@ expressApp.set('views', path.join(__dirname, '/../views'));
 // prevents express setting x-powered-by header
 expressApp.disable('x-powered-by');
 
-// use compression
+/**
+ * use compression
+ */
 expressApp.use(compression());
 
 // // log all paths
@@ -60,11 +75,6 @@ expressApp.use(compression());
 //   console.log(req.path);
 //   next();
 // });
-
-// force https on Bluemix
-if (!cfenv.getAppEnv().isLocal) {
-  expressApp.use(forceHttps);
-}
 
 // Define static assets path - i.e. styles, scripts etc.
 expressApp.use('/', express.static(path.join(__dirname + '/../../../build/')));
