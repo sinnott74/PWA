@@ -1,3 +1,5 @@
+import RouterSingleton from '../libs/RouterSingleton';
+
 export default class PageController {
   constructor() {
     this.loader = document.querySelector('.js-global-loader');
@@ -50,11 +52,31 @@ export default class PageController {
         // Add content from partial to page
         this.mainContainer.innerHTML = responseObject.partialhtml;
 
+        // make router handle all anchor in mainContainer
+        var router = RouterSingleton.getRouter();
+        var anchorElements = this.mainContainer.querySelectorAll('a');
+        var sideNav = document.getElementsByTagName('app-sidenav')[0];
+        for (var i = 0; i < anchorElements.length; i++) {
+          if (!anchorElements[i].href) {
+            continue;
+          }
+          anchorElements[i].addEventListener('click', (clickEvent) => {
+            console.log('Clicked link controlled by router');
+            console.log(clickEvent);
+            clickEvent.stopPropagation();
+            clickEvent.preventDefault();
+            sideNav.opened = false;
+            router.goToPath(clickEvent.currentTarget.href);
+          });
+        }
+
+
         // TODO: Handle remote scripts
 
         // TODO: Handle remote styles
       })
       .catch((error) => {
+        console.log(error);
         this.showError('There was a problem loading this page');
       });
   }

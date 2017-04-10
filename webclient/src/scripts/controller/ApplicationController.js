@@ -12,8 +12,10 @@ export default class ApplicationController extends Controller {
     // var sideNav = document.getElementsByTagName('app-sidenav')[0];
 
     document.addEventListener('side-nav-ready', (navReadyEvent) => {
+      var router = RouterSingleton.getRouter();
       var sideNav = document.getElementsByTagName('app-sidenav')[0];
-      var anchorElements = sideNav.querySelectorAll('a');
+      // var anchorElements = sideNav.querySelectorAll('a');
+      var anchorElements = document.querySelectorAll('a');
       for (var i = 0; i < anchorElements.length; i++) {
         if (!anchorElements[i].href) {
           continue;
@@ -27,12 +29,10 @@ export default class ApplicationController extends Controller {
 
           sideNav.opened = false;
 
-          var router = RouterSingleton.getRouter();
-          router.goToPath(clickEvent.target.href);
+          router.goToPath(clickEvent.currentTarget.href);
         });
       }
 
-      var router = RouterSingleton.getRouter();
       router.setDefaultRoute(new PageController());
       router.requestStateUpdate();
     });
