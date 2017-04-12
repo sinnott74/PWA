@@ -4,10 +4,10 @@ var minifyHtml = require('gulp-minify-html');
 var replace = require('gulp-replace');
 
 gulp.task('html:watch', function() {
-  gulp.watch(GLOBAL.config.src + '/**/*.html', ['vulcanize', 'html']);
+  gulp.watch(GLOBAL.config.src + '/**/*.html', ['elements', 'html']);
 });
 
-gulp.task('html', ['vulcanize', 'html:copyToDest', 'html:replaceVersionNo']);
+gulp.task('html', ['elements', 'html:copyToDest', 'html:replaceVersionNo']);
 
 // copies all html files into the dist directory
 // ignoring webcomponent elements as these are included in elements.html during vulcanization
