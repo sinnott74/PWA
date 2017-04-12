@@ -180,9 +180,9 @@
         this.direction = "";
 
         if (this.sideNavTransform < -this.TOUCH_SLOP) {
-          this.opened = false;
+          this._close();
         } else if (this.sideNavTransform < -window.devicePixelRatio/100){
-          this.opened = true;;
+          this._open();
         }
 
         // allow content scrolling again
@@ -227,20 +227,22 @@
       _handleEdgeTouchEnd: function(e) {
         this.direction = "";
         if (this.edgeTransform >= this.TOUCH_SLOP) {
-          this.opened = true;
+          this._open();
           return;
         } else if (this.edgeTransform < this.TOUCH_SLOP){
-          this.opened = false;
+          this._close();
         }
       },
 
       _close: function() {
+        this.opened = false;
         this.classList.add("side_nav--animatable");
         this.sideNavContent.removeAttribute('style');
         document.body.style.overflowY = 'auto';
       },
 
       _open: function() {
+        this.opened = true;
         this.classList.add("side_nav--animatable");
         this.sideNavContent.removeAttribute('style');
         document.body.style.overflowY = 'hidden';
