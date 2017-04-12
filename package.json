@@ -42,6 +42,7 @@
     "gulp-minify-html": "^1.0.4",
     "gulp-mocha": "^4.1.0",
     "gulp-nodemon": "^2.0.4",
+    "gulp-polylint": "^1.0.3",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-sass": "^2.0.4",
