@@ -49,7 +49,7 @@ gulp.task('data:rollback', function() {
   });
 });
 
-gulp.task('data:seed', ['data:latest'], function() {
+gulp.task('data:seed', function() {
   var knexInstance = knex();
   return knexInstance.seed.run(seedConfig)
   .then(function() {
