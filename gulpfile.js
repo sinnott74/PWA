@@ -34,18 +34,19 @@ GLOBAL.config = {
   license: 'Apache'
 };
 
-var allTasks = ['bower', 'styles', 'scripts', 'copy', 'html', 'images', 'data', 'service-worker'];
+var allTasks = ['bower', 'styles', 'scripts', 'copy', 'html', 'images', 'data'];
 
 gulp.task('default', function(cb) {
   runSequence(
     'clean',
     'bump',
     allTasks,
+    'service-worker',
     cb);
 });
 
 function startWatchTasks() {
-  return runSequence('clean', allTasks, 'watch', 'nodemon');
+  return runSequence('clean', allTasks, 'service-worker', 'watch', 'nodemon');
 }
 
 gulp.task('dev', function() {
