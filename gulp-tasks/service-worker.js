@@ -13,7 +13,7 @@ gulp.task('service-worker:watch', function() {
   gulp.watch(GLOBAL.config.src + '/../gulp-tasks/service-worker.js', ['service-worker']);
 });
 
-gulp.task('service-worker', ['styles', 'images', 'scripts', 'vulcanize'], function(cb) {
+gulp.task('service-worker', function(cb) {
   swPrecache.write(path.join(GLOBAL.config.dest, 'sw.js'), {
     staticFileGlobs: [
       GLOBAL.config.dest + '/**/*.{js,html,css,png,jpg,jpeg,gif,svg}',
