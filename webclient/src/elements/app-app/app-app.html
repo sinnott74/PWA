@@ -1,0 +1,269 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../app-toast/app-toast.html">
+<link rel="import" href="../app-sidenav/app-sidenav.html">
+<link rel="import" href="../app-header/app-header.html">
+<link rel="import" href="../app-router/app-router.html">
+
+<dom-module id="app-app">
+
+  <!-- Defines the element's style and local DOM -->
+  <!-- <link rel="stylesheet" type="text/css" href="app-app.css"> -->
+  <template>
+    <app-header title="App Shell"></app-header>
+    <app-sidenav></app-sidenav>
+    <app-toast></app-toast>
+    <app-router></app-router>
+  </template>
+
+  <!-- Creates the element's prototype and registers it -->
+  <script>
+    Polymer({
+      is: 'app-app',
+
+      ready: function() {
+        this.sidenav = this.querySelector('app-sidenav');
+        this.router = this.querySelector('app-router');
+
+        this._registerRouters();
+        this._registerServiceWorker();
+      },
+
+      _registerRouters() {
+
+        var anchorElements = document.querySelectorAll('a');
+        for (var i = 0; i < anchorElements.length; i++) {
+          if (!anchorElements[i].href) {
+            continue;
+          }
+
+          anchorElements[i].addEventListener('click', (clickEvent) => {
+            console.log('Clicked link controlled by router');
+            console.log(clickEvent);
+            clickEvent.stopPropagation();
+            clickEvent.preventDefault();
+
+            this.sidenav.opened = false;
+
+            this.router.goToPath(clickEvent.currentTarget.href);
+          });
+        }
+
+        this.router.setDefaultRoute(new PageController());
+        this.router.requestStateUpdate();
+      },
+
+      _registerServiceWorker() {
+        if (!('serviceWorker' in navigator)) {
+            // Service worker is not supported on this platform
+            return;
+          }
+
+          navigator.serviceWorker.register('/sw.js', {
+            scope: '/'
+          }).then((registration) => {
+            console.log('Service worker is registered.');
+
+            var isUpdate = false;
+
+            // If this fires we should check if there's a new Service Worker
+            // waiting to be activated. If so, ask the user to force refresh.
+            if (registration.active) {
+              isUpdate = true;
+            }
+
+            registration.onupdatefound = function(updateEvent) {
+              console.log('A new Service Worker version has been found...');
+
+              // If an update is found the spec says that there is a new Service
+              // Worker installing, so we should wait for that to complete then
+              // show a notification to the user.
+              registration.installing.onstatechange = function(event) {
+                if (this.state === 'installed') {
+                  var message, toastEvent;
+
+                  if (isUpdate) {
+                    message = 'App updated. Restart for the new version.';
+                    toastEvent = new CustomEvent('toast', {'detail': message});
+                    document.dispatchEvent(toastEvent);
+                    // ToasterSingleton.getToaster().toast(
+                    //     'App updated. Restart for the new version.');
+                  } else {
+                    message = 'App ready for offline use.';
+                    toastEvent = new CustomEvent('toast', {'detail': message});
+                    document.dispatchEvent(toastEvent);
+                    // ToasterSingleton.getToaster().toast(
+                    //     'App ready for offline use.');
+                  }
+                }
+              };
+            };
+          })
+          .catch((err) => {
+            console.log('Unable to register service worker.', err);
+          });
+        },
+
+        _loadScript(url) {
+          return new Promise((resolve, reject) => {
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = url;
+
+            script.onload = resolve;
+            script.onerror = reject;
+
+            document.head.appendChild(script);
+          });
+        },
+
+        _loadCSS(url) {
+          return new Promise((resolve, reject) => {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url);
+            xhr.responseType = 'text';
+            xhr.onload = function(e) {
+              if (this.status === 200) {
+                var style = document.createElement('style');
+                style.textContent = xhr.response;
+                document.head.appendChild(style);
+                resolve();
+              } else {
+                reject();
+              }
+            };
+            xhr.send();
+          });
+        }
+    });
+
+    function PageController() {
+      this.loader = document.querySelector('.js-global-loader');
+      this.mainContainer = document.querySelector('.js-global-main');
+
+      this.DEFAULT_TITLE = 'App Shell';
+    }
+
+    PageController.prototype.onUpdate = function() {
+      console.log('onUpdate: ', this.path);
+    }
+
+    PageController.prototype.onStart = function(path) {
+      console.log('onStart: ', path);
+
+      // Show loading dialog while we get content
+      this.loader = document.querySelector('.js-global-loader');
+      this.loader.classList.remove('is-hidden');
+
+      this.updateNavDrawer(path);
+
+      fetch('/api' + path)
+        .then((response) => {
+          if (response.status === 404) {
+            this.show404();
+            return null;
+          }
+
+          return response.json();
+        })
+        .then((responseObject) => {
+          // Hide loading dialog
+          this.loader.classList.add('is-hidden');
+
+          if (responseObject === null) {
+            throw new Error('Unexpected response from Server.');
+          }
+
+          if (responseObject.title) {
+            document.title = responseObject.title;
+          } else {
+            document.title = this.DEFAULT_TITLE;
+          }
+
+          // Add style element to the document head
+          // var styleElement = document.createElement('style');
+          // styleElement.textContent = responseObject.partialinlinestyles;
+          // document.head.appendChild(styleElement);
+
+          // Add content from partial to page
+          this.mainContainer.innerHTML = responseObject.partialhtml;
+
+          // make router handle all anchor in mainContainer
+          var router = document.querySelector('app-router');
+          var anchorElements = this.mainContainer.querySelectorAll('a');
+          var sideNav = document.querySelector('app-sidenav');
+          for (var i = 0; i < anchorElements.length; i++) {
+            if (!anchorElements[i].href) {
+              continue;
+            }
+            anchorElements[i].addEventListener('click', (clickEvent) => {
+              console.log('Clicked link controlled by router');
+              console.log(clickEvent);
+              clickEvent.stopPropagation();
+              clickEvent.preventDefault();
+              sideNav.opened = false;
+              router.goToPath(clickEvent.currentTarget.href);
+            });
+          }
+
+
+          // TODO: Handle remote scripts
+
+          // TODO: Handle remote styles
+        })
+        .catch((error) => {
+          console.log(error);
+          this.showError('There was a problem loading this page');
+        });
+    }
+
+    PageController.prototype.onFinish = function() {
+      console.log('onFinish');
+      // Remove any existing styles
+      var insertedStyles =
+        document.querySelector('.js-partial-styles');
+      if (insertedStyles) {
+        document.head.removeChild(insertedStyles);
+      }
+
+      // Remove the current content
+      while (this.mainContainer.firstChild) {
+        this.mainContainer.removeChild(this.mainContainer.firstChild);
+      }
+    }
+
+    PageController.prototype.show404 = function() {
+      var headingElement = document.createElement('h1');
+      headingElement.textContent = '404.';
+      this.mainContainer.appendChild(headingElement);
+
+      var paragraphElement = document.createElement('p');
+      paragraphElement.textContent = 'Oops - looks like this ' +
+        'page isn\'t valid.';
+      this.mainContainer.appendChild(paragraphElement);
+    }
+
+    PageController.prototype.showError = function(msg) {
+      var headingElement = document.createElement('h1');
+      headingElement.textContent = 'Ooopps.';
+      this.mainContainer.appendChild(headingElement);
+
+      var paragraphElement = document.createElement('p');
+      paragraphElement.textContent = 'There was a problem displaying this page ' +
+        ', sorry about that.';
+      this.mainContainer.appendChild(paragraphElement);
+    }
+
+    PageController.prototype.updateNavDrawer = function(path) {
+     var nodeList = document.querySelectorAll('.side-nav__body a');
+      [].forEach.call(nodeList, function(el) {
+        // Reset active states
+        el.classList.remove('active');
+        // We could compare against path, but easier to compare
+        // against the current document href
+        if (el.href === document.location.href) {
+          el.classList.add('active');
+        }
+      });
+    }
+  </script>
+</dom-module>

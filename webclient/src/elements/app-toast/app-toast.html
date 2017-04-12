@@ -16,9 +16,9 @@
     Polymer({
       is: 'app-toast',
       ready: function() {
-        this.view = document.querySelector('.js-toast-view');
-        this.closeBtn = document.querySelector('.js-toast-view__btn-close');
-        this.text = document.querySelector('.js-toast-view__text');
+        this.view = this.querySelector('.js-toast-view');
+        this.closeBtn = this.view.querySelector('.js-toast-view__btn-close');
+        this.text = this.view.querySelector('.js-toast-view__text');
         this.hideTimeout = 0;
 
         this.hide = this.hide.bind(this);
