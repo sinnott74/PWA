@@ -1,6 +1,6 @@
 <link rel="import" href="../../../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../../../bower_components/iron-icon/iron-icon.html">
-<link rel="import" href="../../../../bower_components/paper-icon-button/paper-icon-button.html">
+<!--<link rel="import" href="../../../../bower_components/iron-icon/iron-icon.html">-->
+<!--<link rel="import" href="../../../../bower_components/paper-icon-button/paper-icon-button.html">-->
 <link rel="import" href="../app-options-menu/app-options-menu.html">
 
 <dom-module id="app-header">
@@ -8,9 +8,10 @@
   <!-- <link rel="stylesheet" type="text/css" href="app-header.css"> -->
   <template>
     <header class="header">
-      <paper-icon-button role="tab" class="header__menu js-toggle-menu" on-click="handleMenuClick">
+      <content select=".sidenav-button"></content>
+      <!--<paper-icon-button role="tab" class="header__menu js-toggle-menu" on-click="handleMenuClick">
         Toggle nav menu
-      </paper-icon-button>
+      </paper-icon-button>-->
       <h1 class="header__title">[[title]]</h1>
       <!--<paper-icon-button role="tab" class="header__options js-toggle-options" on-click="handleOptionsClick">
         Toggle options menu

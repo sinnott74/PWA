@@ -3,13 +3,19 @@
 <link rel="import" href="../app-sidenav/app-sidenav.html">
 <link rel="import" href="../app-header/app-header.html">
 <link rel="import" href="../app-router/app-router.html">
+<link rel="import" href="../../../../bower_components/paper-icon-button/paper-icon-button.html">
 
 <dom-module id="app-app">
 
   <!-- Defines the element's style and local DOM -->
   <!-- <link rel="stylesheet" type="text/css" href="app-app.css"> -->
   <template>
-    <app-header title="App Shell"></app-header>
+    <app-header title="App Shell">
+      <!-- This replaces content in app-header-->
+      <paper-icon-button role="tab" class="sidenav-button header__menu" on-click="_onSideNavButtonClick">
+        Toggle nav menu
+      </paper-icon-button>
+    </app-header>
     <app-sidenav></app-sidenav>
     <app-toast></app-toast>
     <app-router></app-router>
@@ -135,6 +141,10 @@
             };
             xhr.send();
           });
+        },
+
+        _onSideNavButtonClick: function(e) {
+          this.sidenav.opened = true;
         }
     });
 

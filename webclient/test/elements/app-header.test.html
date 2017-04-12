@@ -32,42 +32,42 @@
       **/
       suite('<app-header>', function() {
 
-        /**
-        *   Test to assure the correct event is thrown when the handleMenuClick method is called
-        **/
-        test('handleMenuClick', function(done) {
+        // /**
+        // *   Test to assure the correct event is thrown when the handleMenuClick method is called
+        // **/
+        // test('handleMenuClick', function(done) {
 
-          // Create event handler
-          testEventHandler = function(e){
-              assert.ok(e, 'Event should be defined');
-              assert.equal(e.type, 'open-nav', 'Event type should be open-nav');
-              done();
-          };
+        //   // Create event handler
+        //   testEventHandler = function(e){
+        //       assert.ok(e, 'Event should be defined');
+        //       assert.equal(e.type, 'open-nav', 'Event type should be open-nav');
+        //       done();
+        //   };
 
-          document.addEventListener('open-nav', testEventHandler);
+        //   document.addEventListener('open-nav', testEventHandler);
 
-          appHeader.handleMenuClick();
-        });
-        /*--------------------------------------------------------------------------------*/
+        //   appHeader.handleMenuClick();
+        // });
+        // /*--------------------------------------------------------------------------------*/
 
-        /**
-        *   Test to assure the correct event is thrown when the button is clicked
-        **/
-        test('onClick Event', function(done) {
+        // /**
+        // *   Test to assure the correct event is thrown when the button is clicked
+        // **/
+        // test('onClick Event', function(done) {
 
-          var button = appHeader.querySelector('.js-toggle-menu');
+        //   var button = appHeader.querySelector('.js-toggle-menu');
 
-            // Create event handler
-          testEventHandler = function(e){
-              assert.ok(e, 'Event should be defined');
-              assert.equal(e.type, 'open-nav', 'Event type should be open-nav');
-              done();
-          };
+        //     // Create event handler
+        //   testEventHandler = function(e){
+        //       assert.ok(e, 'Event should be defined');
+        //       assert.equal(e.type, 'open-nav', 'Event type should be open-nav');
+        //       done();
+        //   };
 
-          document.addEventListener('open-nav', testEventHandler);
-          button.click();
-        });
-        /*--------------------------------------------------------------------------------*/
+        //   document.addEventListener('open-nav', testEventHandler);
+        //   button.click();
+        // });
+        // /*--------------------------------------------------------------------------------*/
 
         /**
         *   Test to title attribute correctly sets the title

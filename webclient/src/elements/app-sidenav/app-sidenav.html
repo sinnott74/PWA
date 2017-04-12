@@ -97,9 +97,6 @@
         this._open = this._open.bind(this);
         this._updateUI = this._updateUI.bind(this);
 
-        document.addEventListener('open-nav', this._open);
-        document.addEventListener('close-nav', this._close);
-
         var event = new Event('side-nav-ready');
         document.dispatchEvent(event);
       },
@@ -186,9 +183,9 @@
         this.direction = "";
 
         if (this.sideNavTransform < -this.TOUCH_SLOP) {
-          this._close();
+          this.opened = false;
         } else if (this.sideNavTransform < -window.devicePixelRatio/100){
-          this._open();
+          this.opened = true;;
         }
 
         // allow content scrolling again
@@ -246,14 +243,12 @@
 
       _close: function() {
         this.classList.add("side_nav--animatable");
-        this.opened = false;
         this.sideNavContent.removeAttribute('style');
         document.body.style.overflowY = 'auto';
       },
 
       _open: function() {
         this.classList.add("side_nav--animatable");
-        this.opened = true;
         this.sideNavContent.removeAttribute('style');
         document.body.style.overflowY = 'hidden';
       },
