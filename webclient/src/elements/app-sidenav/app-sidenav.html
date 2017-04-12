@@ -66,7 +66,7 @@
         this.sideNavContentWidth = this.sideNavContent.offsetWidth;
 
         this.addEventListener('click', function(e) {
-          this._close();
+          this.opened = false;
         });
 
         this.sideNavContent.addEventListener('click', function(e) {
@@ -81,9 +81,6 @@
           e.stopPropagation();
         });
 
-        // this.addEventListener('touchmove', function(e){
-        //   e.preventDefault();
-        // });
 
         this.touching = false;
 
@@ -230,10 +227,10 @@
       _handleEdgeTouchEnd: function(e) {
         this.direction = "";
         if (this.edgeTransform >= this.TOUCH_SLOP) {
-          this._open();
+          this.opened = true;
           return;
         } else if (this.edgeTransform < this.TOUCH_SLOP){
-          this._close();
+          this.opened = false;
         }
       },
 
