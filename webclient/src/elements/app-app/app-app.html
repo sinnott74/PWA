@@ -28,23 +28,25 @@
         this._registerServiceWorker();
       },
 
-      _registerRouters() {
+      _registerRouters: function() {
 
         var anchorElements = document.querySelectorAll('a');
+        var sidenav = this.sidenav;
+        var router = this.router;
         for (var i = 0; i < anchorElements.length; i++) {
           if (!anchorElements[i].href) {
             continue;
           }
 
-          anchorElements[i].addEventListener('click', (clickEvent) => {
+          anchorElements[i].addEventListener('click', function(clickEvent) {
             console.log('Clicked link controlled by router');
             console.log(clickEvent);
             clickEvent.stopPropagation();
             clickEvent.preventDefault();
 
-            this.sidenav.opened = false;
+            sidenav.opened = false;
 
-            this.router.goToPath(clickEvent.currentTarget.href);
+            router.goToPath(clickEvent.currentTarget.href);
           });
         }
 
@@ -52,7 +54,7 @@
         this.router.requestStateUpdate();
       },
 
-      _registerServiceWorker() {
+      _registerServiceWorker: function() {
         if (!('serviceWorker' in navigator)) {
             // Service worker is not supported on this platform
             return;
@@ -60,7 +62,7 @@
 
           navigator.serviceWorker.register('/sw.js', {
             scope: '/'
-          }).then((registration) => {
+          }).then(function(registration) {
             console.log('Service worker is registered.');
 
             var isUpdate = false;
@@ -98,13 +100,13 @@
               };
             };
           })
-          .catch((err) => {
+          .catch(function(err) {
             console.log('Unable to register service worker.', err);
           });
         },
 
-        _loadScript(url) {
-          return new Promise((resolve, reject) => {
+        _loadScript: function(url) {
+          return new Promise(function(resolve, reject) {
             var script = document.createElement('script');
             script.async = true;
             script.src = url;
@@ -116,8 +118,8 @@
           });
         },
 
-        _loadCSS(url) {
-          return new Promise((resolve, reject) => {
+        _loadCSS: function(url) {
+          return new Promise(function(resolve, reject) {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', url);
             xhr.responseType = 'text';
@@ -151,23 +153,26 @@
       console.log('onStart: ', path);
 
       // Show loading dialog while we get content
-      this.loader = document.querySelector('.js-global-loader');
+      var pageController = this;
+      var loader = this.loader;
+      var mainContainer = this.mainContainer;
+
       this.loader.classList.remove('is-hidden');
 
       this.updateNavDrawer(path);
 
       fetch('/api' + path)
-        .then((response) => {
+        .then(function(response) {
           if (response.status === 404) {
-            this.show404();
+            pageController.show404();
             return null;
           }
 
           return response.json();
         })
-        .then((responseObject) => {
+        .then(function(responseObject) {
           // Hide loading dialog
-          this.loader.classList.add('is-hidden');
+          loader.classList.add('is-hidden');
 
           if (responseObject === null) {
             throw new Error('Unexpected response from Server.');
@@ -185,17 +190,17 @@
           // document.head.appendChild(styleElement);
 
           // Add content from partial to page
-          this.mainContainer.innerHTML = responseObject.partialhtml;
+          mainContainer.innerHTML = responseObject.partialhtml;
 
           // make router handle all anchor in mainContainer
           var router = document.querySelector('app-router');
-          var anchorElements = this.mainContainer.querySelectorAll('a');
+          var anchorElements = mainContainer.querySelectorAll('a');
           var sideNav = document.querySelector('app-sidenav');
           for (var i = 0; i < anchorElements.length; i++) {
             if (!anchorElements[i].href) {
               continue;
             }
-            anchorElements[i].addEventListener('click', (clickEvent) => {
+            anchorElements[i].addEventListener('click', function(clickEvent) {
               console.log('Clicked link controlled by router');
               console.log(clickEvent);
               clickEvent.stopPropagation();
@@ -210,9 +215,9 @@
 
           // TODO: Handle remote styles
         })
-        .catch((error) => {
+        .catch(function(error) {
           console.log(error);
-          this.showError('There was a problem loading this page');
+          pageController.showError('There was a problem loading this page');
         });
     }
 

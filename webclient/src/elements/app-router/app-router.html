@@ -13,17 +13,17 @@
     Polymer({
       is: 'app-router',
       ready: function() {
-
+        var router = this;
         this.routes = {};
         this.currentPath = window.location.pathname;
         this.defaultActivity = null;
 
-        window.addEventListener('popstate', (e) => {
-          this.onPopState(e);
+        window.addEventListener('popstate', function(e) {
+          router.onPopState(e);
         });
       },
 
-      addRoute(path, activity) {
+      addRoute: function(path, activity) {
         if (this.routes[path]) {
           throw 'A handler already exists for this path: ' + path;
         }
@@ -31,7 +31,7 @@
         this.routes[path] = activity;
       },
 
-      setDefaultRoute(activity) {
+      setDefaultRoute: function(activity) {
         if (this.defaultActivity) {
           throw 'A default handler already exists';
         }
@@ -39,7 +39,7 @@
         this.defaultActivity = activity;
       },
 
-      removeRoute(path) {
+      removeRoute: function(path) {
         if (!this.routes[path]) {
           return;
         }
@@ -47,13 +47,15 @@
         delete this.routes[path];
       },
 
-      requestStateUpdate() {
-        requestAnimationFrame(() => {
-          this.manageState();
+      requestStateUpdate: function() {
+
+        var router = this;
+        requestAnimationFrame(function() {
+          router.manageState();
         });
       },
 
-      manageState() {
+      manageState: function() {
         var newPath = document.location.pathname;
         var newActivity = this.routes[newPath];
         var currentActivity = this.routes[this.currentPath];
@@ -88,7 +90,7 @@
         return true;
       },
 
-      goToPath(path, title = null) {
+      goToPath: function(path, title) {
         console.log('goToPath() path = ' + path);
         // Only process real changes.
         if (path === window.location.pathname) {
@@ -96,12 +98,13 @@
         }
 
         history.pushState(undefined, title, path);
-        requestAnimationFrame(() => {
-          this.manageState();
+        var router = this;
+        requestAnimationFrame(function() {
+          router.manageState();
         });
       },
 
-      onPopState(e) {
+      onPopState: function(e) {
         e.preventDefault();
         this.requestStateUpdate();
       }
