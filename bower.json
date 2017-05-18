@@ -16,8 +16,10 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.7.0",
-    "web-component-tester": "Polymer/web-component-tester#^5.0.0",
     "paper-icon-button": "PolymerElements/paper-icon-button#^1.1.4"
+  },
+  "devDependencies": {
+    "web-component-tester": "Polymer/web-component-tester#^5.0.0"
   },
   "resolutions": {
     "mocha": "3.2.0",
