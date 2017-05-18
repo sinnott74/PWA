@@ -3,6 +3,7 @@ var eslint = require('gulp-eslint');
 var mocha = require('gulp-mocha');
 var util = require('gulp-util');
 var cfenv = require('cfenv');
+var runSequence = require('run-sequence');
 
 // If running in Bluemix don't load WCT
 if(cfenv.getAppEnv().isLocal) {
@@ -46,4 +47,11 @@ gulp.task('test:server', function() {
         .on('error', util.log);
 });
 
-gulp.task('test', ['test:eslint', 'test:server', wctTask]);
+gulp.task('test', function(cb) {
+  runSequence(
+    'test:eslint',
+    'test:server',
+    wctTask,
+    cb
+  );
+});
