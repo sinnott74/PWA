@@ -5,7 +5,7 @@ var env = require('gulp-env');
 gulp.task('nodemon', function() {
   env({
     vars: {
-      PORT: GLOBAL.config.port
+      PORT: global.config.port
     }
   });
 

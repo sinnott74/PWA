@@ -9,7 +9,7 @@ gulp.task('update-pkg', function() {
 });
 
 gulp.task('bump', ['update-pkg'], function(cb) {
-  GLOBAL.config.version =
+  global.config.version =
     JSON.parse(fs.readFileSync('./package.json', 'utf8')).version;
   cb();
 });

@@ -8,33 +8,33 @@ var swPrecache = require('sw-precache');
 var packageName = JSON.parse(fs.readFileSync('./package.json', 'utf8')).name;
 
 gulp.task('service-worker:watch', function() {
-  gulp.watch(GLOBAL.config.dest + '/**/*.*', ['service-worker']);
-  gulp.watch(GLOBAL.config.src + '/../server/views/**/*.*', ['service-worker']);
-  gulp.watch(GLOBAL.config.src + '/../gulp-tasks/service-worker.js', ['service-worker']);
+  gulp.watch(global.config.dest + '/**/*.*', ['service-worker']);
+  gulp.watch(global.config.src + '/../server/views/**/*.*', ['service-worker']);
+  gulp.watch(global.config.src + '/../gulp-tasks/service-worker.js', ['service-worker']);
 });
 
 gulp.task('service-worker', function(cb) {
-  swPrecache.write(path.join(GLOBAL.config.dest, 'sw.js'), {
+  swPrecache.write(path.join(global.config.dest, 'sw.js'), {
     staticFileGlobs: [
-      GLOBAL.config.dest + '/**/*.{js,html,css,png,jpg,jpeg,gif,svg}',
-      GLOBAL.config.dest + '/manifest.json'
+      global.config.dest + '/**/*.{js,html,css,png,jpg,jpeg,gif,svg}',
+      global.config.dest + '/manifest.json'
     ],
     dynamicUrlToDependencies: {
       '/': [
         'server/src/views/layouts/default.handlebars',
         'server/src/views/partials/open-page.handlebars',
         'server/src/views/partials/close-page.handlebars',
-        GLOBAL.config.dest + '/styles/core.css'
+        global.config.dest + '/styles/core.css'
       ],
       '/app-shell': [
         'server/src/views/layouts/app-shell.handlebars',
         'server/src/views/partials/open-page.handlebars',
         'server/src/views/partials/close-page.handlebars',
-        GLOBAL.config.dest + '/styles/core.css'
+        global.config.dest + '/styles/core.css'
       ],
       '/api/': [
         'server/src/views/index.handlebars',
-        GLOBAL.config.dest + '/styles/core.css'
+        global.config.dest + '/styles/core.css'
       ],
       '/api/url-1': [
         'server/src/views/url-1.handlebars'
@@ -43,13 +43,13 @@ gulp.task('service-worker', function(cb) {
         'server/src/views/url-2.handlebars'
       ]
     },
-    stripPrefix: GLOBAL.config.dest,
+    stripPrefix: global.config.dest,
     // navigateFallback: '/',
     cacheId: packageName,
     logger: gutil.log,
 
     // Turn on service worker for production only
-    handleFetch: (GLOBAL.config.env === 'prod')
+    handleFetch: (global.config.env === 'prod')
   })
   .then(cb)
   .catch(() => {

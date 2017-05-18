@@ -23,7 +23,7 @@ var runSequence = require('run-sequence');
 require('require-dir')('gulp-tasks');
 
 var projectPackage = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
-GLOBAL.config = {
+global.config = {
   env: 'prod',
   port: 8080,
   src: 'webclient/src',
@@ -50,8 +50,8 @@ function startWatchTasks() {
 }
 
 gulp.task('dev', function() {
-  GLOBAL.config.env = 'dev';
-  GLOBAL.config.port = 8081;
+  global.config.env = 'dev';
+  global.config.port = 8081;
   return startWatchTasks();
 });
 

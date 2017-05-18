@@ -16,7 +16,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var rename = require('gulp-rename');
 
 gulp.task('scripts:watch', function() {
-  gulp.watch(GLOBAL.config.src + '/**/*.js', ['scripts']);
+  gulp.watch(global.config.src + '/**/*.js', ['scripts']);
   gulp.watch(['./.eslintrc', './.eslintignore'], ['scripts']);
 });
 
@@ -43,11 +43,11 @@ function compileES6Bundles(browserifyBundles, cb) {
           this.emit('end');
         })
         .pipe(source(bundle.outputFilename))
-        .pipe(replace(/@VERSION@/g, GLOBAL.config.version))
+        .pipe(replace(/@VERSION@/g, global.config.version))
 
         // If this is a production build - minify JS
-        .pipe(gulpif(GLOBAL.config.env === 'prod', streamify(uglify())))
-        .pipe(license(GLOBAL.config.license, {tiny: true}))
+        .pipe(gulpif(global.config.env === 'prod', streamify(uglify())))
+        .pipe(license(global.config.license, {tiny: true}))
         .pipe(gulp.dest(bundle.dest))
         .on('end', function() {
           finishedCount++;
@@ -87,7 +87,7 @@ function generateES6Bundles(srcPath, cb) {
     browserifyBundles.push({
       srcPath: './' + filepath,
       outputFilename: outputFilename,
-      dest: path.join(GLOBAL.config.dest, relativeDirectory)
+      dest: path.join(global.config.dest, relativeDirectory)
     });
   });
 
@@ -95,7 +95,7 @@ function generateES6Bundles(srcPath, cb) {
 }
 
 gulp.task('scripts:eslint', function() {
-  return gulp.src([GLOBAL.config.src + '/**/*.js'])
+  return gulp.src([global.config.src + '/**/*.js'])
 
     // eslint() attaches the lint output to the eslint property,
     // of the file object so it can be used by other modules.
@@ -107,16 +107,16 @@ gulp.task('scripts:eslint', function() {
 
     // To have the process exit with an error code (1) on
     // lint error, return the stream and pipe to failOnError last.
-    .pipe(gulpif(GLOBAL.config.env === 'prod', eslint.failOnError()));
+    .pipe(gulpif(global.config.env === 'prod', eslint.failOnError()));
 });
 
 gulp.task('scripts:es6', function(cb) {
-  generateES6Bundles(GLOBAL.config.src, cb);
+  generateES6Bundles(global.config.src, cb);
 });
 
 gulp.task('scripts:es5', function() {
-  return gulp.src([GLOBAL.config.src + '/**/*.es5.js'])
-    .pipe(gulpif(GLOBAL.config.env !== 'prod', sourcemaps.init()))
+  return gulp.src([global.config.src + '/**/*.es5.js'])
+    .pipe(gulpif(global.config.env !== 'prod', sourcemaps.init()))
 
     // Remove the .es5 from the end of the file name using gulp-rename
     .pipe(rename(function(filePath) {
@@ -125,16 +125,16 @@ gulp.task('scripts:es5', function() {
         0, filePath.basename.length - fileExtensionLength);
     }))
 
-    .pipe(replace(/@VERSION@/g, GLOBAL.config.version))
-    .pipe(gulpif(GLOBAL.config.env === 'prod', uglify()))
-    .pipe(license(GLOBAL.config.license, {tiny: true}))
-    .pipe(gulpif(GLOBAL.config.env !== 'prod', sourcemaps.write()))
-    .pipe(gulp.dest(GLOBAL.config.dest));
+    .pipe(replace(/@VERSION@/g, global.config.version))
+    .pipe(gulpif(global.config.env === 'prod', uglify()))
+    .pipe(license(global.config.license, {tiny: true}))
+    .pipe(gulpif(global.config.env !== 'prod', sourcemaps.write()))
+    .pipe(gulp.dest(global.config.dest));
 });
 
 // Delete any files currently in the scripts destination path
 gulp.task('scripts:clean', function(cb) {
-  del([GLOBAL.config.dest + '/**/*.js', '!' + GLOBAL.config.dest + '/lib/**'], {dot: true})
+  del([global.config.dest + '/**/*.js', '!' + global.config.dest + '/lib/**'], {dot: true})
     .then(function() {
       cb();
     });

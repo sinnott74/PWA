@@ -25,7 +25,7 @@ if(process.env.CI) {
 gulp.task('test:eslint', function() {
   var eslintOpts = {};
 
-  return gulp.src([GLOBAL.config.src + '/**/*.js', GLOBAL.config.serverSrc + '/**/*.js'])
+  return gulp.src([global.config.src + '/**/*.js', global.config.serverSrc + '/**/*.js'])
 
     // eslint() attaches the lint output to the eslint property,
     // of the file object so it can be used by other modules.
@@ -41,7 +41,7 @@ gulp.task('test:eslint', function() {
 });
 
 gulp.task('test:server', function() {
-  return gulp.src([GLOBAL.config.serverTest + '/**/*.js'], {read: false})
+  return gulp.src([global.config.serverTest + '/**/*.js'], {read: false})
         .pipe(mocha({reporter: 'spec'}))
         .on('error', util.log);
 });

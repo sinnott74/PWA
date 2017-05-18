@@ -22,30 +22,30 @@ var AUTOPREFIXER_BROWSERS = [
 ];
 
 gulp.task('styles:watch', function() {
-  gulp.watch(GLOBAL.config.src + '/**/*.scss', ['styles']);
+  gulp.watch(global.config.src + '/**/*.scss', ['styles']);
 });
 
 // Delete any files currently in the scripts destination path
 gulp.task('styles:clean', function(cb) {
-  del([GLOBAL.config.dest + '/**/*.css'], {dot: true})
+  del([global.config.dest + '/**/*.css'], {dot: true})
     .then(function() {
       cb();
     });
 });
 
 gulp.task('styles:sass', function() {
-  return gulp.src(GLOBAL.config.src + '/**/*.scss')
+  return gulp.src(global.config.src + '/**/*.scss')
     // output sass lint if in dev
-    .pipe(gulpif(GLOBAL.config.env === 'dev', sasslint()))
-    .pipe(gulpif(GLOBAL.config.env === 'dev', sasslint.format()))
+    .pipe(gulpif(global.config.env === 'dev', sasslint()))
+    .pipe(gulpif(global.config.env === 'dev', sasslint.format()))
     // Only create sourcemaps for dev
-    .pipe(gulpif(GLOBAL.config.env !== 'prod', sourcemaps.init()))
+    .pipe(gulpif(global.config.env !== 'prod', sourcemaps.init()))
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer(AUTOPREFIXER_BROWSERS))
-    .pipe(gulpif(GLOBAL.config.env === 'prod', cleanCSS()))
-    .pipe(license(GLOBAL.config.license, {tiny: true}))
-    .pipe(gulpif(GLOBAL.config.env !== 'prod', sourcemaps.write()))
-    .pipe(gulp.dest(GLOBAL.config.dest));
+    .pipe(gulpif(global.config.env === 'prod', cleanCSS()))
+    .pipe(license(global.config.license, {tiny: true}))
+    .pipe(gulpif(global.config.env !== 'prod', sourcemaps.write()))
+    .pipe(gulp.dest(global.config.dest));
 });
 
 gulp.task('styles', function(cb) {
