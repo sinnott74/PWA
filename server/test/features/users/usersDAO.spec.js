@@ -2,125 +2,240 @@
 // node_modules/mocha/bin/mocha server/test/features/users/usersDAO.spec.js
 require('../../serverTestFramework');
 var assert = require('assert');
-var userDAO = require('../../../src/features/users/usersDAO');
+var UserDAO = require('../../../src/features/users/usersDAO');
+var TransactionInfo = require('../../../src/core/TransactionInfo');
 
-describe('userDAO tests', function() {
+describe('userDAO', function() {
   /**
    *
    */
   it('should create an entry on the user table, read it back then delete it', function(done) {
-    var testPassword = 'password';
+    TransactionInfo.startTransaction(async function() {
+      try {
+        let userDAO = new UserDAO();
 
-    // user object
-    var user = {
-      username: 'testUsername',
-      password: testPassword,
-      firstname: 'testFirstName',
-      lastname: 'testLastName',
-      dob: new Date( 2017, 1, 1)
-    };
+        var testPassword = 'password';
 
-    // create user
-    userDAO.create(user)
-    // read it back
-    .then((id) => userDAO.read(id))
-    // assert all values
-    .then((dbUser) => {
-      // then assert all values match
-      assert.equal(dbUser.username, user.username);
-      assert.equal(dbUser.password, user.password);
-      assert.notEqual(dbUser.password, testPassword); // check password has been hashed
-      assert.equal(dbUser.firstname, user.firstname);
-      assert.equal(dbUser.lastname, user.lastname);
-      assert.equal(dbUser.dob.getTime(), user.dob.getTime());
-      return Promise.resolve(dbUser);
-    })
-    // delete user
-    .then((dbUser) => userDAO.delete(dbUser))
-    // finish test
-    .then(() => done());
-  });
+        // user object
+        var user = {
+          username: 'testUsername',
+          password: testPassword,
+          firstname: 'testFirstName',
+          lastname: 'testLastName',
+          dob: new Date( 2017, 1, 1)
+        };
 
-  /**
-   * Tests usersDAO#validate.
-   * User is a valid entity
-   */
-  it('should not throw a TypeError for valid user', function(done) {
-    var user = {
-      username: 'testUsername',
-      password: 'testPassword',
-      firstname: 'testFirstName',
-      lastname: 'testLastName',
-      dob: new Date( 2017, 1, 1)
-    };
+        // create user
+        let id = await userDAO.create(user);
 
-    userDAO.validate(user)
-    .then(() => {
-      done();
+        // read it back
+        let dbUser = await userDAO.read(id);
+
+        // assert all values
+        assert.equal(dbUser.username, user.username);
+        assert.equal(dbUser.password, user.password);
+        assert.notEqual(dbUser.password, testPassword); // check password has been hashed
+        assert.equal(dbUser.firstname, user.firstname);
+        assert.equal(dbUser.lastname, user.lastname);
+        assert.equal(dbUser.dob.getTime(), user.dob.getTime());
+
+        // delete user
+        await userDAO.delete(dbUser);
+        done();
+      } catch(error) {
+        console.error(error);
+        assert.fail();
+        done();
+      }
     });
   });
 
-  /**
-   * Tests usersDAO#validate
-   * User is invalid
-   */
-  it('should throw type error for invalid/null user', function(done) {
-    var user = null;
-    userDAO.validate(user)
-    .catch((error) => {
-      assert.equal(error.message, 'User object invalid');
-      done();
-    });
-  });
+  // it('should rollback after creating a user then throwing an error', function(done) {
+  //   TransactionInfo.startTransaction(async function() {
+  //     let userDAO = new UserDAO();
+  //     let testUsername = 'testUsername';
 
-  /**
-   * Tests usersDAO#tableName
-   */
-  it('should return the table name', function() {
-    assert.equal(userDAO.tableName, 'users');
-  });
+  //     try {
+  //       var testPassword = 'password';
 
-  /**
-   * Tests usersDAO#preCreate.
-   */
-  it('should replace password with hashed password', function(done) {
-    var testPassword = 'password';
-    var user = {
-      password: testPassword
-    };
+  //       // user object
+  //       var user = {
+  //         username: testUsername,
+  //         password: testPassword,
+  //         firstname: 'testFirstName',
+  //         lastname: 'testLastName',
+  //         dob: new Date( 2017, 1, 1)
+  //       };
 
-    userDAO.preCreate(user)
-    .then(() => {
-       // check password changed
-      assert.notEqual(user.password, testPassword);
-      // check its same length as expected hash length
-      assert.equal(user.password.length, 60);
-      done();
-    });
-  });
+  //       // create user
+  //       await userDAO.create(user);
+  //       throw new Error();
+  //     } catch(error) {
+  //       console.error(error);
+  //       userDAO.readByUserName(testUsername)
+  //       .catch((err) => {
+  //         // username not found
+  //         console.error(error);
+  //         done();
+  //       });
+  //     }
+  //   });
+  // });
 
-  it('should validate the ID & resolve', function(done) {
-    var ID = 123;
-    userDAO.validateID(ID)
-    .then(() => done());
-  });
+  // /**
+  //  * Tests usersDAO#validate.
+  //  * User is a valid entity
+  //  */
+  // it('should not throw a TypeError for valid user', function(done) {
+  //   var user = {
+  //     username: 'testUsername',
+  //     password: 'testPassword',
+  //     firstname: 'testFirstName',
+  //     lastname: 'testLastName',
+  //     dob: new Date( 2017, 1, 1)
+  //   };
 
-  it('should validate the ID as a string & resolve', function(done) {
-    var ID = '123';
-    userDAO.validateID(ID)
-    .then(() => done());
-  });
+  //   var userDAO = new UserDAO();
 
-  it('should validate the ID as a string & reject', function(done) {
-    var ID = '123a';
-    userDAO.validateID(ID)
-    .catch(() => done());
-  });
+  //   userDAO.validate(user)
+  //   .then(() => {
+  //     done();
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //     assert.fail();
+  //   });
+  // });
 
-  it('should validate the ID as a undefined & reject', function(done) {
-    var ID;
-    userDAO.validateID(ID)
-    .catch(() => done());
-  });
+  // /**
+  //  * Tests usersDAO#validate
+  //  * User is invalid
+  //  */
+  // it('should throw type error for invalid/null user', function(done) {
+  //   var user = null;
+  //   let userDAO = new UserDAO();
+
+  //   userDAO.validate(user)
+  //   .catch((error) => {
+  //     assert.equal(error.message, 'User object invalid');
+  //     done();
+  //   });
+  // });
+
+  // /**
+  //  * Tests usersDAO#tableName
+  //  */
+  // it('should return the table name', function() {
+  //   let userDAO = new UserDAO();
+  //   assert.equal(userDAO.tableName, 'users');
+  // });
+
+  // /**
+  //  * Tests usersDAO#preCreate.
+  //  */
+  // it('should replace password with hashed password', async function() {
+  //   var testPassword = 'password';
+  //   var user = {
+  //     password: testPassword
+  //   };
+
+  //   let userDAO = new UserDAO();
+
+  //   await userDAO.preCreate(user);
+
+  //   // check password changed
+  //   assert.notEqual(user.password, testPassword);
+  //   // check its same length as expected hash length
+  //   assert.equal(user.password.length, 60);
+  // });
+
+  // it('should validate the ID & resolve', function(done) {
+  //   var ID = 123;
+
+  //   let userDAO = new UserDAO();
+
+  //   userDAO.validateID(ID)
+  //   .then(() => done())
+  //   .catch(() => {
+  //     assert.fail();
+  //     done();
+  //   });
+  // });
+
+  // it('should validate the ID as a string & resolve', function(done) {
+  //   var ID = '123';
+
+  //   let userDAO = new UserDAO();
+
+  //   userDAO.validateID(ID)
+  //   .then(() => done())
+  //   .catch(() => {
+  //     assert.fail();
+  //     done();
+  //   });
+  // });
+
+  // it('should validate the ID as a string & reject', function(done) {
+  //   var ID = '123a';
+
+  //   let userDAO = new UserDAO();
+
+  //   userDAO.validateID(ID)
+  //   .then(() => {
+  //     assert.fail();
+  //     done();
+  //   })
+  //   .catch(() => done());
+  // });
+
+  // it('should validate the ID as a undefined & reject', function(done) {
+  //   var ID;
+
+  //   let userDAO = new UserDAO();
+
+  //   userDAO.validateID(ID)
+  //   .then(() => {
+  //     assert.fail();
+  //     done();
+  //   })
+  //   .catch(() => done());
+  // });
+
+  // it('should check if a username is available. Username is taken', function() {
+  //   TransactionInfo.startTransaction(async function() {
+  //     // username is used by seed data
+  //     let username = 'test@test.com';
+
+  //     let userDAO = new UserDAO();
+
+  //     let isUserNameAvailable = await userDAO.isUserNameAvailable(username);
+  //     assert.equal(isUserNameAvailable, false);
+  //   });
+  // });
+
+  // it('should check if a username is available. Username is free', function() {
+  //   TransactionInfo.startTransaction(async function() {
+  //     // username is not used by seed data
+  //     let username = 'test2@test.com';
+
+  //     let userDAO = new UserDAO();
+
+  //     let isUserNameAvailable = await userDAO.isUserNameAvailable(username);
+  //     assert.equal(isUserNameAvailable, true);
+  //   });
+  // });
+
+  // it('should read a user by username', function() {
+  //   TransactionInfo.startTransaction(async function() {
+  //     let userDAO = new UserDAO();
+
+  //     // username is used by seed data
+  //     let username = 'test@test.com';
+  //     let user = await userDAO.readByUserName(username);
+  //     assert.equal(user.username, 'test@test.com');
+  //     assert.equal(user.firstname, 'Test');
+  //     assert.equal(user.lastname, 'Test');
+  //   });
+  // });
 });
 

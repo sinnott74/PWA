@@ -1,17 +1,30 @@
 'user strict';
 
-var userDAO = require('./usersDAO');
+var UserDAO = require('./usersDAO');
 
-var userFacade = {};
+class UserFacade {
 
-userFacade.readByID = function(userKey) {
-  console.log('Read user by ID - ' + userKey.id);
-  return userDAO.read(userKey.id);
-};
+  async readByID(userKey) {
+    console.log('Read user by ID - ' + userKey.id);
+    let userDAO = new UserDAO();
+    return userDAO.read(userKey.id);
+  }
 
-userFacade.listAllUsers = function() {
-  console.log('List all users');
-  return userDAO.list();
-};
+  async createUser(user) {
+    console.log(`Creating user - ${JSON.stringify(user)}`);
+    let userDAO = new UserDAO();
 
-module.exports = userFacade;
+    user.dob = new Date();
+
+    let userID = await userDAO.create(user);
+    return userDAO.read(userID);
+  }
+
+  async listAllUsers() {
+    console.log('List all users');
+    let userDAO = new UserDAO();
+    return userDAO.list();
+  }
+}
+
+module.exports = UserFacade;

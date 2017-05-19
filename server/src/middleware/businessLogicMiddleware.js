@@ -1,5 +1,9 @@
 'user strict';
 
+// var createNamespace = require('continuation-local-storage').createNamespace;
+// var session = createNamespace('session');
+var TransactionInfo = require('../core/TransactionInfo');
+
 /**
  * This middleware is responsible check if a facade is configured
  * Then converting req parameters into facade input parameters
@@ -43,19 +47,55 @@ module.exports = function(req, res, next) {
   var pathConfig = res.locals.config;
 
   if(isFacadeOperationConfigured(pathConfig)) {
-    var facade = require(pathConfig.data.facade);
+    // Get the facade path
+    let facadePath = pathConfig.data.facade;
 
-    if(pathConfig.data.operation.input) {
-      var facadeInputObject = createFacadeInput(req, pathConfig.data.operation.input);
+    // require the facade
+    let FacadeClass = require(facadePath);
+
+    let facadeInputAttributes = pathConfig.data.operation.input;
+
+    // if the facade has input attributes configured
+    // read the inputs from the  request
+    let facadeInputObject;
+    if(facadeInputAttributes) {
+      facadeInputObject = createFacadeInput(req, facadeInputAttributes);
     }
 
-    // call the facade which returns a promise for an entity
-    facade[pathConfig.data.operation.name](facadeInputObject)
+    // Create instance of the Facade
+    let facadeInstance = new FacadeClass();
+
+    //   // Get the facade operation
+    let facadeOperation = facadeInstance[pathConfig.data.operation.name];
+
+    // // Run facade in a transaction
+    // knex.transaction(function(transaction) {
+    //   // Create instance of the Facade
+    //   let facadeInstance = new FacadeClass();
+
+    //   // Get the facade operation
+    //   let facadeOperation = facadeInstance[pathConfig.data.operation.name];
+
+    //   return TransactionInfo.setTransaction(transaction, async function() {
+    //     return facadeOperation(facadeInputObject);
+    //   });
+    // })
+    TransactionInfo.startTransaction(function() {
+      return facadeOperation(facadeInputObject);
+    })
     .then((entity) => {
-      // Add that entity onto the response locals object so it can be access from the view
+      // Facade call successful
+      // Add entity onto locals object
       res.locals.model = entity;
       next();
+    })
+    .catch ((error) => {
+      let inputStringified = JSON.stringify(facadeInputObject);
+      console.error(`Error executing - ${facadePath} with inputs - ${inputStringified}`);
+      next(error);
     });
+
+  // No facade needed
   } else {
     next();
   }

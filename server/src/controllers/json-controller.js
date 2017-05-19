@@ -18,4 +18,10 @@ jsonController.onRequest = function(req, res) {
   return;
 };
 
+jsonController.onBusinessLogicError = function(err, req, res, next) {
+  console.error('Handling json business logic error');
+  console.error(err);
+  res.status(500).send();
+};
+
 module.exports = jsonController;

@@ -28,4 +28,11 @@ staticPageController.onRequest = function(req, res) {
   }
 };
 
+staticPageController.onBusinessLogicError = function(err, req, res, next) {
+  console.error('Handling static page business logic error');
+  console.error(err);
+  let pathConfig = pathConfigs.get500();
+  res.render(pathConfig.data.view, pathConfig);
+};
+
 module.exports = staticPageController;

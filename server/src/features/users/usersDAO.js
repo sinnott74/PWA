@@ -23,13 +23,10 @@ class UsersDAO extends DAO {
   * @paramater {object} representing a user
   * @throws {TypeError} if the given user is invalid
   */
-  validate(user) {
-    return new Promise(function(resolve, reject) {
-      if(!user) {
-        throw new TypeError('User object invalid');
-      }
-      return resolve();
-    });
+  async validate(user) {
+    if(!user) {
+      throw new TypeError('User object invalid');
+    }
   }
 
 /**
@@ -37,16 +34,33 @@ class UsersDAO extends DAO {
  * Hashes a user's password.
  * @param {*} user
  */
-  preCreate(user) {
-    return bcrypt.genSalt()
-      .then((salt) => {
-        return bcrypt.hash(user.password, salt);
-      })
-      .then((hash) => {
-        user.password = hash;
-      }
-    );
+  async preCreate(user) {
+    let salt = await bcrypt.genSalt();
+    let hash = await bcrypt.hash(user.password, salt);
+    user.password = hash;
+  }
+
+  async isUserNameAvailable(userName) {
+    let entityArray = await this.database(this.tableName).where('username', userName);
+
+    if(entityArray.length === 0) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Read user table by username
+   * @param {*} userName
+   */
+  async readByUserName(userName) {
+    let entityArray = await this.database(this.tableName).where('username', userName);
+
+    if(entityArray.length === 1) {
+      return entityArray[0];
+    }
+    throw new Error();
   }
 }
 
-module.exports = new UsersDAO();
+module.exports = UsersDAO;

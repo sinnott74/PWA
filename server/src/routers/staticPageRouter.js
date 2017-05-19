@@ -13,6 +13,7 @@ urls.forEach((url) => {
   router.route(url)
     .all(pathConfiguration)
     .all(businessLogic)
+    .all(staticPageController.onBusinessLogicError)
     .all(staticPageController.onRequest);
 });
 
