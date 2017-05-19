@@ -33,6 +33,15 @@ var pathConfigs = {
     // inlineStyles: getFileContents(['/styles/core.css']),
     remoteStyles: [],
     remoteScripts: []
+  },
+  '/500': {
+    view: '500',
+    title: 'Internal Server Error',
+    facade: '',
+    operation: {},
+    // inlineStyles: getFileContents(['/styles/core.css']),
+    remoteStyles: [],
+    remoteScripts: []
   }
 };
 
@@ -87,6 +96,12 @@ module.exports = {
   get404: function() {
     return {
       'data': pathConfigs['/404']
+    };
+  },
+
+  get500: function() {
+    return {
+      'data': pathConfigs['/500']
     };
   },
 
