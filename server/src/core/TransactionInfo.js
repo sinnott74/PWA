@@ -3,16 +3,29 @@ var createNameSpace = CLS.createNamespace;
 var getNameSpace = CLS.getNamespace;
 var knex = require('../core/database');
 
-let kNAMESPACE = 'session';
+let kNAMESPACE = 'pwa';
+
+// create the NameSpace
+createNameSpace(kNAMESPACE);
 
 var TransactionInfo = {};
 
 /**
  * Starts a database transaction & adds that as a facade scoped object under the key 'database'
  */
+// TransactionInfo.startTransaction = async function(cb) {
+//   return knex.transaction(function(transaction) {
+//     let session = getNameSpace(kNAMESPACE);
+//     return session.runAndReturn(function() {
+//       session.set('database', transaction);
+//       return cb();
+//     });
+//   });
+// };
+
 TransactionInfo.startTransaction = async function(cb) {
   return knex.transaction(function(transaction) {
-    var session = createNameSpace(kNAMESPACE);
+    let session = getNameSpace(kNAMESPACE);
     return session.runAndReturn(function() {
       session.set('database', transaction);
       return cb();
@@ -34,6 +47,11 @@ TransactionInfo.getFacadeScopedObject = function(key) {
 TransactionInfo.setFacadeScopedObject = function(key, object) {
   let session = getNameSpace(kNAMESPACE);
   session.set(key, object);
+};
+
+TransactionInfo.bindEmitter = function(obj) {
+  let session = getNameSpace(kNAMESPACE);
+  session.bindEmitter(obj);
 };
 
 module.exports = TransactionInfo;

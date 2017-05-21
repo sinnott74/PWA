@@ -1,4 +1,4 @@
-'user strict';
+'use strict';
 
 /**
  * This middleware is responsible for reading the configuration for the path

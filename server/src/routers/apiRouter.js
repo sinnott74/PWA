@@ -3,6 +3,7 @@ var router = new express.Router();
 var apiController = require('../controllers/api-controller');
 var businessLogic = require('../middleware/businessLogicMiddleware');
 var pathConfiguration = require('../middleware/configurationMiddleware');
+var transaction = require('../middleware/transactionMiddleware');
 var pathConfigs = require('../core/pathConfigs.js');
 
 // Read all urls
@@ -11,6 +12,7 @@ var urls = pathConfigs.getAllURLs();
 // configure router for each url
 urls.forEach((url) => {
   router.route(url)
+    .all(transaction)
     .all(pathConfiguration)
     .all(businessLogic)
     .all(apiController.onBusinessLogicError)
