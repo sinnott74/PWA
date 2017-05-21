@@ -30,8 +30,7 @@ TransactionInfo.startTransaction = async function(cb) {
       session.set('database', transaction);
       return cb();
     });
-  })
-  .then(() => knex.destroy);
+  });
 };
 
 /**
