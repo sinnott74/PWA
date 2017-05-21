@@ -2,7 +2,7 @@
 
 // var createNamespace = require('continuation-local-storage').createNamespace;
 // var session = createNamespace('session');
-// var TransactionInfo = require('../core/TransactionInfo');
+var TransactionInfo = require('../core/TransactionInfo');
 
 /**
  * This middleware is responsible check if a facade is configured
@@ -80,10 +80,12 @@ module.exports = function(req, res, next) {
     //     return facadeOperation(facadeInputObject);
     //   });
     // })
-    // TransactionInfo.startTransaction(function() {
-    //   return facadeOperation(facadeInputObject);
-    // })
-    facadeOperation(facadeInputObject)
+    TransactionInfo.bindEmitter(req);
+    TransactionInfo.bindEmitter(res);
+    TransactionInfo.startTransaction(function() {
+      return facadeOperation(facadeInputObject);
+    })
+    // facadeOperation(facadeInputObject)
     .then((entity) => {
       // Facade call successful
       // Add entity onto locals object

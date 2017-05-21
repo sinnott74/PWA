@@ -27,7 +27,7 @@ TransactionInfo.startTransaction = async function(cb) {
   return knex.transaction(function(transaction) {
     let session = getNameSpace(kNAMESPACE);
     return session.runAndReturn(function() {
-      session.set('database', transaction);
+      session.set('transaction', transaction);
       return cb();
     });
   });
