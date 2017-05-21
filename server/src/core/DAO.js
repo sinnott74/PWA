@@ -41,6 +41,7 @@ class DAO {
     }
 
     // Read database from the transaction info
+    this.database = database;
     this.transaction = TransactionInfo.getFacadeScopedObject('transaction');
   }
 
@@ -55,7 +56,10 @@ class DAO {
     // call subclasses preCreate implemenation
     await this.preCreate(entity);
     // insert entity onto db
-    let idArray = await database(this.tableName).transacting(this.transaction).insert(entity).returning('id');
+    let idArray = await this.database(this.tableName)
+                        .transacting(this.transaction)
+                        .insert(entity)
+                        .returning('id');
 
     if (idArray.length !== 1) {
       throw new Error(this.tableName + ' insertion failed');
@@ -73,7 +77,9 @@ class DAO {
     // validate the ID
     await this.validateID(id);
     // read entity
-    let entityArray = await database(this.tableName).transacting(this.transaction).where('id', id);
+    let entityArray = await this.database(this.tableName)
+                            .transacting(this.transaction)
+                            .where('id', id);
 
     if (entityArray.length !== 1) {
       throw new Error(`Read on table ${this.tableName} failed`);
@@ -93,7 +99,10 @@ class DAO {
     // call subclasses validate implemenation
     await this.validate(entity);
     // return promise which resolves to nothing
-    return database(this.tableName).transacting(this.transaction).update(entity).where('id', entity.id);
+    return this.database(this.tableName)
+            .transacting(this.transaction)
+            .update(entity)
+            .where('id', entity.id);
   }
 
   /**
@@ -108,7 +117,10 @@ class DAO {
     await this.validate(entity);
     // return deletion promise
     console.log('UserID', entity.id);
-    return database(this.tableName).transacting(this.transaction).where('id', entity.id).del();
+    return this.database(this.tableName)
+            .transacting(this.transaction)
+            .where('id', entity.id)
+            .del();
   }
 
   /**
@@ -116,7 +128,8 @@ class DAO {
    * @returns {Promise<Array>} A promise which resolves an array of entities
    */
   list() {
-    return database(this.tableName).transacting(this.transaction);
+    return this.database(this.tableName)
+            .transacting(this.transaction);
   }
 
   /**

@@ -41,7 +41,9 @@ class UsersDAO extends DAO {
   }
 
   async isUserNameAvailable(userName) {
-    let entityArray = await this.database(this.tableName).where('username', userName);
+    let entityArray = await this.database(this.tableName)
+                            .transacting(this.transaction)
+                            .where('username', userName);
 
     if(entityArray.length === 0) {
       return true;
@@ -54,7 +56,9 @@ class UsersDAO extends DAO {
    * @param {*} userName
    */
   async readByUserName(userName) {
-    let entityArray = await this.database(this.tableName).where('username', userName);
+    let entityArray = await this.database(this.tableName)
+                            .transacting(this.transaction)
+                            .where('username', userName);
 
     if(entityArray.length === 1) {
       return entityArray[0];
