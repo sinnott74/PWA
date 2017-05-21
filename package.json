@@ -63,7 +63,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "devDependencies": {
-    "web-component-tester": "^5.0.0"
+    "web-component-tester": "^6.0.0"
   },
   "repository": {
     "type": "git",
