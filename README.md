@@ -5,6 +5,12 @@
 
 ## Installation
 
+Install a database. The project is configured to use Postgres, but MySQL & sqlite3 can used used by updating the projects knexfile.js
+
+```sh
+brew install postgresql
+```
+
 Install dependencies using npm:
 
 ```sh
@@ -16,7 +22,7 @@ $ npm install -g gulp nodemon && npm install
 ### Production Build
 
 ```sh
-$ gulp
+$ gulp prod
 ```
 
 ### Development Build with Watch
