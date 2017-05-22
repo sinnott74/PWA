@@ -22,6 +22,7 @@ Create Database:
     createdb <databasename>
 
 Open Database:
+    psql pwadb
     psql <databasename> -U postgres
     psql -h <host> -p <port> -U <user> -W <databasename>    // Note: -W specifies a password will be prompted
 
@@ -34,3 +35,6 @@ Default port:
 Created default development user:
     CREATE USER postgres PASSWORD '';
     GRANT ALL ON ALL TABLES IN SCHEMA public TO postgres;
+
+Query open database connections:
+    SELECT * FROM pg_stat_activity;
