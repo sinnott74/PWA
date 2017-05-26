@@ -1,6 +1,6 @@
 {
   "/users": {
-   "view": "users",
+   "view": "users_list",
     "title": "Users",
     "facade": "../features/users/usersFacade",
     "operation": {
@@ -10,7 +10,7 @@
     "remoteScripts": []
   },
   "/users/:id(\\d+)": {
-    "view": "user",
+    "view": "users_read",
     "title": "User",
     "facade": "../features/users/usersFacade",
     "operation": {
