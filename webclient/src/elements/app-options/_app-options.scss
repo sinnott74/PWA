@@ -4,21 +4,26 @@ app-options {
   top: $header-height;
   right: 10px;
   width: 200px;
+  height: calc(100vh - #{$header-height});
+  border-radius: .3em;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
+    0 3px 1px -2px rgba(0, 0, 0, .2),
+    0 1px 5px 0 rgba(0, 0, 0, .12);
+  overflow: hidden;
 }
 
 .options-view {
   outline: none;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
-    0 3px 1px -2px rgba(0, 0, 0, .2),
-    0 1px 5px 0 rgba(0, 0, 0, .12);
+  position: relative;
+  overflow-y: auto;
+  height: 100%;
 }
 
 .options__item {
-  font-size: 14px;
+  font-size: 0.8em;
   outline: none;
-  height: 48px;
+  height: 3em;
   width: 100%;
-  text-align: left;
   display: block;
   border: 0;
   color: $text-dark;
@@ -26,4 +31,14 @@ app-options {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+
+.options__item:hover {
+  background: #555;
+  color: #FFF;
+}
+
+.options-btn {
+  background: url('/images/ic_options_24px.svg') center center no-repeat;
 }
