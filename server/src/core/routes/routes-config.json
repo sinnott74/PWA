@@ -1,0 +1,6 @@
+{
+  "/404" : "NotFoundRoute",
+  "/500" : "InternalServerErrorRoute",
+  "/app-shell" : "AppShellRoute",
+  "/" : "IndexRoute"
+}

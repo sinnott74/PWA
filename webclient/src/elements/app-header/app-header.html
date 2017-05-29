@@ -6,11 +6,11 @@
   <!-- <link rel="stylesheet" type="text/css" href="app-header.css"> -->
   <template>
     <header class="header">
+
       <content select=".sidenav-button"></content>
-      <!--<paper-icon-button role="tab" class="header__menu js-toggle-menu" on-click="handleMenuClick">
-        Toggle nav menu
-      </paper-icon-button>-->
+
       <h1 class="header__title">[[title]]</h1>
+
       <content select=".js-toggle-options"></content>
     </header>
 
@@ -30,18 +30,7 @@
       },
 
       ready: function() {
-        this.options = this.querySelector('app-options');
 
-        this.handleMenuClick = this.handleMenuClick.bind(this);
-        this.handleOptionsClick = this.handleOptionsClick.bind(this);
-      },
-
-      /**
-      * Handles the side navigation button click.
-      * Dispatches a custom open-nav event, which should open the side-nav
-      **/
-      handleMenuClick : function(e) {
-        document.dispatchEvent(new Event('open-nav'));
       }
     });
   </script>

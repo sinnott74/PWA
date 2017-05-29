@@ -1,0 +1,4 @@
+{
+  "/users" : "UsersListRoute",
+  "/users/:id(\\d+)" : "UsersReadRoute"
+}

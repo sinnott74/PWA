@@ -19,5 +19,11 @@
     },
     "remoteStyles": [],
     "remoteScripts": []
+  },
+  "/users/new": {
+    "view": "createUser",
+    "title": "Create new user",
+    "remoteStyles": [],
+    "remoteScripts": []
   }
 }
