@@ -7,6 +7,7 @@ app-sidenav {
   top: 0;
   bottom: 0;
   right: 0;
+  will-change: transform;
   transform : translate3d(0, 0, 0);
 
    &::before {
@@ -18,13 +19,13 @@ app-sidenav {
     display: block;
     position: absolute;
     will-change: opacity;
-    transition: opacity .233s cubic-bezier(0, 0, .21, 1);
+    transition: opacity 130ms linear;
     overflow-y: hidden;
   }
 }
 
 .side_nav--animatable .side-nav__content{
-  transition: all 130ms linear;
+  transition: transform 130ms linear;
 }
 
 app-sidenav[opened] {
