@@ -8,9 +8,11 @@
     position: fixed;
     align-items: center;
     justify-content: center;
+    background-color: rgba(100, 100, 100, 0.7);
   }
 
   &__message {
     color: $warning;
+    font-size: 3em;
   }
 }
