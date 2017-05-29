@@ -3,6 +3,7 @@
 <link rel="import" href="../app-sidenav/app-sidenav.html">
 <link rel="import" href="../app-header/app-header.html">
 <link rel="import" href="../app-router/app-router.html">
+<link rel="import" href="../app-options/app-options.html">
 <link rel="import" href="../../../../bower_components/paper-icon-button/paper-icon-button.html">
 
 <dom-module id="app-app">
@@ -16,7 +17,11 @@
       <paper-icon-button role="tab" class="sidenav-button header__menu" on-click="_onSideNavButtonClick">
         Toggle nav menu
       </paper-icon-button>
+      <paper-icon-button role="tab" class="header__options js-toggle-options" on-click="_handleOptionsButtonClick">
+        Toggle options menu
+      </paper-icon-button>
     </app-header>
+    <app-options></app-options>
 
     <app-sidenav></app-sidenav>
 
@@ -37,6 +42,7 @@
       ready: function() {
         this.sidenav = this.querySelector('app-sidenav');
         this.router = this.querySelector('app-router');
+        this.options = this.querySelector('app-options');
 
         this._registerRouters();
         this._registerServiceWorker();
@@ -153,6 +159,14 @@
 
         _onSideNavButtonClick: function(e) {
           this.sidenav.opened = true;
+        },
+
+        /**
+        * Handles the options button click.
+        * Sets the opened attribute on the app-options element
+        **/
+        _handleOptionsButtonClick : function(e) {
+          this.options.opened = true;
         }
     });
 

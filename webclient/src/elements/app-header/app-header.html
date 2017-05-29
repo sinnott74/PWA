@@ -1,7 +1,5 @@
 <link rel="import" href="../../../../bower_components/polymer/polymer.html">
-<!--<link rel="import" href="../../../../bower_components/iron-icon/iron-icon.html">-->
-<!--<link rel="import" href="../../../../bower_components/paper-icon-button/paper-icon-button.html">-->
-<link rel="import" href="../app-options/app-options.html">
+
 
 <dom-module id="app-header">
   <!-- Defines the element's style and local DOM -->
@@ -13,10 +11,7 @@
         Toggle nav menu
       </paper-icon-button>-->
       <h1 class="header__title">[[title]]</h1>
-      <paper-icon-button role="tab" class="header__options js-toggle-options" on-click="handleOptionsClick">
-        Toggle options menu
-      </paper-icon-button>
-      <app-options></app-options>
+      <content select=".js-toggle-options"></content>
     </header>
 
   </template>
@@ -47,14 +42,6 @@
       **/
       handleMenuClick : function(e) {
         document.dispatchEvent(new Event('open-nav'));
-      },
-
-      /**
-      * Handles the options button click.
-      * Sets the opened attribute on the app-options element
-      **/
-      handleOptionsClick : function(e) {
-        this.options.setAttribute('opened', 'true');
       }
     });
   </script>

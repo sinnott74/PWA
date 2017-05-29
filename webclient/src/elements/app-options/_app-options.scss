@@ -3,7 +3,8 @@ app-options {
   background-color: white;
   top: $header-height;
   right: 10px;
-  width: 200px;
+  max-width: 200px;
+  width: 33vw;
   height: calc(100vh - #{$header-height});
   border-radius: .3em;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
