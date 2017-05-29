@@ -101,7 +101,6 @@
       properties: {
         opened: {
           type: Boolean,
-          value: false,
           reflectToAttribute: true,
           observer: '_openedChanged'
         },
@@ -114,14 +113,18 @@
 
      _openedChanged: function(newValue, oldValue){
 
+       console.log('_openedChanged', newValue);
+
         // prevents updating sidenav when value is set upon instantiation
-        if(oldValue === undefined){
+        if(newValue === undefined){
           return;
         }
 
         if(newValue === true){
+          console.log('should call _open');
           this._open();
-        } else{
+        } else if(newValue === false) {
+          console.log('should call _close');
           this._close();
         }
       },
@@ -176,13 +179,21 @@
 
       _handleSideNavTouchEnd: function(e) {
 
+        console.log('sidenav touch end called', this.sideNavTransform, this.TOUCH_SLOP, -window.devicePixelRatio/100);
+
         this.touching = false;
         this.direction = "";
 
         if (this.sideNavTransform < -this.TOUCH_SLOP) {
-          this._close();
+          // this._close();
+          console.log('setting opened', false);
+          this.opened = undefined;
+          this.opened = false;
         } else if (this.sideNavTransform < -window.devicePixelRatio/100){
-          this._open();
+          // this._open();
+          console.log('setting opened', true);
+          this.opened = undefined;
+          this.opened = true;;
         }
 
         // allow content scrolling again
@@ -226,25 +237,36 @@
 
       _handleEdgeTouchEnd: function(e) {
         this.direction = "";
+        console.log('Edge touch end called', this.edgeTransform, this.TOUCH_SLOP);
         if (this.edgeTransform >= this.TOUCH_SLOP) {
-          this._open();
+          // this._open();
+          console.log('setting opened', true);
+          this.opened = undefined;
+          this.opened = true;
           return;
         } else if (this.edgeTransform < this.TOUCH_SLOP){
-          this._close();
+          // this._close();
+          console.log('setting opened', false);
+          this.opened = undefined;
+          this.opened = false;
         }
       },
 
       _close: function() {
-        this.opened = false;
+        // this.opened = false;
+        console.log('Called _close');
         this.classList.add("side_nav--animatable");
-        this.sideNavContent.removeAttribute('style');
+        // this.sideNavContent.removeAttribute('style');
+        this.sideNavContent.style.transform = '';
         document.body.style.overflowY = 'auto';
       },
 
       _open: function() {
-        this.opened = true;
+        // this.opened = true;
+        console.log('Called _open');
         this.classList.add("side_nav--animatable");
-        this.sideNavContent.removeAttribute('style');
+        // this.sideNavContent.removeAttribute('style');
+        this.sideNavContent.style.transform = '';
         document.body.style.overflowY = 'hidden';
       },
 
