@@ -10,12 +10,6 @@ app-options {
   z-index: 0;
 }
 
-body {
-  &::after {
-    z-index: 100;
-  }
-}
-
 app-sidenav {
   z-index: 200;
 }
