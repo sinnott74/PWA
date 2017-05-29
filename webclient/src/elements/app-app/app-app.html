@@ -3,7 +3,7 @@
 <link rel="import" href="../app-sidenav/app-sidenav.html">
 <link rel="import" href="../app-header/app-header.html">
 <link rel="import" href="../app-router/app-router.html">
-<link rel="import" href="../app-options/app-options.html">
+<link rel="import" href="../app-options-menu/app-options-menu.html">
 <link rel="import" href="../../../../bower_components/paper-icon-button/paper-icon-button.html">
 
 <dom-module id="app-app">
@@ -21,7 +21,7 @@
         Toggle options menu
       </paper-icon-button>
     </app-header>
-    <app-options></app-options>
+    <app-options-menu></app-options-menu>
 
     <app-sidenav></app-sidenav>
 
@@ -42,7 +42,7 @@
       ready: function() {
         this.sidenav = this.querySelector('app-sidenav');
         this.router = this.querySelector('app-router');
-        this.options = this.querySelector('app-options');
+        this.options = this.querySelector('app-options-menu');
 
         this._registerRouters();
         this._registerServiceWorker();

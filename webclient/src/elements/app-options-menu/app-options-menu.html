@@ -1,0 +1,69 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../app-options-item/app-options-item.html">
+
+<dom-module id="app-options-menu">
+
+  <template>
+    <div class="options-scrim js-options-scrim" on-tap="_close"></div>
+    <aside class="options-view js-options-view">
+      <app-options-item title="Option 1"></app-options-item>
+      <app-options-item title="Option 2"></app-options-item>
+      <app-options-item title="Option 3"></app-options-item>
+      <app-options-item title="Option 4"></app-options-item>
+      <app-options-item title="Option 1"></app-options-item>
+      <app-options-item title="Option 2"></app-options-item>
+      <app-options-item title="Option 3"></app-options-item>
+      <app-options-item title="Option 4"></app-options-item>
+      <app-options-item title="Option 1"></app-options-item>
+      <app-options-item title="Option 2"></app-options-item>
+      <app-options-item title="Option 3"></app-options-item>
+      <app-options-item title="Option 4"></app-options-item>
+      <app-options-item title="Option 1"></app-options-item>
+      <app-options-item title="Option 2"></app-options-item>
+      <app-options-item title="Option 3"></app-options-item>
+      <app-options-item title="Option 5"></app-options-item>
+      <app-options-item title="Option 1"></app-options-item>
+      <app-options-item title="Option 2"></app-options-item>
+      <app-options-item title="Option 3"></app-options-item>
+      <app-options-item title="Option 4"></app-options-item>
+      <app-options-item title="Option 1"></app-options-item>
+      <app-options-item title="Option 2"></app-options-item>
+      <app-options-item title="Option 3"></app-options-item>
+      <app-options-item title="Option 4"></app-options-item>
+      <app-options-item title="Option 1"></app-options-item>
+      <app-options-item title="Option 2"></app-options-item>
+      <app-options-item title="Option 3"></app-options-item>
+      <app-options-item title="Option 4"></app-options-item>
+      <app-options-item title="Option 1"></app-options-item>
+      <app-options-item title="Option 2"></app-options-item>
+      <app-options-item title="Option 3"></app-options-item>
+      <app-options-item title="Option 4"></app-options-item>
+    </aside>
+  </template>
+
+  <!-- Creates the element's prototype and registers it -->
+  <script>
+    Polymer({
+      is: 'app-options-menu',
+
+      properties: {
+        opened: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
+        }
+      },
+
+      ready: function() {
+        this.view = this.querySelector('.js-options-view');
+        this.scrim = this.querySelector('.js-options-scrim');
+        this._close = this._close.bind(this);
+      },
+
+      _close: function() {
+        this.opened = false;
+      }
+    });
+  </script>
+</dom-module>

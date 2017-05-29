@@ -1,0 +1,22 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+
+<dom-module id="app-options-item">
+
+  <template>
+    <div tabindex="0">[[title]]</div>
+  </template>
+
+  <!-- Creates the element's prototype and registers it -->
+  <script>
+    Polymer({
+      is: 'app-options-item',
+
+      properties: {
+        title: {
+          type: String,
+          reflectToAttribute: true
+        }
+      },
+    });
+  </script>
+</dom-module>
