@@ -7,11 +7,7 @@
 <link rel="import" href="../../../../bower_components/paper-icon-button/paper-icon-button.html">
 
 <dom-module id="app-app">
-
-  <!-- Defines the element's style and local DOM -->
-  <!-- <link rel="stylesheet" type="text/css" href="app-app.css"> -->
   <template>
-
     <app-header title="App Shell">
       <!-- This replaces content in app-header-->
       <paper-icon-button role="tab" class="header__menu" on-click="_onSideNavButtonClick">
@@ -22,19 +18,13 @@
       </paper-icon-button>
     </app-header>
     <app-options-menu></app-options-menu>
-
     <app-sidenav></app-sidenav>
-
     <!-- Main content -->
     <content></content>
-
     <app-toast></app-toast>
-
     <app-router></app-router>
-
   </template>
 
-  <!-- Creates the element's prototype and registers it -->
   <script>
     Polymer({
       is: 'app-app',
@@ -43,13 +33,13 @@
         this.sidenav = this.querySelector('app-sidenav');
         this.router = this.querySelector('app-router');
         this.options = this.querySelector('app-options-menu');
+        this.toast = this.querySelector('app-toast');
 
         this._registerRouters();
         this._registerServiceWorker();
       },
 
       _registerRouters: function() {
-
         var anchorElements = document.querySelectorAll('a');
         var sidenav = this.sidenav;
         var router = this.router;
@@ -75,6 +65,7 @@
       },
 
       _registerServiceWorker: function() {
+        var toast = this.toast;
         if (!('serviceWorker' in navigator)) {
             // Service worker is not supported on this platform
             return;
@@ -101,21 +92,13 @@
               // show a notification to the user.
               registration.installing.onstatechange = function(event) {
                 if (this.state === 'installed') {
-                  var message, toastEvent;
-
+                  var message;
                   if (isUpdate) {
                     message = 'App updated. Restart for the new version.';
-                    toastEvent = new CustomEvent('toast', {'detail': message});
-                    document.dispatchEvent(toastEvent);
-                    // ToasterSingleton.getToaster().toast(
-                    //     'App updated. Restart for the new version.');
                   } else {
                     message = 'App ready for offline use.';
-                    toastEvent = new CustomEvent('toast', {'detail': message});
-                    document.dispatchEvent(toastEvent);
-                    // ToasterSingleton.getToaster().toast(
-                    //     'App ready for offline use.');
                   }
+                  toast.text = message;
                 }
               };
             };

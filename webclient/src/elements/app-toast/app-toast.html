@@ -5,10 +5,50 @@
   <!-- Defines the element's style and local DOM -->
   <!-- <link rel="stylesheet" type="text/css" href="app-toast.css"> -->
   <template>
-    <aside class="toast-view js-toast-view">
-      <button class="toast-view__btn-close js-toast-view__btn-close" on-click="hide">&#10006;</button>
-      <div class="toast-view__text js-toast-view__text"></div>
-    </aside>
+    <style>
+      :host {
+        background-color: var(--background-color-dark);
+        border-radius: 3px;
+        box-shadow: 0 0 2px rgba(0, 0, 0, .12),
+                    0 2px 4px rgba(0, 0, 0, .24);
+        color: var( --text-color-light);
+        line-height: 20px;
+        padding: 16px;
+        transition: opacity 200ms,
+                    transform 300ms cubic-bezier(.165, .84, .44, 1);
+        opacity: 0;
+        transform: translateY(20px);
+        will-change: transform;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        word-wrap: normal;
+      }
+      :host.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      :host .btn-close {
+        border: 0;
+        background-color: transparent;
+        font-size: 20px;
+        float: right;
+        cursor: pointer;
+      }
+      :host .btn-close:hover {
+        border: 0;
+        background-color: transparent;
+        color: var( --text-color-light);
+        font-size: 20px;
+        float: right;
+        cursor: pointer;
+      }
+      :host .message {
+        width: calc(100% - 20px);
+      }
+    </style>
+    <button class="btn-close js-toast-view__btn-close" on-click="_hide">&#10006;</button>
+    <div class="message js-toast-view__message">[[text]]</div>
   </template>
 
   <!-- Creates the element's prototype and registers it -->
@@ -16,28 +56,27 @@
     Polymer({
       is: 'app-toast',
       ready: function() {
-        this.view = this.querySelector('.js-toast-view');
-        this.closeBtn = this.view.querySelector('.js-toast-view__btn-close');
-        this.text = this.view.querySelector('.js-toast-view__text');
-        this.hideTimeout = 0;
+        this.closeBtn = this.querySelector('.js-toast-view__btn-close');
+        this.message = this.querySelector('.js-toast-view__message');
 
-        this.hide = this.hide.bind(this);
-        this.toast = this.toast.bind(this);
-
-        this.closeBtn.addEventListener('click', this.hide);
-
-        document.addEventListener('toast', this.toast);
-
+        this._hide = this._hide.bind(this);
+        this._textChanged = this._textChanged.bind(this);
       },
-      hide: function(e, detail) {
-        console.log('Hiding toast');
-        this.view.classList.remove('toast-view--visible');
+
+      properties: {
+        text: {
+          type: String,
+          reflectToAttribute: true,
+          observer: '_textChanged'
+        }
       },
-      toast: function(e) {
-        console.log('Showing toast');
-        console.log(e);
-        this.text.textContent = e.detail;
-        this.view.classList.add('toast-view--visible');
+
+      _textChanged: function(){
+        this.classList.add('visible');
+      },
+
+      _hide: function(e, detail) {
+        this.classList.remove('visible');
       }
     });
   </script>
