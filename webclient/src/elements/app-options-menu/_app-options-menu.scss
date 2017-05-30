@@ -3,11 +3,11 @@ app-options-menu {
   display: none;
   background-color: white;
   top: $header-height;
-  right: 10px;
+  right: 0;
   max-width: 200px;
   width: 33vw;
   height: calc(95% - #{$header-height});
-  border-radius: .3em;
+  border-radius: 0 0 .3em .3em;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
     0 3px 1px -2px rgba(0, 0, 0, .2),
     0 1px 5px 0 rgba(0, 0, 0, .12);
