@@ -49,7 +49,7 @@
   </style>
 
   <template>
-    <div class="options-scrim js-options-scrim" on-tap="_close"></div>
+    <div class="options-scrim js-options-scrim" on-tap="_handleScrimTap"></div>
     <aside class="options-view js-options-view">
       <app-options-item title="Option 1"></app-options-item>
       <app-options-item title="Option 2"></app-options-item>
@@ -94,7 +94,6 @@
       properties: {
         opened: {
           type: Boolean,
-          value: false,
           reflectToAttribute: true,
           observer: '_openedChanged'
         }
@@ -111,14 +110,16 @@
         newValue ? this._open() : this._close();
       },
 
-      _close: function() {
+      _handleScrimTap: function() {
         this.opened = false;
-        document.body.style.overflowY = 'auto';
+      },
+
+      _close: function() {
+        document.body.classList.remove('noscroll');
       },
 
       _open: function() {
-        this.opened = true;
-        document.body.style.overflowY = 'hidden';
+        document.body.classList.add('noscroll');
       }
     });
   </script>

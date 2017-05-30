@@ -258,7 +258,7 @@
         this.classList.add("side_nav--animatable");
         // this.sideNavContent.removeAttribute('style');
         this.sideNavContent.style.transform = '';
-        document.body.style.overflowY = 'auto';
+        document.body.classList.remove('noscroll');
       },
 
       _open: function() {
@@ -267,7 +267,7 @@
         this.classList.add("side_nav--animatable");
         // this.sideNavContent.removeAttribute('style');
         this.sideNavContent.style.transform = '';
-        document.body.style.overflowY = 'hidden';
+        document.body.classList.add('noscroll');
       },
 
       togglePin: function(e) {
