@@ -24,6 +24,7 @@ app-options-menu[opened] {
   bottom: 0;
   left: 0;
   right: 0;
+  overflow: hidden;
 }
 
 app-options-menu[opened] .options-scrim {
