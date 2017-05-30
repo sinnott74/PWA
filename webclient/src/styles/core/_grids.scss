@@ -12,19 +12,19 @@ $grids: (
 );
 
 $spans: (
-  'main': (
+  '.main': (
     'small': 4,
     'big': 12
   ),
-  'header': (
+  'app-header': (
     'small': 4,
     'big': 12
   ),
-  'side-nav__content': (
+  '.side-nav__content': (
     'small': 3,
     'big': 4
   ),
-  'toast-view': (
+  '.toast-view': (
     'small': 4,
     'big': 3
   )
@@ -58,7 +58,7 @@ $spans: (
 }
 
 @each $class, $span in $spans {
-  .#{$class} {
+  #{$class} {
     @include span(map-get($span, 'small'), 'small');
 
     @include mq($big-screen) {
