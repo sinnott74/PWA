@@ -31,23 +31,21 @@
       :host .btn-close {
         border: 0;
         background-color: transparent;
+        color: var( --text-color-light);
+        opacity: .8;
+        transition: opacity .333s cubic-bezier(0, 0, .21, 1);
         font-size: 20px;
         float: right;
         cursor: pointer;
       }
       :host .btn-close:hover {
-        border: 0;
-        background-color: transparent;
-        color: var( --text-color-light);
-        font-size: 20px;
-        float: right;
-        cursor: pointer;
+        opacity: 1;
       }
       :host .message {
         width: calc(100% - 20px);
       }
     </style>
-    <button class="btn-close js-toast-view__btn-close" on-tap="_handleCloseButtonTap">&#10006;</button>
+    <button class="btn-close js-toast-view__btn-close" on-tap="_handleCloseButtonTap" aria-label="Close Toast">&#10006;</button>
     <div class="message js-toast-view__message">[[text]]</div>
   </template>
 
