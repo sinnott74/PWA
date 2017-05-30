@@ -30,7 +30,6 @@
       bottom: 0;
       left: 0;
       right: 0;
-      overflow: hidden;
     }
 
     :host[opened] .options-scrim {
@@ -96,7 +95,8 @@
         opened: {
           type: Boolean,
           value: false,
-          reflectToAttribute: true
+          reflectToAttribute: true,
+          observer: '_openedChanged'
         }
       },
 
@@ -104,10 +104,21 @@
         this.view = this.querySelector('.js-options-view');
         this.scrim = this.querySelector('.js-options-scrim');
         this._close = this._close.bind(this);
+        this._open = this._open.bind(this);
+      },
+
+      _openedChanged: function(newValue, oldValue){
+        newValue ? this._open() : this._close();
       },
 
       _close: function() {
         this.opened = false;
+        document.body.style.overflowY = 'auto';
+      },
+
+      _open: function() {
+        this.opened = true;
+        document.body.style.overflowY = 'hidden';
       }
     });
   </script>
