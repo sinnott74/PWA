@@ -24,7 +24,7 @@
         left: 0;
         word-wrap: normal;
       }
-      :host.visible {
+      :host[opened] {
         opacity: 1;
         transform: translateY(0);
       }
@@ -47,7 +47,7 @@
         width: calc(100% - 20px);
       }
     </style>
-    <button class="btn-close js-toast-view__btn-close" on-click="_hide">&#10006;</button>
+    <button class="btn-close js-toast-view__btn-close" on-tap="_handleCloseButtonTap">&#10006;</button>
     <div class="message js-toast-view__message">[[text]]</div>
   </template>
 
@@ -59,24 +59,20 @@
         this.closeBtn = this.querySelector('.js-toast-view__btn-close');
         this.message = this.querySelector('.js-toast-view__message');
 
-        this._hide = this._hide.bind(this);
-        this._textChanged = this._textChanged.bind(this);
+        this._handleCloseButtonTap = this._handleCloseButtonTap.bind(this);
       },
-
       properties: {
+        opened: {
+          type: Boolean,
+          reflectToAttribute: true
+        },
         text: {
           type: String,
-          reflectToAttribute: true,
-          observer: '_textChanged'
+          reflectToAttribute: true
         }
       },
-
-      _textChanged: function(){
-        this.classList.add('visible');
-      },
-
-      _hide: function(e, detail) {
-        this.classList.remove('visible');
+      _handleCloseButtonTap: function() {
+        this.opened = false;
       }
     });
   </script>
