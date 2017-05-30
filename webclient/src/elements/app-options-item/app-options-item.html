@@ -2,6 +2,28 @@
 
 <dom-module id="app-options-item">
 
+  <style>
+    :host {
+      font-size: 0.8em;
+      outline: none;
+      height: 3em;
+      width: 100%;
+      display: block;
+      border: 0;
+      color: var(--text-color-dark, #444);
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    :host:hover {
+      background: #555;
+      color: #FFF;
+    }
+  </style>
+
   <template>
     <div tabindex="0">[[title]]</div>
   </template>
