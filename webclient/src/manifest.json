@@ -22,6 +22,10 @@
         "src": "images/chrome-splashscreen-icon-384x384.png",
         "sizes": "384x384",
         "type": "image/png"
+      },{
+        "src": "images/chrome-splashscreen-icon-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
       }],
   "display": "standalone",
   "background_color": "#3E4EB8",
