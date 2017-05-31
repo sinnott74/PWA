@@ -3,6 +3,7 @@
 <link rel="import" href="../app-sidenav/app-sidenav.html">
 <link rel="import" href="../app-header/app-header.html">
 <link rel="import" href="../app-router/app-router.html">
+<link rel="import" href="../app-page-controller/app-page-controller.html">
 <link rel="import" href="../app-options-menu/app-options-menu.html">
 <link rel="import" href="../../../../bower_components/paper-icon-button/paper-icon-button.html">
 
@@ -23,6 +24,7 @@
     <content></content>
     <app-toast></app-toast>
     <app-router></app-router>
+    <app-page-controller></app-page-controller>
   </template>
 
   <script>
@@ -34,6 +36,7 @@
         this.router = this.querySelector('app-router');
         this.options = this.querySelector('app-options-menu');
         this.toast = this.querySelector('app-toast');
+        this.pageController = this.querySelector('app-page-controller');
 
         this._registerRouters();
         this._registerServiceWorker();
@@ -60,7 +63,7 @@
           });
         }
 
-        this.router.setDefaultRoute(new PageController());
+        this.router.setDefaultRoute(this.pageController);
         this.router.requestStateUpdate();
       },
 
@@ -153,138 +156,5 @@
           this.options.opened = true;
         }
     });
-
-    function PageController() {
-      this.loader = document.querySelector('.js-global-loader');
-      this.mainContainer = document.querySelector('.js-global-main');
-
-      this.DEFAULT_TITLE = 'App Shell';
-    }
-
-    PageController.prototype.onUpdate = function() {
-      console.log('onUpdate: ', this.path);
-    }
-
-    PageController.prototype.onStart = function(path) {
-      console.log('onStart: ', path);
-
-      // Show loading dialog while we get content
-      var pageController = this;
-      var loader = this.loader;
-      var mainContainer = this.mainContainer;
-
-      this.loader.classList.remove('is-hidden');
-
-      this.updateNavDrawer(path);
-
-      fetch('/api' + path)
-        .then(function(response) {
-          if (response.status === 404) {
-            pageController.show404();
-            return null;
-          }
-
-          return response.json();
-        })
-        .then(function(responseObject) {
-          // Hide loading dialog
-          loader.classList.add('is-hidden');
-
-          if (responseObject === null) {
-            throw new Error('Unexpected response from Server.');
-          }
-
-          if (responseObject.title) {
-            document.title = responseObject.title;
-          } else {
-            document.title = this.DEFAULT_TITLE;
-          }
-
-          // Add style element to the document head
-          // var styleElement = document.createElement('style');
-          // styleElement.textContent = responseObject.partialinlinestyles;
-          // document.head.appendChild(styleElement);
-
-          // Add content from partial to page
-          mainContainer.innerHTML = responseObject.partialhtml;
-
-          // make router handle all anchor in mainContainer
-          var router = document.querySelector('app-router');
-          var anchorElements = mainContainer.querySelectorAll('a');
-          var sideNav = document.querySelector('app-sidenav');
-          for (var i = 0; i < anchorElements.length; i++) {
-            if (!anchorElements[i].href) {
-              continue;
-            }
-            anchorElements[i].addEventListener('click', function(clickEvent) {
-              console.log('Clicked link controlled by router');
-              console.log(clickEvent);
-              clickEvent.stopPropagation();
-              clickEvent.preventDefault();
-              sideNav.opened = false;
-              router.goToPath(clickEvent.currentTarget.href);
-            });
-          }
-
-
-          // TODO: Handle remote scripts
-
-          // TODO: Handle remote styles
-        })
-        .catch(function(error) {
-          console.log(error);
-          pageController.showError('There was a problem loading this page');
-        });
-    }
-
-    PageController.prototype.onFinish = function() {
-      console.log('onFinish');
-      // Remove any existing styles
-      var insertedStyles =
-        document.querySelector('.js-partial-styles');
-      if (insertedStyles) {
-        document.head.removeChild(insertedStyles);
-      }
-
-      // Remove the current content
-      while (this.mainContainer.firstChild) {
-        this.mainContainer.removeChild(this.mainContainer.firstChild);
-      }
-    }
-
-    PageController.prototype.show404 = function() {
-      var headingElement = document.createElement('h1');
-      headingElement.textContent = '404.';
-      this.mainContainer.appendChild(headingElement);
-
-      var paragraphElement = document.createElement('p');
-      paragraphElement.textContent = 'Oops - looks like this ' +
-        'page isn\'t valid.';
-      this.mainContainer.appendChild(paragraphElement);
-    }
-
-    PageController.prototype.showError = function(msg) {
-      var headingElement = document.createElement('h1');
-      headingElement.textContent = 'Ooopps.';
-      this.mainContainer.appendChild(headingElement);
-
-      var paragraphElement = document.createElement('p');
-      paragraphElement.textContent = 'There was a problem displaying this page ' +
-        ', sorry about that.';
-      this.mainContainer.appendChild(paragraphElement);
-    }
-
-    PageController.prototype.updateNavDrawer = function(path) {
-     var nodeList = document.querySelectorAll('.side-nav__body a');
-      [].forEach.call(nodeList, function(el) {
-        // Reset active states
-        el.classList.remove('active');
-        // We could compare against path, but easier to compare
-        // against the current document href
-        if (el.href === document.location.href) {
-          el.classList.add('active');
-        }
-      });
-    }
   </script>
 </dom-module>
