@@ -38,33 +38,23 @@
         this.toast = this.querySelector('app-toast');
         this.pageController = this.querySelector('app-page-controller');
 
-        this._registerRouters();
+        // this._registerRouters();
         this._registerServiceWorker();
+        this._registerRouterAndRouteEventListener();
       },
 
-      _registerRouters: function() {
-        var anchorElements = document.querySelectorAll('a');
-        var sidenav = this.sidenav;
-        var router = this.router;
-        for (var i = 0; i < anchorElements.length; i++) {
-          if (!anchorElements[i].href) {
-            continue;
-          }
-
-          anchorElements[i].addEventListener('click', function(clickEvent) {
-            console.log('Clicked link controlled by router');
-            console.log(clickEvent);
-            clickEvent.stopPropagation();
-            clickEvent.preventDefault();
-
-            sidenav.opened = false;
-
-            router.goToPath(clickEvent.currentTarget.href);
-          });
-        }
-
+      _registerRouterAndRouteEventListener: function() {
         this.router.setDefaultRoute(this.pageController);
         this.router.requestStateUpdate();
+
+        var sidenav = this.sidenav;
+        var router = this.router;
+        this.addEventListener('route', function(e){
+          e.stopPropagation();
+          e.preventDefault();
+          sidenav.opened = false;
+          router.goToPath(e.detail);
+        });
       },
 
       _registerServiceWorker: function() {

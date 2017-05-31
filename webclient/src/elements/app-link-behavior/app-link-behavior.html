@@ -1,0 +1,25 @@
+<script>
+  /**
+   * @polymerBehavior
+   */
+  LinkBehaviour = {
+
+    listeners: {
+      tap: '_handleLinkTap'
+    },
+
+    properties: {
+      url: {
+        type: String,
+        reflectToAttribute: true
+      }
+    },
+
+    _handleLinkTap: function(e) {
+      var url = e.srcElement.pathname;
+      e.preventDefault();
+      var event = new CustomEvent('route', {'detail': url, 'bubbles':true});
+      this.dispatchEvent(event);
+    }
+  };
+</script>

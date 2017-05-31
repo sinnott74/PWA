@@ -1,0 +1,22 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../app-link-behavior/app-link-behavior.html">
+
+<dom-module id="app-sidenav-link">
+  <template>
+    <a tabindex="0" class="side-nav__blog-post" href$=[[url]] on-tap="_handleLinkTap">[[text]]</a>
+  </template>
+
+  <!-- Creates the element's prototype and registers it -->
+  <script>
+    Polymer({
+      is: 'app-sidenav-link',
+      properties: {
+        text: {
+          type: String,
+          reflectToAttribute: true
+        },
+      },
+      behaviors: [LinkBehaviour]
+    });
+  </script>
+</dom-module>

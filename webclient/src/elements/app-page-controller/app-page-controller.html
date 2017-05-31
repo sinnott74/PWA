@@ -57,24 +57,6 @@
             // Add content from partial to page
             mainContainer.innerHTML = responseObject.partialhtml;
 
-            // make router handle all anchor in mainContainer
-            var router = document.querySelector('app-router');
-            var anchorElements = mainContainer.querySelectorAll('a');
-            var sideNav = document.querySelector('app-sidenav');
-            for (var i = 0; i < anchorElements.length; i++) {
-              if (!anchorElements[i].href) {
-                continue;
-              }
-              anchorElements[i].addEventListener('click', function(clickEvent) {
-                console.log('Clicked link controlled by router');
-                console.log(clickEvent);
-                clickEvent.stopPropagation();
-                clickEvent.preventDefault();
-                sideNav.opened = false;
-                router.goToPath(clickEvent.currentTarget.href);
-              });
-            }
-
 
             // TODO: Handle remote scripts
 
