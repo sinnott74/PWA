@@ -1,7 +1,8 @@
-var CLS = require('continuation-local-storage');
-var createNameSpace = CLS.createNamespace;
-var getNameSpace = CLS.getNamespace;
-var knex = require('../core/database');
+const CLS = require('continuation-local-storage');
+const createNameSpace = CLS.createNamespace;
+const getNameSpace = CLS.getNamespace;
+const knex = require('../core/database');
+const uuidV4 = require('uuid/v4');
 
 let kNAMESPACE = 'pwa';
 
@@ -27,7 +28,10 @@ TransactionInfo.startTransaction = async function(cb) {
   return knex.transaction(function(transaction) {
     let session = getNameSpace(kNAMESPACE);
     return session.runAndReturn(function() {
+      // Add knex transaction object
       session.set('transaction', transaction);
+      // Add transactionID for async logging
+      session.set('transactionID', uuidV4());
       return cb();
     });
   });
