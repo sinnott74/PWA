@@ -16,7 +16,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var rename = require('gulp-rename');
 
 gulp.task('scripts:watch', function() {
-  gulp.watch(global.config.src + '/**/*.js', ['scripts']);
+  gulp.watch(global.config.clientSrc + '/**/*.js', ['scripts']);
   gulp.watch(['./.eslintrc', './.eslintignore'], ['scripts']);
 });
 
@@ -87,7 +87,7 @@ function generateES6Bundles(srcPath, cb) {
     browserifyBundles.push({
       srcPath: './' + filepath,
       outputFilename: outputFilename,
-      dest: path.join(global.config.dest, relativeDirectory)
+      dest: path.join(global.config.clientDest, relativeDirectory)
     });
   });
 
@@ -95,7 +95,7 @@ function generateES6Bundles(srcPath, cb) {
 }
 
 gulp.task('scripts:eslint', function() {
-  return gulp.src([global.config.src + '/**/*.js'])
+  return gulp.src([global.config.clientSrc + '/**/*.js'])
 
     // eslint() attaches the lint output to the eslint property,
     // of the file object so it can be used by other modules.
@@ -111,11 +111,11 @@ gulp.task('scripts:eslint', function() {
 });
 
 gulp.task('scripts:es6', function(cb) {
-  generateES6Bundles(global.config.src, cb);
+  generateES6Bundles(global.config.clientSrc, cb);
 });
 
 gulp.task('scripts:es5', function() {
-  return gulp.src([global.config.src + '/**/*.es5.js'])
+  return gulp.src([global.config.clientSrc + '/**/*.es5.js'])
     .pipe(gulpif(global.config.env !== 'prod', sourcemaps.init()))
 
     // Remove the .es5 from the end of the file name using gulp-rename
@@ -129,12 +129,12 @@ gulp.task('scripts:es5', function() {
     .pipe(gulpif(global.config.env === 'prod', uglify()))
     .pipe(license(global.config.license, {tiny: true}))
     .pipe(gulpif(global.config.env !== 'prod', sourcemaps.write()))
-    .pipe(gulp.dest(global.config.dest));
+    .pipe(gulp.dest(global.config.clientDest));
 });
 
 // Delete any files currently in the scripts destination path
 gulp.task('scripts:clean', function(cb) {
-  del([global.config.dest + '/**/*.js', '!' + global.config.dest + '/lib/**'], {dot: true})
+  del([global.config.dest + '/**/*.js', '!' + global.config.clientDest + '/lib/**'], {dot: true})
     .then(function() {
       cb();
     });

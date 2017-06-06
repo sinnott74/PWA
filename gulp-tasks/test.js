@@ -26,7 +26,7 @@ if(process.env.CI) {
 gulp.task('test:eslint', function() {
   var eslintOpts = {};
 
-  return gulp.src([global.config.src + '/**/*.js', global.config.serverSrc + '/**/*.js'])
+  return gulp.src([global.config.clientSrc + '/**/*.js', global.config.serverSrc + '/**/*.js'])
 
     // eslint() attaches the lint output to the eslint property,
     // of the file object so it can be used by other modules.

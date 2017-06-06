@@ -77,7 +77,7 @@ expressApp.use(compression());
 // });
 
 // Define static assets path - i.e. styles, scripts etc.
-expressApp.use('/', express.static(path.join(__dirname + '/../../../build/')));
+expressApp.use('/', express.static(path.join(__dirname + '/../../../webclient/build')));
 
 /**
  * Define routes.

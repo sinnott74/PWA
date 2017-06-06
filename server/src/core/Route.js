@@ -30,7 +30,7 @@ class Route {
     this.req = req;
     this.res = res;
 
-    let cssPath = path.resolve(__dirname, '../../../build/styles/core.css');
+    let cssPath = path.resolve(__dirname, '../../../webclient/build/styles/core.css');
     this.inlineStyles = '' + fs.readFileSync(cssPath);
   }
 
