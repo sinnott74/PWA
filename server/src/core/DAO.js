@@ -43,6 +43,9 @@ class DAO {
     // Read database from the transaction info
     this.database = database;
     this.transaction = TransactionInfo.getFacadeScopedObject('transaction');
+
+    // Short hand
+    this.table = this.database(this.tableName).transacting(this.transaction);
   }
 
   /**
@@ -56,8 +59,7 @@ class DAO {
     // call subclasses preCreate implemenation
     await this.preCreate(entity);
     // insert entity onto db
-    let idArray = await this.database(this.tableName)
-                        .transacting(this.transaction)
+    let idArray = await this.table
                         .insert(entity)
                         .returning('id');
 
@@ -77,8 +79,7 @@ class DAO {
     // validate the ID
     await this.validateID(id);
     // read entity
-    let entityArray = await this.database(this.tableName)
-                            .transacting(this.transaction)
+    let entityArray = await this.table
                             .where('id', id);
 
     if (entityArray.length !== 1) {
@@ -99,8 +100,7 @@ class DAO {
     // call subclasses validate implemenation
     await this.validate(entity);
     // return promise which resolves to nothing
-    return this.database(this.tableName)
-            .transacting(this.transaction)
+    return this.table
             .update(entity)
             .where('id', entity.id);
   }
@@ -117,8 +117,7 @@ class DAO {
     await this.validate(entity);
     // return deletion promise
     console.log('UserID', entity.id);
-    return this.database(this.tableName)
-            .transacting(this.transaction)
+    return this.table
             .where('id', entity.id)
             .del();
   }
@@ -128,8 +127,7 @@ class DAO {
    * @returns {Promise<Array>} A promise which resolves an array of entities
    */
   list() {
-    return this.database(this.tableName)
-            .transacting(this.transaction);
+    return this.table;
   }
 
   /**
