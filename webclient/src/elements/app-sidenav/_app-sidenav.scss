@@ -9,19 +9,6 @@ app-sidenav {
   right: 0;
   will-change: transform;
   transform : translate3d(0, 0, 0);
-
-   &::before {
-    content: '';
-    width: 100%;
-    height: 100%;
-    background: $background-dark;
-    opacity: 0;
-    display: block;
-    position: absolute;
-    will-change: opacity;
-    transition: opacity 130ms linear;
-    overflow-y: hidden;
-  }
 }
 
 .side_nav--animatable .side-nav__content{
@@ -30,10 +17,24 @@ app-sidenav {
 
 app-sidenav[opened] {
   pointer-events: auto;
+}
 
-  &::before {
-    opacity: .7;
-  }
+app-sidenav .side-nav__scrim {
+      //display: none;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      opacity: 0;
+      background: $background-dark;
+      will-change: opacity;
+      transition: opacity 130ms linear;
+}
+
+app-sidenav[opened] .side-nav__scrim {
+      display: block;
+      opacity: .8;
 }
 
 app-sidenav[opened] .side-nav__content {

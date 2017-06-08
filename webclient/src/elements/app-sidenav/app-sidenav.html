@@ -2,9 +2,9 @@
 <link rel="import" href="../app-sidenav-link/app-sidenav-link.html">
 
 <dom-module id="app-sidenav">
-  <!-- Defines the element's style and local DOM -->
-  <<!-- link rel="stylesheet" type="text/css" href="app-sidenav.css"> -->
+
   <template>
+    <div class="side-nav__scrim" on-tap="_handleScrimTap"></div>
     <div class="side-nav__content js-side-nav-content" on-touchstart="_handleSideNavTouchStart" on-touchmove="_handleSideNavTouchMove" on-touchend="_handleSideNavTouchEnd">
       <div class="side-nav__header">
         <button class="side-nav__pin" on-click="togglePin"></button>
@@ -17,6 +17,7 @@
           <app-sidenav-link url="/url-1" text="URL 1"></app-sidenav-link>
           <app-sidenav-link url="/url-2" text="URL 2"></app-sidenav-link>
           <app-sidenav-link url="/users" text="Users"></app-sidenav-link>
+          <app-sidenav-link url="/users/new" text="Create User"></app-sidenav-link>
           <app-sidenav-link url="/" text="Index"></app-sidenav-link>
           <app-sidenav-link url="/url-1" text="URL 1"></app-sidenav-link>
           <app-sidenav-link url="/url-2" text="URL 2"></app-sidenav-link>
@@ -52,7 +53,6 @@
     <div class="side-nav__edgearea js-side-nav-edgearea" on-touchstart="_handleEdgeTouchStart" on-touchmove="_handleEdgeTouchMove" on-touchend="_handleEdgeTouchEnd"></div>
   </template>
 
-  <!-- Creates the element's prototype and registers it -->
   <script>
     Polymer({
       is: 'app-sidenav',
@@ -60,29 +60,10 @@
       ready: function(){
         this.sideNavContent = this.querySelector('.js-side-nav-content');
         this.pin = this.querySelector('.side-nav__pin');
-        this.edge = document.querySelector('.js-side-nav-edgearea');
+        this.scrim = this.querySelector('.side-nav__scrim');
+        this.edge = this.querySelector('.js-side-nav-edgearea');
         this.body = this.querySelector('.js-side-nav-body');
         this.addEventListener('transitionend', this.onTransitionEnd, false);
-
-
-        this.sideNavContentWidth = this.sideNavContent.offsetWidth;
-
-        this.addEventListener('click', function(e) {
-          this.opened = false;
-        });
-
-        this.sideNavContent.addEventListener('click', function(e) {
-          e.stopPropagation();
-        });
-
-        this.addEventListener('scroll', function(e) {
-          e.stopPropagation();
-        });
-
-        this.body.addEventListener('scroll', function(e) {
-          e.stopPropagation();
-        });
-
 
         this.touching = false;
 
@@ -113,7 +94,7 @@
         }
       },
 
-     _openedChanged: function(newValue, oldValue){
+      _openedChanged: function(newValue, oldValue){
 
        console.log('_openedChanged', newValue);
 
@@ -166,15 +147,9 @@
 
       _updateUI: function() {
          if(this.touching){
-
-            // if(Math.abs(this.translateX) > (3 * window.devicePixelRatio)){
-            //   this.sideNavContent.style.overflowY = 'hidden';
-            // }
-
             this.sideNavTransform = Math.min(0, this.translateX);
             this.sideNavContent.style.transform =
               'translate3d(' + this.sideNavTransform + 'px, 0, 0)';
-
             requestAnimationFrame(this._updateUI);
           }
       },
@@ -228,9 +203,7 @@
         }
 
         if(this.direction === "horizontal"){
-
           e.preventDefault();
-
           this.edgeTransform = Math.min(this.sideNavContentWidth, newEdgeTouchX - this.edgeTouchStartX);
           this.sideNavContent.style.transform =
             'translate3d(' + (-this.sideNavContentWidth + this.edgeTransform) + 'px, 0, 0)';
@@ -254,20 +227,18 @@
         }
       },
 
+      _handleScrimTap: function(e) {
+        this.opened = false;
+      },
+
       _close: function() {
-        // this.opened = false;
-        console.log('Called _close');
         this.classList.add("side_nav--animatable");
-        // this.sideNavContent.removeAttribute('style');
         this.sideNavContent.style.transform = '';
         document.body.classList.remove('noscroll');
       },
 
       _open: function() {
-        // this.opened = true;
-        console.log('Called _open');
         this.classList.add("side_nav--animatable");
-        // this.sideNavContent.removeAttribute('style');
         this.sideNavContent.style.transform = '';
         document.body.classList.add('noscroll');
       },
