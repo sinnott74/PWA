@@ -41,6 +41,13 @@
       position: relative;
       overflow-y: auto;
       height: 100%;
+      transition: transform .1s ease-out;
+      transform-origin: 0 0 ;
+      transform: scaleY(0.99);
+    }
+
+    .options-view__animate {
+      transform: scaleY(1);
     }
 
     :host .options-btn {
@@ -116,10 +123,12 @@
 
       _close: function() {
         document.body.classList.remove('noscroll');
+        this.view.classList.remove('options-view__animate');
       },
 
       _open: function() {
         document.body.classList.add('noscroll');
+        requestAnimationFrame(() => this.view.classList.add('options-view__animate'));
       }
     });
   </script>
