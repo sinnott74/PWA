@@ -43,9 +43,12 @@ class DAO {
     // Read database from the transaction info
     this.database = database;
     this.transaction = TransactionInfo.getFacadeScopedObject('transaction');
+  }
 
-    // Short hand
-    this.table = this.database(this.tableName).transacting(this.transaction);
+  // Short hand for putting the transaction on the knex object
+  // needs to be created each time its used
+  get table() {
+    return this.database(this.tableName).transacting(this.transaction);
   }
 
   /**
@@ -126,7 +129,7 @@ class DAO {
    * List all entries on this table
    * @returns {Promise<Array>} A promise which resolves an array of entities
    */
-  list() {
+  async list() {
     return this.table;
   }
 
