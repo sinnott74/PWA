@@ -2,6 +2,39 @@
 <link rel="import" href="../app-link-behavior/app-link-behavior.html">
 
 <dom-module id="app-sidenav-link">
+  <style>
+    .side-nav__delete-memos,
+    .side-nav__delete-all,
+    .side-nav__blog-post,
+    .side-nav__file-bug-report {
+      font-family: var(--font-family);
+      font-size: 14px;
+      outline: none;
+      height: 48px;
+      padding-left: 72px;
+      width: 100%;
+      text-align: left;
+      display: block;
+      border: 0;
+      background: url('/images/ic_delete_24px.svg') 16px 12px no-repeat;
+      color: var(--text-color-dark);
+      cursor: pointer;
+    }
+    .side-nav__blog-post {
+      background-image: url('/images/ic_info_outline_24px.svg');
+      line-height: 48px;
+      text-decoration: none;
+      /*&.active {
+        font-weight: bold;
+        background-color: $background;
+      }*/
+    }
+    .side-nav__blog-post:focus {
+      background-color: var(--background-color);
+      outline: 0;
+    }
+  </style>
+
   <template>
     <a tabindex="0" class="side-nav__blog-post" href$=[[url]] on-tap="_handleLinkTap">[[text]]</a>
   </template>
