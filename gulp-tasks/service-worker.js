@@ -24,6 +24,7 @@ gulp.task('service-worker', function(cb) {
         'server/src/views/layouts/default.handlebars',
         'server/src/views/partials/open-page.handlebars',
         'server/src/views/partials/close-page.handlebars',
+        'server/src/views/partials/custom-styles.handlebars',
         global.config.clientDest + '/styles/core.css'
       ],
       '/app-shell': [
