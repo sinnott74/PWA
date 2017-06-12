@@ -128,7 +128,10 @@
 
       _open: function() {
         document.body.classList.add('noscroll');
-        requestAnimationFrame(() => this.view.classList.add('options-view__animate'));
+        var view = this.view;
+        requestAnimationFrame(function() {
+          view.classList.add('options-view__animate')
+        });
       }
     });
   </script>
