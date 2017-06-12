@@ -5,7 +5,6 @@
   <style>
     :host {
       font-size: 0.8em;
-      outline: none;
       height: 3em;
       width: 100%;
       display: block;
@@ -25,7 +24,7 @@
   </style>
 
   <template>
-    <div tabindex="0">[[title]]</div>
+    <div>[[title]]</div>
   </template>
 
   <!-- Creates the element's prototype and registers it -->
@@ -39,6 +38,9 @@
           reflectToAttribute: true
         }
       },
+      hostAttributes: {
+        tabindex: 0
+      }
     });
   </script>
 </dom-module>

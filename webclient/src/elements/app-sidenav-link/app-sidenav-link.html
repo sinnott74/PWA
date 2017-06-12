@@ -7,36 +7,34 @@
     .side-nav__delete-all,
     .side-nav__blog-post,
     .side-nav__file-bug-report {
-      font-family: var(--font-family);
-      font-size: 14px;
-      outline: none;
       height: 48px;
       padding-left: 72px;
       width: 100%;
-      text-align: left;
       display: block;
-      border: 0;
       background: url('/images/ic_delete_24px.svg') 16px 12px no-repeat;
       color: var(--text-color-dark);
-      cursor: pointer;
     }
-    .side-nav__blog-post {
-      background-image: url('/images/ic_info_outline_24px.svg');
+    :host {
       line-height: 48px;
+      text-align: left;
+      height: 48px;
       text-decoration: none;
-      /*&.active {
-        font-weight: bold;
-        background-color: $background;
-      }*/
+      border: 0;
+      display: block;
+      cursor: pointer;
+      color: var(--text-color-dark);
     }
-    .side-nav__blog-post:focus {
+    :host:focus, :host:active {
       background-color: var(--background-color);
-      outline: 0;
+    }
+
+    :host a {
+      text-decoration: none;
     }
   </style>
 
   <template>
-    <a tabindex="0" class="side-nav__blog-post" href$=[[url]] on-tap="_handleLinkTap">[[text]]</a>
+    <a tabindex="-1" class="side-nav__blog-post" href$=[[url]] on-tap="_handleLinkTap">[[text]]</a>
   </template>
 
   <!-- Creates the element's prototype and registers it -->
@@ -49,7 +47,12 @@
           reflectToAttribute: true
         },
       },
-      behaviors: [LinkBehaviour]
+
+      behaviors: [LinkBehaviour],
+
+      hostAttributes: {
+        tabindex: 0
+      }
     });
   </script>
 </dom-module>
