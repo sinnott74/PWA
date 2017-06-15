@@ -16,8 +16,9 @@
     },
 
     _handleLinkTap: function(e) {
-      var url = e.srcElement.pathname;
       e.preventDefault();
+      e.stopPropagation();
+      var url = e.currentTarget.pathname;
       var event = new CustomEvent('route', {'detail': url, 'bubbles':true});
       this.dispatchEvent(event);
     }
